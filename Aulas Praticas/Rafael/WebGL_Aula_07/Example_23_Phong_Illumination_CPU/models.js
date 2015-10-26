@@ -268,11 +268,14 @@ function computeVertexNormals( coordsArray, normalsArray ) {
 
     for( var index = 0; index < coordsArray.length; index += 9 )
     {
+			var normalVector = computeNormalVector(coordsArray.slice(index, index+3), coordsArray.slice(index+3, index+6), coordsArray.slice(index+6, index+9));
+
+			normalsArray.push(normalVector[0], normalVector[1], normalVector[2]);
+			normalsArray.push(normalVector[0], normalVector[1], normalVector[2]);
+			normalsArray.push(normalVector[0], normalVector[1], normalVector[2]);
 		// COMPLETE THE CODE !!
-		var norma = computeNormalVector()
 
 		// Compute unit normal vector for each triangle
-
 
 
         // Store the unit normal vector for each vertex
