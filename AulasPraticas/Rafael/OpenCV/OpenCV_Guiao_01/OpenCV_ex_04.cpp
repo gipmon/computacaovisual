@@ -31,11 +31,11 @@ int main( void )
 
 	// Ler uma imagem
 
-	//CV_LOAD_IMAGE_UNCHANGED : imagem carregada tal como definida
+	// CV_LOAD_IMAGE_UNCHANGED : imagem carregada tal como definida
 
 	// Questao : que outras flags podemos usar ?
 
-	image = imread( "lena.JPG", CV_LOAD_IMAGE_UNCHANGED );
+	image = imread( "lena.jpg", CV_LOAD_IMAGE_UNCHANGED );
 
 	if( ! image.data )
 	{
@@ -57,12 +57,24 @@ int main( void )
     imshow( "Display window", image );
 
     // Esperar
+    setMouseCallback("Imagem", on_mouse);
 
     waitKey( 0 );
+
+    cout << "IMAGEM" << endl;
+
+    cout << "Numero de linhas: " << I
 
 	// Destruir a janela --- Desnecessario neste programa simples
 
 	destroyWindow( "Display window" );
 
 	return 0;
+}
+
+
+void on_mouse(int event, int x, int y, int flags, void*param){
+        if(event==CV_EVENT_RBUTTONDOWN){
+            circle(IMAGEM, POINT(x, y), 25, CV_RGB())
+        }
 }
