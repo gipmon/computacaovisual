@@ -1,452 +1,285 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//  WebGL_example_20.js
-//
-//  Animating models with global and local transformations.
-//
-//  References: www.learningwebgl.com + E. Angel examples
-//
-//  J. Madeira - October 2015
-//
-//////////////////////////////////////////////////////////////////////////////
+// © RRTeam
+
+// z_index
+var z_index = 1;
+
+function CanvasWebGl(url_param, cname_param){
+	this.url = null;
+	this.canvasName = null;
+
+	this.gl = null; // WebGL context
+	this.shaderProgram = null;
+
+	this.triangleVertexPositionBuffer = null;
+	this.triangleVertexColorBuffer = null;
+
+	// The GLOBAL transformation parameters
+	this.globalAngleYY = 0.0;
+	this.globalTz = 0.0;
 
+	// The translation vector
+	this.tx = 0.0;
+	this.ty = 0.0;
+	this.tz = 0.0;
 
-//----------------------------------------------------------------------------
-//
-// Global Variables
-//
+	// The rotation angles in degrees
+	this.angleXX = 0.0;
+	this.angleYY = 0.0;
+	this.angleZZ = 0.0;
 
-var gl = null; // WebGL context
+	// The scaling factors
+	this.sx = 0.5;
+	this.sy = 0.5;
+	this.sz = 0.5;
 
-var shaderProgram = null;
+	// NEW - GLOBAL Animation controls
+	this.globalRotationYY_ON = 1;
+	this.globalRotationYY_DIR = 1;
+	this.globalRotationYY_SPEED = 1;
 
-var triangleVertexPositionBuffer = null;
+	// rotations and animation
+	this.rotationXX_ON = 1;
+	this.rotationXX_DIR = 1;
+	this.rotationXX_SPEED = 1;
+	this.rotationYY_ON = 1;
+	this.rotationYY_DIR = 1;
+	this.rotationYY_SPEED = 1;
+	this.rotationZZ_ON = 1;
+	this.rotationZZ_DIR = 1;
+	this.rotationZZ_SPEED = 1;
 
-var triangleVertexColorBuffer = null;
+	// To allow choosing the way of drawing the model triangles
+	this.primitiveType = null;
 
-// The GLOBAL transformation parameters
+	// To allow choosing the projection type
+	this.projectionType = 0;
+	this.vertices = [];
+	this.colors = [];
 
-var globalAngleYY = 0.0;
+	// canvas
+	this.canvas = null;
 
-var globalTz = 0.0;
+	// Handling the Vertex and the Color Buffers
+	function initBuffers(){
+		// Coordinates
+		this.triangleVertexPositionBuffer = this.gl.createBuffer();
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
+		this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+		this.triangleVertexPositionBuffer.itemSize = 3;
+		this.triangleVertexPositionBuffer.numItems = this.vertices.length / 3;
 
-// The local transformation parameters
+		// Associating to the vertex shader
+		this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
+				this.triangleVertexPositionBuffer.itemSize,
+				this.gl.FLOAT, false, 0, 0);
 
-// The translation vector
+		// Colors
+		this.triangleVertexColorBuffer = this.gl.createBuffer();
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
+		this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+		this.triangleVertexColorBuffer.itemSize = 3;
+		this.triangleVertexColorBuffer.numItems = this.colors.length / 3;
 
-var tx = 0.0;
+		// Associating to the vertex shader
+		this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
+				this.triangleVertexColorBuffer.itemSize,
+				this.gl.FLOAT, false, 0, 0);
+	}
 
-var ty = 0.0;
+	//  Drawing the model
+	function drawModel(angleXX, angleYY, angleZZ,
+						sx, sy, sz,
+						tx, ty, tz,
+						mvMatrix,
+						primitiveType){
 
-var tz = 0.0;
+	  // Pay attention to transformation order !!
 
-// The rotation angles in degrees
+		mvMatrix = mult(mvMatrix, translationMatrix(tx, ty, tz));
 
-var angleXX = 0.0;
+		mvMatrix = mult(mvMatrix, rotationZZMatrix(angleZZ));
 
-var angleYY = 0.0;
+		mvMatrix = mult(mvMatrix, rotationYYMatrix(angleYY));
 
-var angleZZ = 0.0;
+		mvMatrix = mult(mvMatrix, rotationXXMatrix(angleXX));
 
-// The scaling factors
+		mvMatrix = mult(mvMatrix, scalingMatrix(sx, sy, sz));
 
-var sx = 0.5;
+		// Passing the Model View Matrix to apply the current transformation
 
-var sy = 0.5;
+		var mvUniform = this.gl.getUniformLocation(this.shaderProgram, "uMVMatrix");
 
-var sz = 0.5;
+		this.gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
 
-// NEW - GLOBAL Animation controls
+		// Drawing the contents of the vertex buffer
 
-var globalRotationYY_ON = 1;
+		// primitiveType allows drawing as filled triangles / wireframe / vertices
 
-var globalRotationYY_DIR = 1;
+		if(primitiveType == this.gl.LINE_LOOP){
 
-var globalRotationYY_SPEED = 1;
+			// To simulate wireframe drawing!
 
-// NEW - Local Animation controls
+			// No faces are defined! There are no hidden lines!
 
-var rotationXX_ON = 1;
+			// Taking the vertices 3 by 3 and drawing a LINE_LOOP
 
-var rotationXX_DIR = 1;
+			var i;
 
-var rotationXX_SPEED = 1;
+			for(i = 0; i < this.triangleVertexPositionBuffer.numItems / 3; i++){
 
-var rotationYY_ON = 1;
+				this.gl.drawArrays(primitiveType, 3 * i, 3);
+			}
+		}else{
+			this.gl.drawArrays(primitiveType, 0, this.triangleVertexPositionBuffer.numItems);
 
-var rotationYY_DIR = 1;
-
-var rotationYY_SPEED = 1;
-
-var rotationZZ_ON = 1;
-
-var rotationZZ_DIR = 1;
-
-var rotationZZ_SPEED = 1;
-
-// To allow choosing the way of drawing the model triangles
-
-var primitiveType = null;
-
-// To allow choosing the projection type
-
-var projectionType = 0;
-
-var vertices = [];
-
-var colors = [];
-
-//----------------------------------------------------------------------------
-//
-// The WebGL code
-//
-
-//----------------------------------------------------------------------------
-//
-//  Rendering
-//
-
-// Handling the Vertex and the Color Buffers
-
-function initBuffers() {
-
-	// Coordinates
-
-	triangleVertexPositionBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-	triangleVertexPositionBuffer.itemSize = 3;
-	triangleVertexPositionBuffer.numItems = vertices.length / 3;
-
-	// Associating to the vertex shader
-
-	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
-			triangleVertexPositionBuffer.itemSize,
-			gl.FLOAT, false, 0, 0);
-
-	// Colors
-
-	triangleVertexColorBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-	triangleVertexColorBuffer.itemSize = 3;
-	triangleVertexColorBuffer.numItems = colors.length / 3;
-
-	// Associating to the vertex shader
-
-	gl.vertexAttribPointer(shaderProgram.vertexColorAttribute,
-			triangleVertexColorBuffer.itemSize,
-			gl.FLOAT, false, 0, 0);
-}
-
-//----------------------------------------------------------------------------
-
-//  Drawing the model
-
-function drawModel( angleXX, angleYY, angleZZ,
-					sx, sy, sz,
-					tx, ty, tz,
-					mvMatrix,
-					primitiveType ) {
-
-    // Pay attention to transformation order !!
-
-	mvMatrix = mult( mvMatrix, translationMatrix( tx, ty, tz ) );
-
-	mvMatrix = mult( mvMatrix, rotationZZMatrix( angleZZ ) );
-
-	mvMatrix = mult( mvMatrix, rotationYYMatrix( angleYY ) );
-
-	mvMatrix = mult( mvMatrix, rotationXXMatrix( angleXX ) );
-
-	mvMatrix = mult( mvMatrix, scalingMatrix( sx, sy, sz ) );
-
-	// Passing the Model View Matrix to apply the current transformation
-
-	var mvUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
-
-	gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
-
-	// Drawing the contents of the vertex buffer
-
-	// primitiveType allows drawing as filled triangles / wireframe / vertices
-
-	if( primitiveType == gl.LINE_LOOP ) {
-
-		// To simulate wireframe drawing!
-
-		// No faces are defined! There are no hidden lines!
-
-		// Taking the vertices 3 by 3 and drawing a LINE_LOOP
-
-		var i;
-
-		for( i = 0; i < triangleVertexPositionBuffer.numItems / 3; i++ ) {
-
-			gl.drawArrays( primitiveType, 3 * i, 3 );
 		}
 	}
-	else {
 
-		gl.drawArrays(primitiveType, 0, triangleVertexPositionBuffer.numItems);
+	function drawScene(){
+		console.log(this.tx);
+		console.log(this.canvasName);
 
-	}
-}
+		//  Drawing the 3D scene
+		console.log(this.gl);
+		var pMatrix;
+		var mvMatrix = mat4();
 
-//----------------------------------------------------------------------------
+		// Clearing the frame-buffer and the depth-buffer
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-//  Drawing the 3D scene
+		// Computing the Projection Matrix
+		if(this.projectionType == 0){
+			//For now, the default orthogonal view volume
+			pMatrix = ortho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 
-function drawScene() {
+			// Global transformation!
+			this.globalTz = 0;
+		}else{
+			// A standard view volume.
+			// Viewer is at (0,0,0)
+			// Ensure that the model is "inside" the view volume
+			pMatrix = perspective(45, 1, 0.05, 15);
 
-	var pMatrix;
+			// Global transformation!
+			this.globalTz = -2.5;
+		}
 
-	var mvMatrix = mat4();
+		// Passing the Projection Matrix to apply the current projection
+		var pUniform = this.gl.getUniformLocation(shaderProgram, "uPMatrix");
 
-	// Clearing the frame-buffer and the depth-buffer
+		this.gl.uniformMatrix4fv(pUniform, false, new Float32Array(flatten(pMatrix)));
 
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
+		mvMatrix = translationMatrix(0, 0, this.globalTz);
 
-	// Computing the Projection Matrix
+		// Instantianting the current model
+		drawModel(this.angleXX, this.angleYY, this.angleZZ,
+		           this.sx, this.sy, this.sz,
+		           this.tx, this.ty, this.tz,
+		           mvMatrix,
+		           this.primitiveType);
+	};
 
-	if( projectionType == 0 ) {
-
-		// For now, the default orthogonal view volume
-
-		pMatrix = ortho( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
-
-		// Global transformation !!
-
-		globalTz = 0;
-
-		// TO BE DONE !
-
-		// Allow the user to control the size of the view volume
-	}
-	else {
-
-		// A standard view volume.
-
-		// Viewer is at (0,0,0)
-
-		// Ensure that the model is "inside" the view volume
-
-		pMatrix = perspective( 45, 1, 0.05, 15 );
-
-		// Global transformation !!
-
-		globalTz = -2.5;
-
-		// TO BE DONE !
-
-		// Allow the user to control the size of the view volume
+	//  read file from an url
+	function readFile(url){
+		return $.get(url, function(data){
+			parseFile(data);
+		});
 	}
 
-	// Passing the Projection Matrix to apply the current projection
-
-	var pUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-
-	gl.uniformMatrix4fv(pUniform, false, new Float32Array(flatten(pMatrix)));
-
-	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
-
-	mvMatrix = translationMatrix( 0, 0, globalTz );
-
-	// Instantianting the current model
-
-	drawModel( angleXX, angleYY, angleZZ,
-	           sx, sy, sz,
-	           tx, ty, tz,
-	           mvMatrix,
-	           primitiveType );
-}
-
-//----------------------------------------------------------------------------
-//
-//  NEW --- Animation
-//
-
-// Animation --- Updating transformation parameters
-
-var lastTime = 0;
-
-function animate() {
-
-	var timeNow = new Date().getTime();
-
-	if( lastTime != 0 ) {
-
-		var elapsed = timeNow - lastTime;
-
-		// Global rotation
-
-		if( globalRotationYY_ON ) {
-
-			globalAngleYY += globalRotationYY_DIR * globalRotationYY_SPEED * (90 * elapsed) / 1000.0;
-	    }
-
-		// Local rotations
-
-		if( rotationXX_ON ) {
-
-			angleXX += rotationXX_DIR * rotationXX_SPEED * (90 * elapsed) / 1000.0;
-	    }
-
-		if( rotationYY_ON ) {
-
-			angleYY += rotationYY_DIR * rotationYY_SPEED * (90 * elapsed) / 1000.0;
-	    }
-
-		if( rotationZZ_ON ) {
-
-			angleZZ += rotationZZ_DIR * rotationZZ_SPEED * (90 * elapsed) / 1000.0;
-	    }
-	}
-
-	lastTime = timeNow;
-}
-
-
-//----------------------------------------------------------------------------
-
-// Timer
-
-function tick() {
-	requestAnimFrame(tick);
-
-	drawScene();
-
-	animate();
-}
-
-//----------------------------------------------------------------------------
-//
-//  User Interaction
-//
-
-
-function readFile(url, tag){
-	return $.get(url, function(data){
+	function parseFile(data){
 		// Entire file read as a string
-
 		// The tokens/values in the file
-
 		// Separation between values is 1 or mode whitespaces
-
 		var tokens = data.split(/\s\s*/);
 
 		// Array of values; each value is a string
-
-		var numVertices = parseInt( tokens[0] );
+		var numVertices = parseInt(tokens[0]);
 
 		// For every vertex we have 6 floating point values
-
 		var i, j;
-
 		var aux = 1;
-
 		var newVertices = [];
-
 		var newColors = []
 
-		for( i = 0; i < numVertices; i++ ) {
-
-			for( j = 0; j < 3; j++ ) {
-
-				newVertices[ 3 * i + j ] = parseFloat( tokens[ aux++ ] );
+		for(i = 0; i < numVertices; i++){
+			for(j = 0; j < 3; j++){
+				newVertices[3 * i + j] = parseFloat(tokens[ aux++ ]);
 			}
 
-			for( j = 0; j < 3; j++ ) {
+			for(j = 0; j < 3; j++){
 
-				newColors[ 3 * i + j ] = parseFloat( tokens[ aux++ ] );
+				newColors[3 * i + j] = parseFloat(tokens[ aux++ ]);
 			}
 		}
 
 		// Assigning to the current model
+		this.vertices = newVertices.slice();
+		this.colors = newColors.slice();
 
-		moduleInstances[tag] = new Array();
-		moduleInstances[tag]["vertices"] = newVertices.slice();
-		moduleInstances[tag]["colors"] = newColors.slice();
 		// Rendering the model just read
 
 		// RESET the transformations - NEED AUXILIARY FUNCTION !!
 
-		tx = ty = tz = 0.0;
+		this.tx = this.ty = this.tz = 0.0;
 
-		angleXX = angleYY = angleZZ = 0.0;
+		this.angleXX = this.angleYY = this.angleZZ = 0.0;
 
-		sx = sy = sz = 0.5;
-	});
-}
-
-//----------------------------------------------------------------------------
-//
-// WebGL Initialization
-//
-
-function initWebGL( canvas ) {
-	try {
-
-		// Create the WebGL context
-
-		// Some browsers still need "experimental-webgl"
-
-		gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-
-		// DEFAULT: The viewport occupies the whole canvas
-
-		// DEFAULT: The viewport background color is WHITE
-
-		// NEW - Drawing the triangles defining the model
-
-		primitiveType = gl.TRIANGLES;
-
-		// DEFAULT: Face culling is DISABLED
-
-		// Enable FACE CULLING
-
-		gl.enable( gl.CULL_FACE );
-
-		// DEFAULT: The BACK FACE is culled!!
-
-		// The next instruction is not needed...
-
-		gl.cullFace( gl.BACK );
-
-	} catch (e) {
+		this.sx = this.sy = this.sz = 0.5;
 	}
-	if (!gl) {
-		alert("Could not initialise WebGL, sorry! :-(");
+
+	// WebGL Initialization
+	function initWebGL(canvas){
+		try{
+			// Create the WebGL context
+			// Some browsers still need "experimental-webgl"
+			this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+
+			// DEFAULT: The viewport occupies the whole canvas
+			// DEFAULT: The viewport background color is WHITE
+			// NEW - Drawing the triangles defining the model
+
+			this.primitiveType = this.gl.TRIANGLES;
+
+			// DEFAULT: Face culling is DISABLED
+			// Enable FACE CULLING
+			this.gl.enable(this.gl.CULL_FACE);
+
+			// DEFAULT: The BACK FACE is culled!!
+			// The next instruction is not needed...
+			this.gl.cullFace(this.gl.BACK);
+
+		} catch (e){
+		}
+
+		if (!this.gl){
+			alert("Could not initialise WebGL, sorry! :-(");
+		}
 	}
+
+	function constructor(r, c){
+			this.canvasName = c;
+			this.url = r;
+			readFile(r, c).then(function(){setupWebGL(c);});
+	}
+
+	function setupWebGL(c){
+			$("#whereGoesCanvas").append('<canvas id="' + c + '" style="z-index: ' + z_index + '" width="600" height="600"></canvas>');
+			this.canvas = document.getElementById(c);
+			initWebGL(this.canvas);
+			shaderProgram = initShaders(this.gl);
+			setEventListeners();
+			initBuffers();
+			drawScene();
+	}
+
+	constructor(url_param, cname_param);
 }
 
-//----------------------------------------------------------------------------
+var cubo_1 = null;
+var cubo_2 = null;
 
-function runWebGL() {
-	readFile("modelos/puzzle_cubo/cubo_1.txt", "cubo1").then(function(){setupWebGL("cubo1");});
-	readFile("modelos/puzzle_cubo/cubo_2.txt", "cubo2").then(function(){setupWebGL("cubo2");});
-}
-
-var z_index = 1;
-
-var moduleInstances = new Array();
-
-function setupWebGL(newCanvas){
-	$("#whereGoesCanvas").append('<canvas id="' + newCanvas + '" style="z-index: ' + z_index + '" width="600" height="600"></canvas>');
-	setCanvasValues(newCanvas);
-	drawCanvas(newCanvas);
-}
-
-function setCanvasValues(canvasName){
-	vertices = moduleInstances[newCanvas]["vertices"].slice();
-	colors = moduleInstances[newCanvas]["colors"].slice();
-}
-
-function drawCanvas(newCanvas){
-	var canvas = document.getElementById(newCanvas);
-	initWebGL(canvas);
-	shaderProgram = initShaders(gl);
-	setEventListeners();
-	initBuffers();
-	drawScene();
+function runWebGL(){
+	cubo_1 = new CanvasWebGl("modelos/puzzle_cubo/cubo_1.txt", "cubo_1");
+	cubo_2 = new CanvasWebGl("modelos/puzzle_cubo/cubo_2.txt", "cubo_2");
 }
