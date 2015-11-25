@@ -312,7 +312,6 @@ function animate() {
 // Timer
 
 function tick() {
-
 	requestAnimFrame(tick);
 
 	drawScene();
@@ -325,301 +324,8 @@ function tick() {
 //  User Interaction
 //
 
-function outputInfos(){
 
-}
-
-//----------------------------------------------------------------------------
-
-function setEventListeners(){
-
-    // NEW --- Mesh subdivision buttons
-
-    document.getElementById("mid-rec-depth-1-button").onclick = function(){
-
-        midPointRefinement( vertices, colors, 1 );
-
-        initBuffers();
-
-	};
-
-    document.getElementById("mid-rec-depth-2-button").onclick = function(){
-
-        midPointRefinement( vertices, colors, 2 );
-
-        initBuffers();
-
-	};
-
-    document.getElementById("mid-rec-depth-3-button").onclick = function(){
-
-        midPointRefinement( vertices, colors, 3 );
-
-        initBuffers();
-
-	};
-
-    document.getElementById("cent-rec-depth-1-button").onclick = function(){
-
-        centroidRefinement( vertices, colors, 1 );
-
-        initBuffers();
-
-	};
-
-    document.getElementById("cent-rec-depth-2-button").onclick = function(){
-
-        centroidRefinement( vertices, colors, 2 );
-
-        initBuffers();
-
-	};
-
-    document.getElementById("cent-rec-depth-3-button").onclick = function(){
-
-        centroidRefinement( vertices, colors, 3 );
-
-        initBuffers();
-
-	};
-
-    // NEW --- Sphere approximation button
-
-    document.getElementById("sphere-surf-button").onclick = function(){
-
-        moveToSphericalSurface( vertices );
-
-        initBuffers();
-
-	};
-
-  // Dropdown list
-
-	var projection = document.getElementById("projection-selection");
-
-	projection.addEventListener("click", function(){
-
-		// Getting the selection
-
-		var p = projection.selectedIndex;
-
-		switch(p){
-
-			case 0 : projectionType = 0;
-				break;
-
-			case 1 : projectionType = 1;
-				break;
-		}
-	});
-
-	// Dropdown list
-
-	var list = document.getElementById("rendering-mode-selection");
-
-	list.addEventListener("click", function(){
-
-		// Getting the selection
-
-		var mode = list.selectedIndex;
-
-		switch(mode){
-
-			case 0 : primitiveType = gl.TRIANGLES;
-				break;
-
-			case 1 : primitiveType = gl.LINE_LOOP;
-				break;
-
-			case 2 : primitiveType = gl.POINTS;
-				break;
-		}
-	});
-
-	// Button events
-
-	document.getElementById("XX-on-off-button").onclick = function(){
-
-		// Switching on / off
-
-		if( rotationXX_ON ) {
-
-			rotationXX_ON = 0;
-		}
-		else {
-
-			rotationXX_ON = 1;
-		}
-	};
-
-	document.getElementById("XX-direction-button").onclick = function(){
-
-		// Switching the direction
-
-		if( rotationXX_DIR == 1 ) {
-
-			rotationXX_DIR = -1;
-		}
-		else {
-
-			rotationXX_DIR = 1;
-		}
-	};
-
-	document.getElementById("XX-slower-button").onclick = function(){
-
-		rotationXX_SPEED *= 0.75;
-	};
-
-	document.getElementById("XX-faster-button").onclick = function(){
-
-		rotationXX_SPEED *= 1.25;
-	};
-
-	document.getElementById("YY-on-off-button").onclick = function(){
-
-		// Switching on / off
-
-		if( rotationYY_ON ) {
-
-			rotationYY_ON = 0;
-		}
-		else {
-
-			rotationYY_ON = 1;
-		}
-	};
-
-	document.getElementById("YY-direction-button").onclick = function(){
-
-		// Switching the direction
-
-		if( rotationYY_DIR == 1 ) {
-
-			rotationYY_DIR = -1;
-		}
-		else {
-
-			rotationYY_DIR = 1;
-		}
-	};
-
-	document.getElementById("YY-slower-button").onclick = function(){
-
-		rotationYY_SPEED *= 0.75;
-	};
-
-	document.getElementById("YY-faster-button").onclick = function(){
-
-		rotationYY_SPEED *= 1.25;
-	};
-
-	document.getElementById("ZZ-on-off-button").onclick = function(){
-
-		// Switching on / off
-
-		if( rotationZZ_ON ) {
-
-			rotationZZ_ON = 0;
-		}
-		else {
-
-			rotationZZ_ON = 1;
-		}
-	};
-
-	document.getElementById("ZZ-direction-button").onclick = function(){
-
-		// Switching the direction
-
-		if( rotationZZ_DIR == 1 ) {
-
-			rotationZZ_DIR = -1;
-		}
-		else {
-
-			rotationZZ_DIR = 1;
-		}
-	};
-
-	document.getElementById("ZZ-slower-button").onclick = function(){
-
-		rotationZZ_SPEED *= 0.75;
-	};
-
-	document.getElementById("ZZ-faster-button").onclick = function(){
-
-		rotationZZ_SPEED *= 1.25;
-	};
-
-	document.getElementById("reset-button").onclick = function(){
-
-		// The initial values
-
-		tx = 0.0;
-
-		ty = 0.0;
-
-		tz = 0.0;
-
-		angleXX = 0.0;
-
-		angleYY = 0.0;
-
-		angleZZ = 0.0;
-
-		sx = 0.5;
-
-		sy = 0.5;
-
-		sz = 0.5;
-
-		rotationXX_ON = 0;
-
-		rotationXX_DIR = 1;
-
-		rotationXX_SPEED = 1;
-
-		rotationYY_ON = 0;
-
-		rotationYY_DIR = 1;
-
-		rotationYY_SPEED = 1;
-
-		rotationZZ_ON = 0;
-
-		rotationZZ_DIR = 1;
-
-		rotationZZ_SPEED = 1;
-	};
-
-	document.getElementById("face-culling-button").onclick = function(){
-
-		if( gl.isEnabled( gl.CULL_FACE ) )
-		{
-			gl.disable( gl.CULL_FACE );
-		}
-		else
-		{
-			gl.enable( gl.CULL_FACE );
-		}
-	};
-
-	document.getElementById("depth-test-button").onclick = function(){
-
-		if( gl.isEnabled( gl.DEPTH_TEST ) )
-		{
-			gl.disable( gl.DEPTH_TEST );
-		}
-		else
-		{
-			gl.enable( gl.DEPTH_TEST );
-		}
-	};
-}
-
-
-function readFile(url){
+function readFile(url, tag){
 	return $.get(url, function(data){
 		// Entire file read as a string
 
@@ -658,10 +364,9 @@ function readFile(url){
 
 		// Assigning to the current model
 
-		vertices = newVertices.slice();
-
-		colors = newColors.slice();
-
+		moduleInstances[tag] = new Array();
+		moduleInstances[tag]["vertices"] = newVertices.slice();
+		moduleInstances[tag]["colors"] = newColors.slice();
 		// Rendering the model just read
 
 		// RESET the transformations - NEED AUXILIARY FUNCTION !!
@@ -718,21 +423,30 @@ function initWebGL( canvas ) {
 //----------------------------------------------------------------------------
 
 function runWebGL() {
-	readFile("modelos/tetraedro.txt").then(setupWebGL);
+	readFile("modelos/puzzle_cubo/cubo_1.txt", "cubo1").then(function(){setupWebGL("cubo1");});
+	readFile("modelos/puzzle_cubo/cubo_2.txt", "cubo2").then(function(){setupWebGL("cubo2");});
 }
 
-function setupWebGL(){
-	var canvas = document.getElementById("my-canvas");
+var z_index = 1;
 
-	initWebGL( canvas );
+var moduleInstances = new Array();
 
-	shaderProgram = initShaders( gl );
+function setupWebGL(newCanvas){
+	$("#whereGoesCanvas").append('<canvas id="' + newCanvas + '" style="z-index: ' + z_index + '" width="600" height="600"></canvas>');
+	setCanvasValues(newCanvas);
+	drawCanvas(newCanvas);
+}
 
+function setCanvasValues(canvasName){
+	vertices = moduleInstances[newCanvas]["vertices"].slice();
+	colors = moduleInstances[newCanvas]["colors"].slice();
+}
+
+function drawCanvas(newCanvas){
+	var canvas = document.getElementById(newCanvas);
+	initWebGL(canvas);
+	shaderProgram = initShaders(gl);
 	setEventListeners();
-
 	initBuffers();
-
-	tick();		// NEW --- A timer controls the rendering / animation
-
-	outputInfos();
+	drawScene();
 }

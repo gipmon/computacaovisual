@@ -5,6 +5,7 @@
 <head>
 
 <title>WebGL example 21 &mdash; Mesh Refinement</title>
+<link rel="stylesheet" type="text/css" href="css/canvas.css">
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
@@ -15,104 +16,12 @@
 	<div style="text-align: center">
 
 		<p>Model animation using rotations</p>
+		<button id="cuboBtn1">Cubo Left 1</button>
+		<button id="cuboBtn2">Cubo Right 2</button>
 
-		<canvas id="my-canvas" style="border:1px solid #000000;" width="800" height="800"></canvas>
-
-		<p>XX rotation:
-
-		<button id="XX-on-off-button">On / Off</button>
-
-	    <button id="XX-direction-button">Change Direction</button>
-
-	    <button id="XX-slower-button">Slower</button>
-
-	    <button id="XX-faster-button">Faster</button>
-
-		</p>
-
-		<p>YY rotation:
-
-		<button id="YY-on-off-button">On / Off</button>
-
-	    <button id="YY-direction-button">Change Direction</button>
-
-	    <button id="YY-slower-button">Slower</button>
-
-	    <button id="YY-faster-button">Faster</button>
-
-		</p>
-
-		<p>ZZ rotation:
-
-		<button id="ZZ-on-off-button">On / Off</button>
-
-	    <button id="ZZ-direction-button">Change Direction</button>
-
-	    <button id="ZZ-slower-button">Slower</button>
-
-	    <button id="ZZ-faster-button">Faster</button>
-
-		</p>
-
-		<p>Choose the <b>projection type</b>:
-
-        <select id="projection-selection">
-			<option value="0">Orthogonal Projection</option>
-			<option value="1">Perspective Projection</option>
-        </select>
-
-        </p>
-
-        <p>Choose the <b>rendering mode</b>:
-
-        <select id="rendering-mode-selection">
-			<option value="0">Filled Triangles</option>
-			<option value="1">Wireframe</option>
-			<option value="2">Vertices</option>
-        </select>
-
-        <p>Mesh refinement, using <b>edge midpoints</b> --- Choose the <b>recursion depth</b>:
-
-        <button id="mid-rec-depth-1-button">1</button>
-
-        <button id="mid-rec-depth-2-button">2</button>
-
-        <button id="mid-rec-depth-3-button">3</button>
-
-        </p>
-
-        <p>Mesh refinement, using <b>triangle centroids</b> --- Choose the <b>recursion depth</b>:
-
-        <button id="cent-rec-depth-1-button">1</button>
-
-        <button id="cent-rec-depth-2-button">2</button>
-
-        <button id="cent-rec-depth-3-button">3</button>
-
-        </p>
-
-        <p>Move vertices to ths <b>spherical surface, of radius 1</b>:
-
-        <button id="sphere-surf-button">Do it!</button>
-
-        </p>
-
-        <p>Read a 3D model from a text file:
-
-		<input type="file" id="file" name="file">
-
-		</p>
-
-        <p>
-
-		<button id="reset-button">Reset</button>
-
-		<button id="face-culling-button">Back-Face-Culling ON/OFF</button>
-
-		<button id="depth-test-button">Depth-Test ON/OFF</button>
-
-		</p>
-
+		<div id="whereGoesCanvas">
+			<canvas id="backgroud" style="border:1px solid #000000; z-index: -1" width="600" height="600"></canvas>
+		</div>
 	</div>
 
 	<!-- JAVASCRIPT AND WEBGL GOES HERE -->
@@ -168,7 +77,6 @@
 			gl_FragColor = vertexColor;
 		}
 	</script>
-
 	<!-- The JS files -->
 	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 
@@ -183,6 +91,8 @@
 	<!-- Processing triangle mesh models -->
 
 	<script type="text/javascript" src="js/models.js"></script>
+
+	<script type="text/javascript" src="js/listeners.js"></script>
 
 	<!-- WebGL code -->
 
