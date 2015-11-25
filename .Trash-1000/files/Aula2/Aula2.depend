@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1354539502 source:/vagrant/AulasPraticas/Rodrigo/OpenCV/Guiao11/OpenCV_Guiao_02/OpenCV_ex_06.cpp
+	<iostream>
+	"opencv2/core/core.hpp"
+	"opencv2/highgui/highgui.hpp"
+
+1448131494 source:/vagrant/AulasPraticas/Rodrigo/OpenCV/Guiao11/OpenCV_Guiao_02/OpenCV_ex_08.cpp
+	<iostream>
+	"opencv2/core/core.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	"opencv2/highgui/highgui.hpp"
+
