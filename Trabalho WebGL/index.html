@@ -128,7 +128,6 @@
 	-->
 
 	<script id="shader-vs" type="x-shader/x-vertex">
-
 	    attribute vec3 aVertexPosition;
 
 	    attribute vec3 aVertexColor;
@@ -158,7 +157,6 @@
 	</script>
 
 	<script id="shader-fs" type="x-shader/x-fragment">
-
 		precision mediump float;
 
 		varying vec4 vertexColor;
@@ -169,28 +167,28 @@
 
 			gl_FragColor = vertexColor;
 		}
-
 	</script>
 
 	<!-- The JS files -->
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 
 	<!-- Some useful functions for browser compatibility -->
 
-	<script type="text/javascript" src="webgl-utils.js"></script>
+	<script type="text/javascript" src="js/webgl-utils.js"></script>
 
 	<!-- Handling vectors and matrices -->
 
-	<script type="text/javascript" src="maths.js"></script>
+	<script type="text/javascript" src="js/maths.js"></script>
 
 	<!-- Processing triangle mesh models -->
 
-	<script type="text/javascript" src="models.js"></script>
+	<script type="text/javascript" src="js/models.js"></script>
 
 	<!-- WebGL code -->
 
-	<script type="text/javascript" src="initShaders.js"></script>
+	<script type="text/javascript" src="js/initShaders.js"></script>
 
-	<script type="text/javascript" src="webgl.js"></script>
+	<script type="text/javascript" src="js/webgl.js"></script>
 	<!-- end -->
 
 </body>
