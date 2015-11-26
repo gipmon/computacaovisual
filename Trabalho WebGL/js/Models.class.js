@@ -9,13 +9,13 @@ function Models(gl, vertices, colors){
 	this.tz = 0.0;
 
 	// The rotation angles in degrees
-	this.angleXX = 45.0;
+	this.angleXX = 0.0;
 	this.angleYY = 0.0;
 	this.angleZZ = 0.0;
 
 	this.triangleVertexPositionBuffer = null;
 	this.triangleVertexColorBuffer = null;
-  
+
 	this.triangleVertexPositionBuffer = this.gl.createBuffer();
 	this.triangleVertexColorBuffer = this.gl.createBuffer();
 }

@@ -1,6 +1,4 @@
 // © RR Team
-// z_index of webgl modules
-var z_index = 1;
 
 // defination of the canvas webgl class
 function CanvasWebGl(url_param_list){

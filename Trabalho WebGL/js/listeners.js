@@ -9,21 +9,26 @@ function setEventListeners(){
     selectedCube = "cubo_1";
   });
 
+  var angle = 45;
+
   $("#xM45").click(function(){
-    webgl.models[selectedCube].angleXX += radians(45);
+    webgl.models[selectedCube].angleXX += angle;
     webgl.drawScene();
   });
 
   $("#xm45").click(function(){
-
+    webgl.models[selectedCube].angleXX -= angle;
+    webgl.drawScene();
   });
 
   $("#yM45").click(function(){
-
+    webgl.models[selectedCube].angleYY += angle;
+    webgl.drawScene();
   });
 
   $("#ym45").click(function(){
-
+    webgl.models[selectedCube].angleYY -= angle;
+    webgl.drawScene();
   });
 
   // keydown events
@@ -39,27 +44,27 @@ function setEventListeners(){
     if (e.keyCode in map) {
         map[e.keyCode] = true;
         if (map[90] && map[38]) {
-          webgl.getModel(selectedCube).tz += 0.01;
+          webgl.models[selectedCube].tz += 0.01;
           webgl.drawScene();
           return false;
         }else if (map[90] && map[40]) {
-          webgl.getModel(selectedCube).tz -= 0.01;
+          webgl.models[selectedCube].tz -= 0.01;
           webgl.drawScene();
           return false;
         }else if (map[37]){ // left
-          webgl.getModel(selectedCube).tx -= 0.01;
+          webgl.models[selectedCube].tx -= 0.01;
           webgl.drawScene();
           return false;
         }else if (map[38]) { // up
-          webgl.getModel(selectedCube).ty += 0.01;
+          webgl.models[selectedCube].ty += 0.01;
           webgl.drawScene();
           return false;
         }else if (map[39]) { // right
-          webgl.getModel(selectedCube).tx += 0.01;
+          webgl.models[selectedCube].tx += 0.01;
           webgl.drawScene();
           return false;
         }else if (map[40]) { // down
-          webgl.getModel(selectedCube).ty -= 0.01;
+          webgl.models[selectedCube].ty -= 0.01;
           webgl.drawScene();
           return false;
         }
