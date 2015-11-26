@@ -15,15 +15,14 @@ function Models(gl, vertices, colors){
 
 	this.triangleVertexPositionBuffer = null;
 	this.triangleVertexColorBuffer = null;
-
-  this.shaderProgram = initShaders(this.gl);
-  this.initBuffers();
+  
+	this.triangleVertexPositionBuffer = this.gl.createBuffer();
+	this.triangleVertexColorBuffer = this.gl.createBuffer();
 }
 
 // Handling the Vertex and the Color Buffers
 Models.prototype.initBuffers = function(){
 	// Coordinates
-	this.triangleVertexPositionBuffer = this.gl.createBuffer();
 	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
 	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
 	this.triangleVertexPositionBuffer.itemSize = 3;
@@ -35,7 +34,6 @@ Models.prototype.initBuffers = function(){
                         			this.gl.FLOAT, false, 0, 0);
 
 	// Colors
-	this.triangleVertexColorBuffer = this.gl.createBuffer();
 	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
 	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
 	this.triangleVertexColorBuffer.itemSize = 3;
@@ -81,6 +79,8 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 };
 
 Models.prototype.drawScene = function(sx, sy, sz){
+  this.shaderProgram = initShaders(this.gl);
+  this.initBuffers();
 	//  Drawing the 3D scene
 	var pMatrix;
 	var mvMatrix = mat4();
@@ -94,7 +94,6 @@ Models.prototype.drawScene = function(sx, sy, sz){
 	globalTz = -2.5;
 
 	// Passing the Projection Matrix to apply the current projection
-  console.log(this.shaderProgram);
 	var pUniform = this.gl.getUniformLocation(this.shaderProgram, "uPMatrix");
 
 	this.gl.uniformMatrix4fv(pUniform, false, new Float32Array(flatten(pMatrix)));

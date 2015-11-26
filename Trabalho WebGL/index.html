@@ -3,7 +3,7 @@
 <html>
 
 <head>
-
+<meta charset="UTF-8" />
 <title>Puzzle by RRTeam</title>
 <link rel="stylesheet" type="text/css" href="css/canvas.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -16,11 +16,12 @@
 <body onload="runWebGL();">
 
 	<div style="text-align: center">
-
-		<p>Model animation using rotations</p>
-		<button id="cuboBtn2" class="btn btn-default">Cubo Left</button>
-		<button id="cuboBtn1" class="btn btn-default">Cubo Right</button>
-
+		<button id="cuboBtn" class="btn btn-default">Cubo</button>
+		<button id="trianguloBtn" class="btn btn-default">Triangulo</button>
+		<button id="xM45" class="btn btn-default">X +45º</button>
+		<button id="xm45" class="btn btn-default">X -45º</button>
+		<button id="yM45" class="btn btn-default">Y +45º</button>
+		<button id="ym45" class="btn btn-default">Y -45º</button>
 
 		<div>
 			<canvas id="webgl-id" style="z-index: 0" width="600" height="600"></canvas>

@@ -1,13 +1,32 @@
 function setEventListeners(){
-  var selectedCube = "cubo_1";
+  var selectedCube = "triangulo";
 
-  $("#cuboBtn1").click(function(){
+  $("#trianguloBtn").click(function(){
+    selectedCube = "triangulo";
+  });
+
+  $("#cuboBtn").click(function(){
     selectedCube = "cubo_1";
   });
 
-  $("#cuboBtn2").click(function(){
-    selectedCube = "cubo_2";
+  $("#xM45").click(function(){
+    webgl.models[selectedCube].angleXX += radians(45);
+    webgl.drawScene();
   });
+
+  $("#xm45").click(function(){
+
+  });
+
+  $("#yM45").click(function(){
+
+  });
+
+  $("#ym45").click(function(){
+
+  });
+
+  // keydown events
 
   var map = {37: false, // left key
              38: false, // up key
@@ -17,34 +36,34 @@ function setEventListeners(){
             };
 
   $(document).keydown(function(e) {
-      if (e.keyCode in map) {
-          map[e.keyCode] = true;
-          if (map[90] && map[38]) {
-            eval(selectedCube).tz += 0.01;
-            eval(selectedCube).drawScene();
-            return false;
-          }else if (map[90] && map[40]) {
-            eval(selectedCube).tz -= 0.01;
-            eval(selectedCube).drawScene();
-            return false;
-          }else if (map[37]){ // left
-            eval(selectedCube).tx -= 0.01;
-            eval(selectedCube).drawScene();
-            return false;
-          }else if (map[38]) { // up
-            eval(selectedCube).ty += 0.01;
-            eval(selectedCube).drawScene();
-            return false;
-          }else if (map[39]) { // right
-            eval(selectedCube).tx += 0.01;
-            eval(selectedCube).drawScene();
-            return false;
-          }else if (map[40]) { // down
-            eval(selectedCube).ty -= 0.01;
-            eval(selectedCube).drawScene();
-            return false;
-          }
-      }
+    if (e.keyCode in map) {
+        map[e.keyCode] = true;
+        if (map[90] && map[38]) {
+          webgl.getModel(selectedCube).tz += 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[90] && map[40]) {
+          webgl.getModel(selectedCube).tz -= 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[37]){ // left
+          webgl.getModel(selectedCube).tx -= 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[38]) { // up
+          webgl.getModel(selectedCube).ty += 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[39]) { // right
+          webgl.getModel(selectedCube).tx += 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[40]) { // down
+          webgl.getModel(selectedCube).ty -= 0.01;
+          webgl.drawScene();
+          return false;
+        }
+    }
   }).keyup(function(e) {
       if (e.keyCode in map) {
           map[e.keyCode] = false;
