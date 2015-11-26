@@ -1,14 +1,14 @@
 function setEventListeners(){
-
   $("#cuboBtn1").click(function(){
-
-    drawScene();
+    cubo_1.tx += 0.01;
+  	cubo_1.drawScene();
   });
 
   $("#cuboBtn2").click(function(){
-    
-    drawScene();
+    cubo_2.tx -= 0.01;
+  	cubo_2.drawScene();
   });
+
   //
   //   // NEW --- Mesh subdivision buttons
   //
