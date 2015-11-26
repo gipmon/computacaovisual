@@ -13,6 +13,40 @@ function CanvasWebGl(url_param, cname_param){
 	this.triangleVertexPositionBuffer = null;
 	this.triangleVertexColorBuffer = null;
 
+	// To allow choosing the way of drawing the model triangles
+	this.primitiveType = null;
+
+	// To allow choosing the projection type
+	this.projectionType = 1;
+	this.vertices = [];
+	this.colors = [];
+
+	// canvas
+	$("#whereGoesCanvas").append('<canvas id="' + this.canvasName + '" style="z-index: ' + z_index + '" width="600" height="600"></canvas>');
+	this.canvas = document.getElementById(this.canvasName);
+
+	var result = null;
+	var url = this.url;
+
+	$.ajax({
+	  url: url,
+	  type: 'get',
+	  dataType: 'text',
+	  async: false,
+	  success: function(data) {
+	      result = data;
+	  }
+	});
+
+	this.resetValues();
+	this.parseFile(result);
+	this.initWebGL();
+	this.initShaderProgram();
+	this.initBuffers();
+	this.drawScene();
+}
+
+CanvasWebGl.prototype.resetValues = function() {
 	// The GLOBAL transformation parameters
 	this.globalAngleYY = 0.0;
 	this.globalTz = 0.0;
@@ -23,7 +57,7 @@ function CanvasWebGl(url_param, cname_param){
 	this.tz = 0.0;
 
 	// The rotation angles in degrees
-	this.angleXX = 0.0;
+	this.angleXX = 45.0;
 	this.angleYY = 0.0;
 	this.angleZZ = 0.0;
 
@@ -47,36 +81,6 @@ function CanvasWebGl(url_param, cname_param){
 	this.rotationZZ_ON = 1;
 	this.rotationZZ_DIR = 1;
 	this.rotationZZ_SPEED = 1;
-
-	// To allow choosing the way of drawing the model triangles
-	this.primitiveType = null;
-
-	// To allow choosing the projection type
-	this.projectionType = 0;
-	this.vertices = [];
-	this.colors = [];
-
-	// canvas
-	$("#whereGoesCanvas").append('<canvas id="' + this.canvasName + '" style="z-index: ' + z_index + '" width="600" height="600"></canvas>');
-	this.canvas = document.getElementById(this.canvasName);
-
-	var result = null;
-	var url = this.url;
-	$.ajax({
-	  url: url,
-	  type: 'get',
-	  dataType: 'text',
-	  async: false,
-	  success: function(data) {
-	      result = data;
-	  }
-	});
-
-	this.parseFile(result);
-	this.initWebGL();
-	this.initShaderProgram();
-	this.initBuffers();
-	this.drawScene();
 }
 
 // Handling the Vertex and the Color Buffers
@@ -146,7 +150,6 @@ CanvasWebGl.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 };
 
 CanvasWebGl.prototype.drawScene = function(){
-
 	//  Drawing the 3D scene
 	var pMatrix;
 	var mvMatrix = mat4();
@@ -180,6 +183,7 @@ CanvasWebGl.prototype.drawScene = function(){
 	mvMatrix = translationMatrix(0, 0, this.globalTz);
 
 	// Instantianting the current model
+	console.log(this);
 	this.drawModel(this.angleXX, this.angleYY, this.angleZZ,
 	          this.sx, this.sy, this.sz,
 	          this.tx, this.ty, this.tz,
@@ -217,9 +221,7 @@ CanvasWebGl.prototype.parseFile =  function(data){
 	this.colors = newColors.slice();
 
 	// RESET the transformations - NEED AUXILIARY FUNCTION !!
-	this.tx = this.ty = this.tz = 0.0;
-	this.angleXX = this.angleYY = this.angleZZ = 0.0;
-	this.sx = this.sy = this.sz = 0.5;
+	this.resetValues();
 };
 
 // WebGL Initialization

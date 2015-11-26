@@ -1,12 +1,32 @@
 function setEventListeners(){
+  var selectedCube = "cubo_1";
+
   $("#cuboBtn1").click(function(){
-    cubo_1.tx += 0.01;
-  	cubo_1.drawScene();
+    selectedCube = "cubo_1";
   });
 
   $("#cuboBtn2").click(function(){
-    cubo_2.tx -= 0.01;
-  	cubo_2.drawScene();
+    selectedCube = "cubo_2";
+  });
+
+  $(document).keydown(function(e){
+    if (e.keyCode == 37){ // left
+      eval(selectedCube).tx -= 0.01;
+      eval(selectedCube).drawScene();
+      return false;
+    }else if (e.keyCode == 38) { // up
+      eval(selectedCube).ty += 0.01;
+      eval(selectedCube).drawScene();
+      return false;
+    }else if (e.keyCode == 39) { // right
+      eval(selectedCube).tx += 0.01;
+      eval(selectedCube).drawScene();
+      return false;
+    }else if (e.keyCode == 40) { // down
+      eval(selectedCube).ty -= 0.01;
+      eval(selectedCube).drawScene();
+      return false;
+    }
   });
 
   //
