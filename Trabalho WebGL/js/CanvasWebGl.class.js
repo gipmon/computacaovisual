@@ -22,7 +22,7 @@ function CanvasWebGl(url_param, cname_param){
 	this.colors = [];
 
 	// canvas
-	$("#whereGoesCanvas").append('<canvas id="' + this.canvasName + '" style="z-index: ' + z_index + '" width="600" height="600"></canvas>');
+	$("#whereGoesCanvas").append('<canvas id="' + this.canvasName + '" style="z-index: 0" width="600" height="600"></canvas>');
 	this.canvas = document.getElementById(this.canvasName);
 
 	var result = null;
@@ -108,6 +108,9 @@ CanvasWebGl.prototype.initBuffers = function() {
 	this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
 			this.triangleVertexColorBuffer.itemSize,
 			this.gl.FLOAT, false, 0, 0);
+
+	// enable depth test
+	this.gl.enable( this.gl.DEPTH_TEST );
 };
 
 
@@ -183,12 +186,11 @@ CanvasWebGl.prototype.drawScene = function(){
 	mvMatrix = translationMatrix(0, 0, this.globalTz);
 
 	// Instantianting the current model
-	console.log(this);
 	this.drawModel(this.angleXX, this.angleYY, this.angleZZ,
-	          this.sx, this.sy, this.sz,
-	          this.tx, this.ty, this.tz,
-	          mvMatrix,
-	          this.primitiveType);
+			           this.sx, this.sy, this.sz,
+			           this.tx, this.ty, this.tz,
+			           mvMatrix,
+			           this.primitiveType);
 };
 
 CanvasWebGl.prototype.parseFile =  function(data){

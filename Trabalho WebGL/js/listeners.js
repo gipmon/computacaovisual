@@ -9,24 +9,46 @@ function setEventListeners(){
     selectedCube = "cubo_2";
   });
 
-  $(document).keydown(function(e){
-    if (e.keyCode == 37){ // left
-      eval(selectedCube).tx -= 0.01;
-      eval(selectedCube).drawScene();
-      return false;
-    }else if (e.keyCode == 38) { // up
-      eval(selectedCube).ty += 0.01;
-      eval(selectedCube).drawScene();
-      return false;
-    }else if (e.keyCode == 39) { // right
-      eval(selectedCube).tx += 0.01;
-      eval(selectedCube).drawScene();
-      return false;
-    }else if (e.keyCode == 40) { // down
-      eval(selectedCube).ty -= 0.01;
-      eval(selectedCube).drawScene();
-      return false;
-    }
+  var map = {37: false, // left key
+             38: false, // up key
+             39: false, // right key
+             40: false, // down key
+             90: false, // z key
+            };
+
+  $(document).keydown(function(e) {
+      if (e.keyCode in map) {
+          map[e.keyCode] = true;
+          if (map[90] && map[38]) {
+            eval(selectedCube).tz += 0.01;
+            eval(selectedCube).drawScene();
+            return false;
+          }else if (map[90] && map[40]) {
+            eval(selectedCube).tz -= 0.01;
+            eval(selectedCube).drawScene();
+            return false;
+          }else if (map[37]){ // left
+            eval(selectedCube).tx -= 0.01;
+            eval(selectedCube).drawScene();
+            return false;
+          }else if (map[38]) { // up
+            eval(selectedCube).ty += 0.01;
+            eval(selectedCube).drawScene();
+            return false;
+          }else if (map[39]) { // right
+            eval(selectedCube).tx += 0.01;
+            eval(selectedCube).drawScene();
+            return false;
+          }else if (map[40]) { // down
+            eval(selectedCube).ty -= 0.01;
+            eval(selectedCube).drawScene();
+            return false;
+          }
+      }
+  }).keyup(function(e) {
+      if (e.keyCode in map) {
+          map[e.keyCode] = false;
+      }
   });
 
   //
