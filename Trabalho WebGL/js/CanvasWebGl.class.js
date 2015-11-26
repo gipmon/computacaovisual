@@ -7,13 +7,6 @@ function CanvasWebGl(url_param_list){
 	this.urls = url_param_list;
 
 	this.gl = null; // WebGL context
-	this.shaderProgram = null;
-
-	// To allow choosing the way of drawing the model triangles
-	this.primitiveType = null;
-
-	// To allow choosing the projection type
-	this.projectionType = 1;
 
 	// models
 	this.models = {};
@@ -26,7 +19,6 @@ function CanvasWebGl(url_param_list){
 	this.resetGlobalValues();
 
 	this.initWebGL();
-	this.initShaderProgram();
 
 	for(var i=0; i<this.urls.length; i++){
 		var url = this.urls[i][0];
@@ -78,36 +70,9 @@ CanvasWebGl.prototype.drawScene = function(){
 	// Clearing the frame-buffer and the depth-buffer
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-	//  Drawing the 3D scene
-	var pMatrix;
-	var mvMatrix = mat4();
-
-	// A standard view volume.
-	// Viewer is at (0,0,0)
-	// Ensure that the model is "inside" the view volume
-	pMatrix = perspective(45, 1, 0.05, 15);
-
-	// Global transformation!
-	globalTz = -2.5;
-
-	// Passing the Projection Matrix to apply the current projection
-	var pUniform = this.gl.getUniformLocation(this.shaderProgram, "uPMatrix");
-
-	this.gl.uniformMatrix4fv(pUniform, false, new Float32Array(flatten(pMatrix)));
-
-	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
-	mvMatrix = translationMatrix(0, 0, globalTz);
-
-	var numItems = 0;
-
 	for(var model in this.models){
-		this.models[model].drawScene(this.sx, this.sy, this.sz, mvMatrix);
-		numItems += this.models[model].triangleVertexPositionBuffer.numItems;
+		this.models[model].drawScene(this.sx, this.sy, this.sz);
 	}
-
-	console.log(numItems);
-
-	this.gl.drawArrays(this.primitiveType, 0, numItems);
 };
 
 CanvasWebGl.prototype.parseFile =  function(alias, data){
@@ -136,8 +101,7 @@ CanvasWebGl.prototype.parseFile =  function(alias, data){
 	}
 
 	// Assigning to the current model
-	this.models[alias] = new Models(this.gl, this.shaderProgram, this.primitiveType,
-		 															newVertices.slice(), newColors.slice());
+	this.models[alias] = new Models(this.gl, newVertices.slice(), newColors.slice());
 
 	// this.resetGlobalValues();
 };
@@ -148,11 +112,6 @@ CanvasWebGl.prototype.initWebGL =  function(){
 		// Create the WebGL context
 		// Some browsers still need "experimental-webgl"
 		this.gl = this.canvas.getContext("webgl") || this.canvas.getContext("experimental-webgl");
-
-		// DEFAULT: The viewport occupies the whole canvas
-		// DEFAULT: The viewport background color is WHITE
-		// NEW - Drawing the triangles defining the model
-		this.primitiveType = this.gl.TRIANGLES;
 
 		// DEFAULT: Face culling is DISABLED
 		// Enable FACE CULLING
@@ -167,8 +126,4 @@ CanvasWebGl.prototype.initWebGL =  function(){
 	if (!this.gl){
 		alert("Could not initialise WebGL, sorry! :-(");
 	}
-};
-
-CanvasWebGl.prototype.initShaderProgram =  function(){
-	this.shaderProgram = initShaders(this.gl);
 };

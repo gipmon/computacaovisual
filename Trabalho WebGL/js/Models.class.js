@@ -1,9 +1,7 @@
-function Models(gl, shaderProgram, primitiveType, vertices, colors){
+function Models(gl, vertices, colors){
   this.gl = gl;
-  this.shaderProgram = shaderProgram;
   this.vertices = vertices;
   this.colors = colors;
-  this.primitiveType = primitiveType;
 
 	// The translation vector
 	this.tx = 0.0;
@@ -18,6 +16,7 @@ function Models(gl, shaderProgram, primitiveType, vertices, colors){
 	this.triangleVertexPositionBuffer = null;
 	this.triangleVertexColorBuffer = null;
 
+  this.shaderProgram = initShaders(this.gl);
   this.initBuffers();
 }
 
@@ -32,8 +31,8 @@ Models.prototype.initBuffers = function(){
 
 	// Associating to the vertex shader
 	this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
-			this.triangleVertexPositionBuffer.itemSize,
-			this.gl.FLOAT, false, 0, 0);
+                        			this.triangleVertexPositionBuffer.itemSize,
+                        			this.gl.FLOAT, false, 0, 0);
 
 	// Colors
 	this.triangleVertexColorBuffer = this.gl.createBuffer();
@@ -44,8 +43,8 @@ Models.prototype.initBuffers = function(){
 
 	// Associating to the vertex shader
 	this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
-			this.triangleVertexColorBuffer.itemSize,
-			this.gl.FLOAT, false, 0, 0);
+                        			this.triangleVertexColorBuffer.itemSize,
+                        			this.gl.FLOAT, false, 0, 0);
 
 	// enable depth test
 	this.gl.enable(this.gl.DEPTH_TEST);
@@ -53,10 +52,9 @@ Models.prototype.initBuffers = function(){
 
 //  Drawing the model
 Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
-				sx, sy, sz,
-				tx, ty, tz,
-				mvMatrix,
-				primitiveType){
+                              				sx, sy, sz,
+                              				tx, ty, tz,
+                              				mvMatrix){
 
 	mvMatrix = mult(mvMatrix, translationMatrix(tx, ty, tz));
 	mvMatrix = mult(mvMatrix, rotationZZMatrix(angleZZ));
@@ -64,22 +62,49 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 	mvMatrix = mult(mvMatrix, rotationXXMatrix(angleXX));
 	mvMatrix = mult(mvMatrix, scalingMatrix(sx, sy, sz));
 
-  console.log(mvMatrix);
-
 	// Passing the Model View Matrix to apply the current transformation
+	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
+  this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
+                        			this.triangleVertexPositionBuffer.itemSize,
+                        			this.gl.FLOAT, false, 0, 0);
+
+	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
+
+  this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
+                              this.triangleVertexColorBuffer.itemSize,
+                              this.gl.FLOAT, false, 0, 0);
+
 	var mvUniform = this.gl.getUniformLocation(this.shaderProgram, "uMVMatrix");
 
 	this.gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
-
-	// Drawing the contents of the vertex buffer
-	// primitiveType allows drawing as filled triangles / wireframe / vertices
+ 	this.gl.drawArrays(this.gl.TRIANGLES, 0, this.triangleVertexPositionBuffer.numItems);
 };
 
-Models.prototype.drawScene = function(sx, sy, sz, mvMatrix){
+Models.prototype.drawScene = function(sx, sy, sz){
+	//  Drawing the 3D scene
+	var pMatrix;
+	var mvMatrix = mat4();
+
+	// A standard view volume.
+	// Viewer is at (0,0,0)
+	// Ensure that the model is "inside" the view volume
+	pMatrix = perspective(45, 1, 0.05, 15);
+
+	// Global transformation!
+	globalTz = -2.5;
+
+	// Passing the Projection Matrix to apply the current projection
+  console.log(this.shaderProgram);
+	var pUniform = this.gl.getUniformLocation(this.shaderProgram, "uPMatrix");
+
+	this.gl.uniformMatrix4fv(pUniform, false, new Float32Array(flatten(pMatrix)));
+
+	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
+	mvMatrix = translationMatrix(0, 0, globalTz);
+
 	// Instantianting the current model
 	this.drawModel(this.angleXX, this.angleYY, this.angleZZ,
 			           sx, sy, sz,
 			           this.tx, this.ty, this.tz,
-			           mvMatrix,
-			           this.primitiveType);
+			           mvMatrix);
 };
