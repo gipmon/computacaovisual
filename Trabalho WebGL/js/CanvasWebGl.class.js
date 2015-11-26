@@ -1,5 +1,4 @@
-// © RRTeam
-
+// © RR Team
 // z_index of webgl modules
 var z_index = 1;
 
@@ -253,13 +252,3 @@ CanvasWebGl.prototype.initWebGL =  function(){
 CanvasWebGl.prototype.initShaderProgram =  function(){
 	this.shaderProgram = initShaders(this.gl);
 };
-
-var cubo_1 = null;
-var cubo_2 = null;
-
-function runWebGL(){
-	cubo_1 = new CanvasWebGl("modelos/puzzle_cubo/cubo_1.txt", "cubo_1");
-	cubo_2 = new CanvasWebGl("modelos/puzzle_cubo/cubo_2.txt", "cubo_2");
-}
-
-setEventListeners();
