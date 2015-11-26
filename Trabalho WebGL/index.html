@@ -3,42 +3,63 @@
 <html>
 
 <head>
-<meta charset="UTF-8" />
-<title>Puzzle by RRTeam</title>
-<link rel="stylesheet" type="text/css" href="css/canvas.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+	<meta charset="UTF-8" />
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<title>Puzzle by RRTeam</title>
 
+	<link rel="stylesheet" type="text/css" href="css/canvas.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/3dbtn.css">
 </head>
 
 <body onload="runWebGL();">
+	<div class="container-fluid">
+		<nav class="navbar navbar-default">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">WebGL Puzzle</a>
+        </div>
 
-	<div style="text-align: center">
-		<button id="cuboBtn" class="btn btn-default">Cubo</button>
-		<button id="trianguloBtn" class="btn btn-default">Triangulo</button>
-		<button id="xM45" class="btn btn-default">X +45º</button>
-		<button id="xm45" class="btn btn-default">X -45º</button>
-		<button id="yM45" class="btn btn-default">Y +45º</button>
-		<button id="ym45" class="btn btn-default">Y -45º</button>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><button id="xM45" 	 style="margin-top: 15px;" class="btn btn-default btn-sm btn3d">X +45º</button></li>
+            <li><button id="xm45" 	 style="margin-top: 15px;" class="btn btn-default btn-sm btn3d">X -45º</button></li>
+            <li><button id="AllxM45" style="margin-top: 15px;" class="btn btn-default btn-sm btn3d">All X +45º</button></li>
+            <li><button id="Allxm45" style="margin-top: 15px;" class="btn btn-default btn-sm btn3d">All X -45º</button></li>
+            <li><button id="AllyM45" style="margin-top: 15px;" class="btn btn-default btn-sm btn3d">All Y +45º</button></li>
+            <li><button id="Allym45" style="margin-top: 15px;" class="btn btn-default btn-sm btn3d">All Y -45º</button></li>
+          </ul>
+      	</div><!-- /.container -->
+			</div>
+  	</nav>
 
-		<div>
-			<canvas id="webgl-id" style="z-index: 0; border: 1px solid black" width="600" height="600"></canvas>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+			    <div class="well">
+			      <h4>Select the figure:</h4>
+						<button id="cuboBtn" class="btn btn-warning btn-lg btn3d">Cubo</button><br/>
+						<button id="trianguloBtn" class="btn btn-success btn-lg btn3d">Triangulo</button>
+			    </div>
+					<div class="well">
+			      <h4>Help:</h4>
+			    </div>
+				</div>
+				<div class="col-lg-8">
+					<canvas id="webgl-id" style="border: 1px solid #E0E0E0" width="600" height="600"></canvas>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<!-- JAVASCRIPT AND WEBGL GOES HERE -->
-
-	<!--
-
-	The simple vertex and fragment shaders.
-
-	Using a vertex coordinate buffer and a vertex colour buffer.
-
-	Passing the Model-View Matrix and the Projection Matrix.
-
-	-->
 
 	<script id="shader-vs" type="x-shader/x-vertex">
 	    attribute vec3 aVertexPosition;

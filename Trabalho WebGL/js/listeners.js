@@ -21,6 +21,34 @@ function setEventListeners(){
     webgl.drawScene();
   });
 
+  $("#AllxM45").click(function(){
+    for(var model in webgl.models){
+      webgl.models[model].angleXX += angle;
+  	}
+    webgl.drawScene();
+  });
+
+  $("#Allxm45").click(function(){
+    for(var model in webgl.models){
+      webgl.models[model].angleXX -= angle;
+  	}
+    webgl.drawScene();
+  });
+
+  $("#AllyM45").click(function(){
+    for(var model in webgl.models){
+      webgl.models[model].angleYY += angle;
+  	}
+    webgl.drawScene();
+  });
+
+  $("#Allym45").click(function(){
+    for(var model in webgl.models){
+      webgl.models[model].angleYY -= angle;
+  	}
+    webgl.drawScene();
+  });
+
   $("#yM45").click(function(){
     webgl.models[selectedCube].angleYY += angle;
     webgl.drawScene();
