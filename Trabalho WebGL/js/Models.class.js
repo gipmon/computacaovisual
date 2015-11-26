@@ -2,6 +2,8 @@ function Models(gl, vertices, colors){
   this.gl = gl;
   this.vertices = vertices;
   this.colors = colors;
+  this.globalAngleYY = 0.0;
+  this.globalAngleXX = 0.0;
 
 	// The translation vector
 	this.tx = 0.0;
@@ -100,6 +102,11 @@ Models.prototype.drawScene = function(sx, sy, sz){
 
 	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
 	mvMatrix = translationMatrix(0, 0, globalTz);
+  mvMatrix = mult( translationMatrix( 0, 0, globalTz ),
+	                 rotationYYMatrix( this.globalAngleYY ) );
+  mvMatrix = mult( mult( translationMatrix( 0, 0, globalTz ),
+	                 rotationYYMatrix( this.globalAngleYY ) ),
+	                 rotationXXMatrix( this.globalAngleXX ) );
 
 	// Instantianting the current model
 	this.drawModel(this.angleXX, this.angleYY, this.angleZZ,

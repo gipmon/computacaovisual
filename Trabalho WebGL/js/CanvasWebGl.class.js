@@ -67,7 +67,7 @@ CanvasWebGl.prototype.resetGlobalValues = function() {
 CanvasWebGl.prototype.drawScene = function(){
 	// Clearing the frame-buffer and the depth-buffer
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
+	
 	for(var model in this.models){
 		this.models[model].drawScene(this.sx, this.sy, this.sz);
 	}

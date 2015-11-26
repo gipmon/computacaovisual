@@ -24,7 +24,6 @@ function setEventListeners(){
   $("#yM45").click(function(){
     webgl.models[selectedCube].angleYY += angle;
     webgl.drawScene();
-    console.log(webgl.models[selectedCube]);
   });
 
   $("#ym45").click(function(){
@@ -75,6 +74,62 @@ function setEventListeners(){
           map[e.keyCode] = false;
       }
   });
+
+  webgl.canvas.onmousedown = handleMouseDown;
+
+  document.onmouseup = handleMouseUp;
+
+  document.onmousemove = handleMouseMove;
+
+  var mouseDown = false;
+
+  var lastMouseX = null;
+
+  var lastMouseY = null;
+
+  function handleMouseDown(event) {
+
+      mouseDown = true;
+
+      lastMouseX = event.clientX;
+
+      lastMouseY = event.clientY;
+  }
+
+  function handleMouseUp(event) {
+
+      mouseDown = false;
+  }
+
+  function handleMouseMove(event) {
+
+      if (!mouseDown) {
+
+        return;
+      }
+
+      // Rotation angles proportional to cursor displacement
+
+      var newX = event.clientX;
+
+      var newY = event.clientY;
+
+      var deltaX = newX - lastMouseX;
+
+      var deltaY = newY - lastMouseY;
+
+      for(var model in webgl.models){
+        webgl.models[model].globalAngleXX += radians( 10 * deltaX);
+        webgl.models[model].globalAngleYY += radians( 10 * deltaY);
+      }
+
+      webgl.drawScene();
+
+
+      lastMouseX = newX
+
+      lastMouseY = newY;
+    }
 
   //
   //   // NEW --- Mesh subdivision buttons
