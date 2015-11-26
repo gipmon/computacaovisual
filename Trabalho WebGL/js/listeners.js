@@ -24,6 +24,7 @@ function setEventListeners(){
   $("#yM45").click(function(){
     webgl.models[selectedCube].angleYY += angle;
     webgl.drawScene();
+    console.log(webgl.models[selectedCube]);
   });
 
   $("#ym45").click(function(){
