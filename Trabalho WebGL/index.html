@@ -3,9 +3,11 @@
 <html>
 
 <head>
-
-<title>WebGL example 21 &mdash; Mesh Refinement</title>
+<meta charset="UTF-8" />
+<title>Puzzle by RRTeam</title>
 <link rel="stylesheet" type="text/css" href="css/canvas.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
@@ -14,13 +16,15 @@
 <body onload="runWebGL();">
 
 	<div style="text-align: center">
+		<button id="cuboBtn" class="btn btn-default">Cubo</button>
+		<button id="trianguloBtn" class="btn btn-default">Triangulo</button>
+		<button id="xM45" class="btn btn-default">X +45º</button>
+		<button id="xm45" class="btn btn-default">X -45º</button>
+		<button id="yM45" class="btn btn-default">Y +45º</button>
+		<button id="ym45" class="btn btn-default">Y -45º</button>
 
-		<p>Model animation using rotations</p>
-		<button id="cuboBtn1">Cubo Left 1</button>
-		<button id="cuboBtn2">Cubo Right 2</button>
-
-		<div id="whereGoesCanvas">
-			<canvas id="backgroud" style="border:1px solid #000000; z-index: -1" width="600" height="600"></canvas>
+		<div>
+			<canvas id="webgl-id" style="z-index: 0" width="600" height="600"></canvas>
 		</div>
 	</div>
 
@@ -77,30 +81,28 @@
 			gl_FragColor = vertexColor;
 		}
 	</script>
+
 	<!-- The JS files -->
 	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 
 	<!-- Some useful functions for browser compatibility -->
-
 	<script type="text/javascript" src="js/webgl-utils.js"></script>
 
 	<!-- Handling vectors and matrices -->
-
 	<script type="text/javascript" src="js/maths.js"></script>
 
 	<!-- Processing triangle mesh models -->
-
 	<script type="text/javascript" src="js/models.js"></script>
-
 	<script type="text/javascript" src="js/listeners.js"></script>
 
 	<!-- WebGL code -->
-
 	<script type="text/javascript" src="js/initShaders.js"></script>
-
-	<script type="text/javascript" src="js/webgl.js"></script>
+	<script type="text/javascript" src="js/Models.class.js"></script>
+	<script type="text/javascript" src="js/CanvasWebGl.class.js"></script>
+	<script type="text/javascript" src="js/puzzle.js"></script>
 	<!-- end -->
 
+	<script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
 
 </html>

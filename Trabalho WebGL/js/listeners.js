@@ -1,14 +1,75 @@
 function setEventListeners(){
+  var selectedCube = "triangulo";
 
-  $("#cuboBtn1").click(function(){
-
-    drawScene();
+  $("#trianguloBtn").click(function(){
+    selectedCube = "triangulo";
   });
 
-  $("#cuboBtn2").click(function(){
-    
-    drawScene();
+  $("#cuboBtn").click(function(){
+    selectedCube = "cubo_1";
   });
+
+  $("#xM45").click(function(){
+    webgl.models[selectedCube].angleXX += radians(45);
+    webgl.drawScene();
+  });
+
+  $("#xm45").click(function(){
+
+  });
+
+  $("#yM45").click(function(){
+
+  });
+
+  $("#ym45").click(function(){
+
+  });
+
+  // keydown events
+
+  var map = {37: false, // left key
+             38: false, // up key
+             39: false, // right key
+             40: false, // down key
+             90: false, // z key
+            };
+
+  $(document).keydown(function(e) {
+    if (e.keyCode in map) {
+        map[e.keyCode] = true;
+        if (map[90] && map[38]) {
+          webgl.getModel(selectedCube).tz += 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[90] && map[40]) {
+          webgl.getModel(selectedCube).tz -= 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[37]){ // left
+          webgl.getModel(selectedCube).tx -= 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[38]) { // up
+          webgl.getModel(selectedCube).ty += 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[39]) { // right
+          webgl.getModel(selectedCube).tx += 0.01;
+          webgl.drawScene();
+          return false;
+        }else if (map[40]) { // down
+          webgl.getModel(selectedCube).ty -= 0.01;
+          webgl.drawScene();
+          return false;
+        }
+    }
+  }).keyup(function(e) {
+      if (e.keyCode in map) {
+          map[e.keyCode] = false;
+      }
+  });
+
   //
   //   // NEW --- Mesh subdivision buttons
   //
