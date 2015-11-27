@@ -1,4 +1,4 @@
-function Models(gl, vertices, colors){
+function Models(gl, initial_positions, vertices, colors){
   this.gl = gl;
   this.vertices = vertices;
   this.colors = colors;
@@ -6,9 +6,9 @@ function Models(gl, vertices, colors){
   this.globalAngleXX = 0.0;
 
 	// The translation vector
-	this.tx = 0.0;
-	this.ty = 0.0;
-	this.tz = 0.0;
+	this.tx = initial_positions[0];
+	this.ty = initial_positions[1];
+	this.tz = initial_positions[2];
 
 	// The rotation angles in degrees
 	this.angleXX = 0.0;
@@ -102,11 +102,11 @@ Models.prototype.drawScene = function(sx, sy, sz){
 
 	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
 	mvMatrix = translationMatrix(0, 0, globalTz);
-  mvMatrix = mult( translationMatrix( 0, 0, globalTz ),
-	                 rotationYYMatrix( this.globalAngleYY ) );
-  mvMatrix = mult( mult( translationMatrix( 0, 0, globalTz ),
-	                 rotationYYMatrix( this.globalAngleYY ) ),
-	                 rotationXXMatrix( this.globalAngleXX ) );
+  mvMatrix = mult(translationMatrix(0, 0, globalTz),
+	                rotationYYMatrix(this.globalAngleYY));
+  mvMatrix = mult(mult(translationMatrix(0, 0, globalTz),
+	                rotationYYMatrix(this.globalAngleYY)),
+	                rotationXXMatrix(this.globalAngleXX));
 
 	// Instantianting the current model
 	this.drawModel(this.angleXX, this.angleYY, this.angleZZ,

@@ -1,8 +1,8 @@
 // © RR Team
 
 // defination of the canvas webgl class
-function CanvasWebGl(url_param_list){
-	this.urls = url_param_list;
+function CanvasWebGl(puzzle){
+	this.puzzle = puzzle;
 
 	this.gl = null; // WebGL context
 
@@ -18,8 +18,8 @@ function CanvasWebGl(url_param_list){
 
 	this.initWebGL();
 
-	for(var i=0; i<this.urls.length; i++){
-		var url = this.urls[i][0];
+	for(var i=0; i<this.puzzle.length; i++){
+		var url = this.puzzle[i][0];
 
 		$.ajax({
 		  url: url,
@@ -31,7 +31,7 @@ function CanvasWebGl(url_param_list){
 		  }
 		});
 
-		this.parseFile(this.urls[i][1], result);
+		this.parseFile(this.puzzle[i], result);
 	}
 
 	this.drawScene();
@@ -67,13 +67,13 @@ CanvasWebGl.prototype.resetGlobalValues = function() {
 CanvasWebGl.prototype.drawScene = function(){
 	// Clearing the frame-buffer and the depth-buffer
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-	
+
 	for(var model in this.models){
 		this.models[model].drawScene(this.sx, this.sy, this.sz);
 	}
 };
 
-CanvasWebGl.prototype.parseFile =  function(alias, data){
+CanvasWebGl.prototype.parseFile =  function(puzzle, data){
 	// Entire file read as a string
 	// The tokens/values in the file
 	// Separation between values is 1 or mode whitespaces
@@ -99,7 +99,7 @@ CanvasWebGl.prototype.parseFile =  function(alias, data){
 	}
 
 	// Assigning to the current model
-	this.models[alias] = new Models(this.gl, newVertices.slice(), newColors.slice());
+	this.models[puzzle[1]] = new Models(this.gl, puzzle[2], newVertices.slice(), newColors.slice());
 
 	// this.resetGlobalValues();
 };
