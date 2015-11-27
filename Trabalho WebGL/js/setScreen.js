@@ -29,6 +29,7 @@ function setScreenPuzzle(puzzle){
   }
 
   $('#'+ selectedCube +'Btn').removeClass("btn3d");
+  $('#'+ selectedCube +'Btn').addClass("btn3ddisabled");
   $('#'+ selectedCube +'Btn').prop('disabled', true);
 
   updateFigurePosition();
