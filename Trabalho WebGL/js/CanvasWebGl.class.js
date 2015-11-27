@@ -56,7 +56,37 @@ CanvasWebGl.prototype.resetGlobalValues = function() {
 	this.rotationZZ_SPEED = 1;
 }
 
+CanvasWebGl.prototype.checkIsFinished = function(){
+	var win = true;
+
+	for(var i=0; i<this.puzzle.pieces.length; i++){
+		if(this.puzzle.pieces[i].finalPosition.tx != this.models[this.puzzle.pieces[i].alias].tx.round(2)){
+			win &= false;
+		}else if(this.puzzle.pieces[i].finalPosition.ty != this.models[this.puzzle.pieces[i].alias].ty.round(2)){
+			win &= false;
+		}else if(this.puzzle.pieces[i].finalPosition.tz != this.models[this.puzzle.pieces[i].alias].tz.round(2)){
+			win &= false;
+		}else if(this.puzzle.pieces[i].finalPosition.angleXX != this.models[this.puzzle.pieces[i].alias].angleXX){
+			win &= false;
+		}else if(this.puzzle.pieces[i].finalPosition.angleYY != this.models[this.puzzle.pieces[i].alias].angleYY){
+			win &= false;
+		}else if(this.puzzle.pieces[i].finalPosition.angleZZ != this.models[this.puzzle.pieces[i].alias].angleZZ){
+			win &= false;
+		}
+	}
+
+	if(win){
+	  $("#informationNotice").hide();
+	  $("#successNotice").show();
+	}else{
+	  $("#informationNotice").show();
+	  $("#successNotice").hide();
+	}
+};
+
 CanvasWebGl.prototype.drawScene = function(){
+	this.checkIsFinished();
+
 	// Clearing the frame-buffer and the depth-buffer
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
