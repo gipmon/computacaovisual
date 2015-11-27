@@ -3,38 +3,50 @@ var deslocamento = 0.01;
 function setEventListeners(){
   var angle = 45;
 
-  $("#xM45").click(function(){
+  var timeoutGo = null;
+
+  $("#correctPosition").click(function(){
+    timeoutGo = setTimeout(function () {
+
+    }, 10);
+
     webgl.models[selectedCube].angleXX += angle;
     webgl.drawScene();
     updateFigurePosition();
   });
 
+  $("#xM45").click(function(){
+    webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX + angle) % 360;
+    webgl.drawScene();
+    updateFigurePosition();
+  });
+
   $("#xm45").click(function(){
-    webgl.models[selectedCube].angleXX -= angle;
+    webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX - angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#yM45").click(function(){
-    webgl.models[selectedCube].angleYY += angle;
+    webgl.models[selectedCube].angleYY = (webgl.models[selectedCube].angleYY + angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#ym45").click(function(){
-    webgl.models[selectedCube].angleYY -= angle;
+    webgl.models[selectedCube].angleYY  = (webgl.models[selectedCube].angleYY - angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#zM45").click(function(){
-    webgl.models[selectedCube].angleZZ += angle;
+    webgl.models[selectedCube].angleZZ = (webgl.models[selectedCube].angleZZ + angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#zm45").click(function(){
-    webgl.models[selectedCube].angleZZ -= angle;
+    webgl.models[selectedCube].angleZZ  = (webgl.models[selectedCube].angleZZ - angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
