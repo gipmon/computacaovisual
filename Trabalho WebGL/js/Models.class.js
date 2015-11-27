@@ -36,7 +36,7 @@ function Models(gl, initial_positions, vertices, colors, background){
 
     var textureVertexIndices = [
         0, 1, 2,      0, 2, 3,
-    ]
+    ];
 
     this.cubeVertexIndexBuffer = this.gl.createBuffer();
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.cubeVertexIndexBuffer);
