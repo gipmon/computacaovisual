@@ -29,6 +29,14 @@ function CanvasWebGl(puzzle){
 	this.drawScene();
 }
 
+CanvasWebGl.prototype.resetValues = function(){
+	this.resetGlobalValues();
+
+	for(var model in this.models){
+		this.models[model].resetValues();
+	}
+}
+
 CanvasWebGl.prototype.resetGlobalValues = function() {
 	// The GLOBAL transformation parameters
 	this.globalAngleYY = 0.0;

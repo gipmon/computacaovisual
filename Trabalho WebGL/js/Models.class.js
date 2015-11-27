@@ -11,6 +11,8 @@ function Models(gl, initialPosition, vertices, colors, background){
     this.background = false;
   }
 
+  this.initialPosition = initialPosition;
+
 	// The translation vector
 	this.tx = initialPosition.tx;
 	this.ty = initialPosition.ty;
@@ -62,6 +64,16 @@ function Models(gl, initialPosition, vertices, colors, background){
 
   }
 }
+
+Models.prototype.resetValues = function(){
+  this.tx = this.initialPosition.tx;
+  this.ty = this.initialPosition.ty;
+  this.tz = this.initialPosition.tz;
+
+  this.angleXX = this.initialPosition.angleXX;
+  this.angleYY = this.initialPosition.angleYY;
+  this.angleZZ = this.initialPosition.angleZZ;
+};
 
 // Handling the Vertex and the Color Buffers
 Models.prototype.initBuffers = function(){

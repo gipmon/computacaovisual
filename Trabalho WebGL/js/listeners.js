@@ -39,6 +39,18 @@ function setEventListeners(){
     updateFigurePosition();
   });
 
+  $("#resetLevel").click(function(){
+    webgl.resetValues();
+    webgl.drawScene();
+    updateFigurePosition();
+  });
+
+  $("#resetValues").click(function(){
+    webgl.models[selectedCube].resetValues();
+    webgl.drawScene();
+    updateFigurePosition();
+  });
+
   // keydown events
 
   var map = {37: false, // left key
