@@ -1,9 +1,15 @@
-function Models(gl, initial_positions, vertices, colors){
+function Models(gl, initial_positions, vertices, colors, background){
   this.gl = gl;
   this.vertices = vertices;
   this.colors = colors;
   this.globalAngleYY = 0.0;
   this.globalAngleXX = 0.0;
+
+  if(background){
+    this.background = true;
+  }else{
+    this.background = false;
+  }
 
 	// The translation vector
 	this.tx = initial_positions[0];
@@ -15,11 +21,47 @@ function Models(gl, initial_positions, vertices, colors){
 	this.angleYY = 0.0;
 	this.angleZZ = 0.0;
 
-	this.triangleVertexPositionBuffer = null;
-	this.triangleVertexColorBuffer = null;
-
 	this.triangleVertexPositionBuffer = this.gl.createBuffer();
 	this.triangleVertexColorBuffer = this.gl.createBuffer();
+
+  if(this.background){
+    this.cubeVertexTextureCoordBuffer = this.gl.createBuffer();
+
+    this.textureCoords = [
+                          0.0, 0.0,
+                          1.0, 0.0,
+                          1.0, 1.0,
+                          0.0, 1.0,
+                          ];
+
+    var textureVertexIndices = [
+        0, 1, 2,      0, 2, 3,
+    ]
+
+    this.cubeVertexIndexBuffer = this.gl.createBuffer();
+    this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.cubeVertexIndexBuffer);
+    this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(textureVertexIndices),
+                       this.gl.STATIC_DRAW);
+    this.cubeVertexIndexBuffer.itemSize = 1;
+    this.cubeVertexIndexBuffer.numItems = 6;
+
+    function handleTextureLoaded(texture) {
+      console.log(gl);
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.bindTexture(gl.TEXTURE_2D, null);
+    }
+
+    this.texture = gl.createTexture();
+    this.texture.image = new Image();
+    this.texture.onload = function() { handleTextureLoaded(this.texture); }
+    this.texture.image.src = "img/background.jpg";
+  }else{
+
+  }
 }
 
 // Handling the Vertex and the Color Buffers
@@ -40,6 +82,14 @@ Models.prototype.initBuffers = function(){
 	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
 	this.triangleVertexColorBuffer.itemSize = 3;
 	this.triangleVertexColorBuffer.numItems = this.colors.length / 3;
+
+  if(this.background){
+    // Textures
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexTextureCoordBuffer);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.textureCoords), this.gl.STATIC_DRAW);
+    this.cubeVertexTextureCoordBuffer.itemSize = 2;
+    this.cubeVertexTextureCoordBuffer.numItems = 4;
+  }
 
 	// Associating to the vertex shader
 	this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
@@ -62,22 +112,39 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 	mvMatrix = mult(mvMatrix, rotationXXMatrix(angleXX));
 	mvMatrix = mult(mvMatrix, scalingMatrix(sx, sy, sz));
 
+	var mvUniform = this.gl.getUniformLocation(this.shaderProgram, "uMVMatrix");
+  this.gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
+
 	// Passing the Model View Matrix to apply the current transformation
 	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
   this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
                         			this.triangleVertexPositionBuffer.itemSize,
                         			this.gl.FLOAT, false, 0, 0);
 
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
+  if(this.background){
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexTextureCoordBuffer);
+    this.gl.vertexAttribPointer(this.shaderProgram.textureCoordAttribute, this.cubeVertexTextureCoordBuffer.itemSize, this.gl.FLOAT, false, 0, 0);
 
-  this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
-                              this.triangleVertexColorBuffer.itemSize,
-                              this.gl.FLOAT, false, 0, 0);
+    this.gl.activeTexture(this.gl.TEXTURE0);
+    this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
 
-	var mvUniform = this.gl.getUniformLocation(this.shaderProgram, "uMVMatrix");
+    this.gl.uniform1i(this.shaderProgram.samplerUniform, 0);
 
-	this.gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
- 	this.gl.drawArrays(this.gl.TRIANGLES, 0, this.triangleVertexPositionBuffer.numItems);
+    // The vertex indices
+
+    this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.cubeVertexIndexBuffer);
+
+	  this.gl.drawElements(this.gl.TRIANGLES, this.cubeVertexIndexBuffer.numItems, this.gl.UNSIGNED_SHORT, 0);
+  }else{
+  	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
+
+    this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
+                                this.triangleVertexColorBuffer.itemSize,
+                                this.gl.FLOAT, false, 0, 0);
+   	this.gl.drawArrays(this.gl.TRIANGLES, 0, this.triangleVertexPositionBuffer.numItems);
+  }
+
+
 };
 
 Models.prototype.drawScene = function(sx, sy, sz){

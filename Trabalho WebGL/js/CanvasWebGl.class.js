@@ -70,13 +70,8 @@ CanvasWebGl.prototype.drawScene = function(){
 };
 
 CanvasWebGl.prototype.initBackground = function(){
-	var result = parseOBJfile("modelos/table.obj");
-	var colors = [];
-	for(var i=0; i<result["vertices"].length; i++){
-		colors.push(0.5);
-		result["vertices"][i] = result["vertices"][i] * 0.05;
-	}
-	this.back = new Models(this.gl, [0, 0, 0], result["vertices"].slice(), colors);
+	var result = parseTXTfile("modelos/back.txt");
+	this.back = new Models(this.gl, [0, 0, 0], result["vertices"].slice(), result["colors"].slice(), true);
 };
 
 CanvasWebGl.prototype.newModel =  function(result, puzzle){
