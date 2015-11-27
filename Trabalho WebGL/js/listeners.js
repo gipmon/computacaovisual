@@ -6,31 +6,37 @@ function setEventListeners(){
   $("#xM45").click(function(){
     webgl.models[selectedCube].angleXX += angle;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#xm45").click(function(){
     webgl.models[selectedCube].angleXX -= angle;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#yM45").click(function(){
     webgl.models[selectedCube].angleYY += angle;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#ym45").click(function(){
     webgl.models[selectedCube].angleYY -= angle;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#zM45").click(function(){
     webgl.models[selectedCube].angleZZ += angle;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#zm45").click(function(){
     webgl.models[selectedCube].angleZZ -= angle;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   // keydown events
@@ -58,36 +64,42 @@ function setEventListeners(){
           if(testConditionScreen(webgl.models[selectedCube].tz, 1)){
             webgl.models[selectedCube].tz += deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[90] && map[40]) {
           if(testConditionScreen(webgl.models[selectedCube].tz, -1)){
             webgl.models[selectedCube].tz -= deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[37]){ // left
           if(testConditionScreen(webgl.models[selectedCube].tx, -1)){
             webgl.models[selectedCube].tx -= deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[38]) { // up
           if(testConditionScreen(webgl.models[selectedCube].ty, 1)){
             webgl.models[selectedCube].ty += deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[39]) { // right
           if(testConditionScreen(webgl.models[selectedCube].tx, 1)){
             webgl.models[selectedCube].tx += deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[40]) { // down
           if(testConditionScreen(webgl.models[selectedCube].ty, -1)){
             webgl.models[selectedCube].ty -= deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }

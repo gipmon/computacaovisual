@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="css/material-btn.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="css/notice.css">
+	<link href="http://www.ua.pt/images/ua.ico" rel="shortcut icon" />
 
 </head>
 
@@ -35,8 +36,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li></li>
-            <li></li>
+						<li><a href="#"><i class="fa fa-users"></i> Authors</a></li>
+            <li><a href="#"><i class="fa fa-flag"></i> Help</a></li>
           </ul>
       	</div><!-- /.container -->
 			</div>
@@ -46,10 +47,19 @@
 			<div class="row">
 				<div class="col-lg-4">
 			    <div class="well">
-						<h3>Puzzle:</h4>
+						<h4>Puzzle:</h4>
 						<img id="puzzleImg" src="img/puzzles/puzzle1.png" />
 			      <h4>Select the figure:</h4>
 						<div id="btns">
+						</div>
+						<h4>Figure position:</4>
+						<div class="input-group number-spinner">
+							<input type="text" id="posX" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Translation x" class="form-control text-center" value="0.4" readonly="true">
+							<input type="text" id="posY" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Translation y" class="form-control text-center" value="0.4" readonly="true">
+							<input type="text" id="posZ" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Translation z" class="form-control text-center" value="0.4" readonly="true">
+							<input type="text" id="angleX" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Angle X" class="form-control text-center" value="0.4" readonly="true">
+							<input type="text" id="angleY" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Angle Y" class="form-control text-center" value="0.4" readonly="true">
+							<input type="text" id="angleZ" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Angle Z" class="form-control text-center" value="0.4" readonly="true">
 						</div>
 						<h4>Controls:</h4>
 						<table>
