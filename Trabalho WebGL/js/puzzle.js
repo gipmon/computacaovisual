@@ -1,11 +1,19 @@
 // © RRTeam
 
-var webgl = null;
-
-function runWebGL(){
-	webgl = new CanvasWebGl([
-													["modelos/puzzle_triangulocubo/triangulo.txt", "triangulo", [0, 0, 0]],
-													["modelos/puzzle_triangulocubo/cubo_1.txt", "cubo_1", [-0.3, 0, 0]]
-													]);
- 	setEventListeners();
+function Piece(url, alias, humanName, initialPosition, finalPosition){
+	this.url = url;
+	this.alias = alias;
+	this.initialPosition = initialPosition;
+	this.humanName = humanName;
+	this.finalPosition = finalPosition;
 }
+
+function Puzzle(image){
+	this.image = image;
+	this.pieces = [];
+}
+
+
+Puzzle.prototype.addPiece = function(piece){
+	this.pieces.push(piece);
+};
