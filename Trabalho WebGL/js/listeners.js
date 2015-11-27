@@ -1,4 +1,4 @@
-var deslocamento = 0.01 * $("#desc").attr("value");
+var deslocamento = 0.01;
 
 function setEventListeners(){
   var selectedCube = "triangulo";
@@ -52,6 +52,11 @@ function setEventListeners(){
              90: false, // z key
             };
 
+  // deslocamento
+  $(document).on('click', '.number-spinner button', function () {
+    deslocamento = 0.01 * $("#desc").val();
+  });
+
   $(document).keydown(function(e) {
     if (e.keyCode in map) {
         map[e.keyCode] = true;
@@ -64,10 +69,12 @@ function setEventListeners(){
           webgl.drawScene();
           return false;
         }else if (map[37]){ // left
+          console.log(webgl.models[selectedCube].tx);
           webgl.models[selectedCube].tx -= deslocamento;
           webgl.drawScene();
           return false;
         }else if (map[38]) { // up
+          console.log(webgl.models[selectedCube].tx);
           webgl.models[selectedCube].ty += deslocamento;
           webgl.drawScene();
           return false;
