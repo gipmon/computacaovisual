@@ -13,6 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="css/circlebtn.css">
 	<link rel="stylesheet" type="text/css" href="css/material-btn.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/notice.css">
 
 </head>
 
@@ -50,12 +51,66 @@
 			      <h4>Select the figure:</h4>
 						<div id="btns">
 						</div>
-			    </div>
-					<div class="well">
-			      <h4>Help:</h4>
+						<h4>Controls:</h4>
+						<table>
+							<tr>
+								<td>
+									<button id="xM45" class="btn btn-default btn-sm btn3d"><strong>X</strong> <i class="fa fa-rotate-left"></i></button>
+								</td>
+								<td>
+									<button id="xm45" class="btn btn-default btn-sm btn3d"><strong>X</strong> <i class="fa fa-rotate-right"></i></button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button id="yM45" class="btn btn-default btn-sm btn3d"><strong>Y</strong> <i class="fa fa-rotate-left"></i></button>
+								</td>
+								<td>
+									<button id="ym45" class="btn btn-default btn-sm btn3d"><strong>Y</strong> <i class="fa fa-rotate-right"></i></button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button id="zM45" class="btn btn-default btn-sm btn3d"><strong>Z</strong> <i class="fa fa-rotate-left"></i></button>
+								</td>
+								<td>
+									<button id="zm45" class="btn btn-default btn-sm btn3d"><strong>Z</strong> <i class="fa fa-rotate-right"></i></button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="input-group number-spinner">
+										<span class="input-group-btn">
+											<button class="btn btn-default" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+										</span>
+										<input type="text" id="desc" style="width: 60px" class="form-control text-center" value="1" readonly="true">
+										<span class="input-group-btn">
+											<button class="btn btn-default" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
+										</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button id="resetLevel" class="btn btn-danger btn-sm btn3d"><strong><i class="fa fa-eraser"></i> lev</strong></button>
+								</td>
+								<td>
+									<button id="resetValues" class="btn btn-danger btn-sm btn3d"><strong><i class="fa fa-eraser"></i> pos</strong></button>
+								</td>
+							</tr>
+						</table>
+						<h4>Game state:</h4>
+						<div id="noticeMessage">
+							<div  id="informationNotice" class="notice notice-sm hide hidden">
+					    	<strong>Unfinished!</strong> Please move the pieces for the correct place.
+					    </div>
+							<div id="successNotice" class="notice notice-success notice-sm hide hidden">
+					        <strong>Finished!</strong> Good! Go to the next level!!
+					    </div>
+						</div>
 			    </div>
 				</div>
-				<div class="col-lg-8">
+				<div class="col-lg-8 text-center">
 				<!--<style type="text/css" media="screen">
 						canvas, img { display:block; margin:1em auto; border:1px solid black; }
 							canvas { background:url(img/background.jpg) }
@@ -63,59 +118,6 @@
 					<canvas id="webgl-id" style="border: 1px solid #E0E0E0; background:url(img/background.jpg)" width="600" height="600"></canvas>
 				</div>
 			</div>
-		</div>
-
-		<div style="position:absolute; right: 20px; top: 70px; text-align: center">
-			<table>
-				<tr>
-					<td>
-						<button id="xM45" class="btn btn-default btn-sm btn3d"><strong>X</strong> <i class="fa fa-rotate-left"></i></button>
-					</td>
-					<td>
-						<button id="xm45" class="btn btn-default btn-sm btn3d"><strong>X</strong> <i class="fa fa-rotate-right"></i></button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<button id="yM45" class="btn btn-default btn-sm btn3d"><strong>Y</strong> <i class="fa fa-rotate-left"></i></button>
-					</td>
-					<td>
-						<button id="ym45" class="btn btn-default btn-sm btn3d"><strong>Y</strong> <i class="fa fa-rotate-right"></i></button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<button id="zM45" class="btn btn-default btn-sm btn3d"><strong>Z</strong> <i class="fa fa-rotate-left"></i></button>
-					</td>
-					<td>
-						<button id="zm45" class="btn btn-default btn-sm btn3d"><strong>Z</strong> <i class="fa fa-rotate-right"></i></button>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<br/>
-						<div class="input-group number-spinner">
-							<span class="input-group-btn">
-								<button class="btn btn-default" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
-							</span>
-							<input type="text" id="desc" style="width: 60px" class="form-control text-center" value="1" readonly="true">
-							<span class="input-group-btn">
-								<button class="btn btn-default" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
-							</span>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<br/>
-						<button id="resetLevel" class="btn btn-danger btn-sm btn3d"><strong><i class="fa fa-eraser"></i> lev</strong></button>
-					</td>
-					<td>
-						<br/>
-						<button id="resetValues" class="btn btn-danger btn-sm btn3d"><strong><i class="fa fa-eraser"></i> pos</strong></button>
-					</td>
-				</tr>
-			</table>
 		</div>
 	</div>
 

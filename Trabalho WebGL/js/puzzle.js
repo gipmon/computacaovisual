@@ -8,6 +8,15 @@ function Piece(url, alias, humanName, initialPosition, finalPosition){
 	this.finalPosition = finalPosition;
 }
 
+function Position(tx, ty, tz, angleXX, angleYY, angleZZ){
+	this.tx = tx;
+	this.ty = ty;
+	this.tz = tz;
+	this.angleXX = angleXX;
+	this.angleYY = angleYY;
+	this.angleZZ = angleZZ;
+}
+
 function Puzzle(image){
 	this.image = image;
 	this.pieces = [];

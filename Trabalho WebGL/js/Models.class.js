@@ -1,4 +1,4 @@
-function Models(gl, initial_positions, vertices, colors, background){
+function Models(gl, initialPosition, vertices, colors, background){
   this.gl = gl;
   this.vertices = vertices;
   this.colors = colors;
@@ -12,14 +12,14 @@ function Models(gl, initial_positions, vertices, colors, background){
   }
 
 	// The translation vector
-	this.tx = initial_positions[0];
-	this.ty = initial_positions[1];
-	this.tz = initial_positions[2];
+	this.tx = initialPosition.tx;
+	this.ty = initialPosition.ty;
+	this.tz = initialPosition.tz;
 
 	// The rotation angles in degrees
-	this.angleXX = 0.0;
-	this.angleYY = 0.0;
-	this.angleZZ = 0.0;
+	this.angleXX = initialPosition.angleXX;
+	this.angleYY = initialPosition.angleYY;
+	this.angleZZ = initialPosition.angleZZ;
 
 	this.triangleVertexPositionBuffer = this.gl.createBuffer();
 	this.triangleVertexColorBuffer = this.gl.createBuffer();

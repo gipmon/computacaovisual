@@ -9,14 +9,18 @@ var puzzle1 = new Puzzle("img/puzzles/puzzle1.png");
 puzzle1.addPiece(new Piece("modelos/puzzle_triangulocubo/triangulo.txt",
 													 "triangulo",
 												 	 "Triângulo",
-												 	 [0, 0, 0],
-												   [0, 0, 0]));
+												 	 new Position(0, 0, 0,
+													 							0, 0, 0),
+ 												 	 new Position(0, 0, 0,
+ 													 							0, 0, 0)));
 
 puzzle1.addPiece(new Piece("modelos/puzzle_triangulocubo/cubo_1.txt",
 													 "cubo_1",
 												 	 "Cubo",
-												 	 [-0.2, 0, 0],
-												   [0, 0, 0]));
+												 	 new Position(-0.2, 0, 0,
+													 							0, 0, 0),
+ 												 	 new Position(-0.1, 0, 0,
+ 													 							0, 0, 0)));
 
 function runWebGL(){
 	webgl = new CanvasWebGl(puzzle1);

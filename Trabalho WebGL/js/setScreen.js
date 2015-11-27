@@ -18,4 +18,6 @@ function setScreenPuzzle(puzzle){
     });
   }
 
+  $("#informationNotice").toggleClass("hide");
+  $("#informationNotice").toggleClass("hidden");
 }
