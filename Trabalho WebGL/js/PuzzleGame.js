@@ -20,5 +20,6 @@ puzzle1.addPiece(new Piece("modelos/puzzle_triangulocubo/cubo_1.txt",
 
 function runWebGL(){
 	webgl = new CanvasWebGl(puzzle1);
- 	setEventListeners();
+ 	setScreenPuzzle(puzzle1);
+	setEventListeners();
 }
