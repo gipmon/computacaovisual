@@ -58,33 +58,47 @@ function setEventListeners(){
   });
 
   $(document).keydown(function(e) {
+    function testConditionScreen(coordinate, increment){
+      return coordinate+increment*deslocamento >= -0.98 && coordinate+increment*deslocamento <= 0.98;
+    }
+
     if (e.keyCode in map) {
         map[e.keyCode] = true;
         if (map[90] && map[38]) {
-          webgl.models[selectedCube].tz += deslocamento;
-          webgl.drawScene();
+          if(testConditionScreen(webgl.models[selectedCube].tz, 1)){
+            webgl.models[selectedCube].tz += deslocamento;
+            webgl.drawScene();
+          }
           return false;
         }else if (map[90] && map[40]) {
-          webgl.models[selectedCube].tz -= deslocamento;
-          webgl.drawScene();
+          if(testConditionScreen(webgl.models[selectedCube].tz, -1)){
+            webgl.models[selectedCube].tz -= deslocamento;
+            webgl.drawScene();
+          }
           return false;
         }else if (map[37]){ // left
-          console.log(webgl.models[selectedCube].tx);
-          webgl.models[selectedCube].tx -= deslocamento;
-          webgl.drawScene();
+          if(testConditionScreen(webgl.models[selectedCube].tx, -1)){
+            webgl.models[selectedCube].tx -= deslocamento;
+            webgl.drawScene();
+          }
           return false;
         }else if (map[38]) { // up
-          console.log(webgl.models[selectedCube].tx);
-          webgl.models[selectedCube].ty += deslocamento;
-          webgl.drawScene();
+          if(testConditionScreen(webgl.models[selectedCube].ty, 1)){
+            webgl.models[selectedCube].ty += deslocamento;
+            webgl.drawScene();
+          }
           return false;
         }else if (map[39]) { // right
-          webgl.models[selectedCube].tx += deslocamento;
-          webgl.drawScene();
+          if(testConditionScreen(webgl.models[selectedCube].tx, 1)){
+            webgl.models[selectedCube].tx += deslocamento;
+            webgl.drawScene();
+          }
           return false;
         }else if (map[40]) { // down
-          webgl.models[selectedCube].ty -= deslocamento;
-          webgl.drawScene();
+          if(testConditionScreen(webgl.models[selectedCube].ty, -1)){
+            webgl.models[selectedCube].ty -= deslocamento;
+            webgl.drawScene();
+          }
           return false;
         }
     }
