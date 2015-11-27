@@ -22,7 +22,7 @@ function CanvasWebGl(puzzle){
 	this.initWebGL();
 
 	for(var i=0; i<this.puzzle.pieces.length; i++){
-		this.newModel(parseTXTfile(this.puzzle.pieces[i].url), this.puzzle.pieces[i]);
+		this.newModel(parseTXTfile(this.puzzle.pieces[i].url), this.puzzle.pieces[i], i);
 	}
 
 	//this.initBackground();
@@ -110,8 +110,8 @@ CanvasWebGl.prototype.initBackground = function(){
 	this.back = new Models(this.gl, [0, 0, 0], result["vertices"].slice(), result["colors"].slice(), true);
 };
 
-CanvasWebGl.prototype.newModel =  function(result, piece){
-	this.models[piece.alias] = new Models(this.gl, piece.initialPosition, result["vertices"].slice(), result["colors"].slice());
+CanvasWebGl.prototype.newModel =  function(result, piece, i){
+	this.models[piece.alias] = new Models(this.gl, piece.initialPosition, i, result["vertices"].slice(), result["colors"].slice());
 };
 
 // WebGL Initialization
