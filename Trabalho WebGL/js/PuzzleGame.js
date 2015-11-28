@@ -4,8 +4,6 @@ var webgl = null;
 
 var puzzles_json = null;
 
-// first puzzle
-
 $.ajax({
   url: 'puzzles.json',
   type: 'get',
@@ -29,14 +27,7 @@ for(var i=0; i<puzzles_json.puzzles.length; i++){
 		var finalP = new Position(finalP_tmp.tx, finalP_tmp.ty, finalP_tmp.tz,
 								 						  finalP_tmp.angleXX, finalP_tmp.angleYY, finalP_tmp.angleZZ);
 
-		var piece = null;
-
-		for(var z=0; z<puzzles_json.pieces.length; z++){
-			if(puzzles_json.pieces[z].alias == puzzles_json.puzzles[i].pieces[j].alias){
-				piece = puzzles_json.pieces[z];
-				break;
-			}
-		}
+		var piece = puzzles_json.puzzles[i].pieces[j];
 
 		puzzles[i].addPiece(new Piece(piece.url,
 																  piece.alias,
