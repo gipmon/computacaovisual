@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="css/notice.css">
 	<link rel="stylesheet" type="text/css" href="css/confetti.css">
+	<link rel="stylesheet" type="text/css" href="css/microscope.css">
 	<link href="http://www.ua.pt/images/ua.ico" rel="shortcut icon" />
 
 </head>
@@ -70,8 +71,8 @@
 			    <div class="well">
 						<h4>Puzzle</h4>
 		    		<a data-toggle="tooltip" data-placement="top" title="Try to make a high score!" id="aBtn" class="btn btn-default orange-circle-button pull-right" href="#"><h2 id="score">1</h2><br /><span id="spanBtn" class="orange-circle-greater-than"></span></a>
-						<a href="#" data-toggle="modal" data-target="#imgModal">
-							<img id="puzzleImg" style="max-width: 170px; max-height: 75px" />
+						<a href="#">
+							<img id="puzzleImg" data-toggle="magnify" style="max-width: 170px; max-height: 75px" />
 						</a>
 			      <h4>Select the piece</h4>
 						<div id="btns">
@@ -145,24 +146,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<!-- Modal -->
-	<div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="modalLabel">Puzzle</h4>
-	      </div>
-	      <div class="modal-body text-center">
-					<img id="puzzleImgModal" />
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
 	</div>
 
 	<script id="shader-vs" type="x-shader/x-vertex">
@@ -274,6 +257,8 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/document.jquery.js"></script>
 	<script type="text/javascript" src="js/confetti.js"></script>
+	<script type="text/javascript" src="js/microscope.js"></script>
+
 </body>
 
 </html>
