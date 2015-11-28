@@ -21,6 +21,9 @@
 
 <body onload="runWebGL();">
 	<div id="confetti" style="z-index: 10;"></div>
+	<div id="nextLevel" style="z-index: 11; position: absolute;left: 37%;top: 42%; display: none">
+		<button type="button" id="nextLevelBtn" class="btn btn-success btn-lg btn3d"><strong>I AM READY, GO TO THE NEXT LEVEL <i class="fa fa-hand-peace-o"></i></strong></button>
+	</div>
 	<div class="container-fluid">
 		<nav class="navbar navbar-default">
       <div class="container">
@@ -101,7 +104,7 @@
 								</td>
 							</tr>
 						</table>
-						<h4>Game state</h4>
+						<h4>Puzzle state</h4>
 						<div id="noticeMessage">
 							<div  id="informationNotice" class="notice notice-sm">
 					    	<strong>Unfinished!</strong> Please move the pieces for the correct place.
