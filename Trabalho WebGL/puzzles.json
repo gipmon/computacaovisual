@@ -159,7 +159,7 @@
         },
         {
           "alias": "paralelepipedo",
-          "url": "modelos/puzzle3/paralelepipedo.txt",
+          "url": "modelos/puzzle3/paralelepipedoGreen.txt",
           "humanName": "Paralelepipedo",
           "initialPosition" : {
             "tx": 0.8,
@@ -186,8 +186,8 @@
       "pieces" : [
         {
           "alias": "paralelepipedo1",
-          "url": "modelos/puzzle3/paralelepipedo.txt",
-          "humanName": "Paralelepipedo1",
+          "url": "modelos/puzzle3/paralelepipedoGreen.txt",
+          "humanName": "Paralelepipedo Green",
           "initialPosition" : {
             "tx": 0.2,
             "ty": 0.4,
@@ -207,8 +207,8 @@
         },
         {
           "alias": "paralelepipedo2",
-          "url": "modelos/puzzle3/paralelepipedo.txt",
-          "humanName": "Paralelepipedo2",
+          "url": "modelos/puzzle3/paralelepipedoBlue.txt",
+          "humanName": "Paralelepipedo Blue",
           "initialPosition" : {
             "tx": 0.3,
             "ty": -0.7,
@@ -249,8 +249,8 @@
         },
         {
           "alias": "paralelepipedo3",
-          "url": "modelos/puzzle3/paralelepipedo.txt",
-          "humanName": "Paralelepipedo3",
+          "url": "modelos/puzzle3/paralelepipedoRed.txt",
+          "humanName": "Paralelepipedo Red",
           "initialPosition" : {
             "tx": -0.4,
             "ty": 0.6,
@@ -270,8 +270,8 @@
         },
         {
           "alias": "paralelepipedo4",
-          "url": "modelos/puzzle3/paralelepipedo.txt",
-          "humanName": "Paralelepipedo4",
+          "url": "modelos/puzzle3/paralelepipedoGrey.txt",
+          "humanName": "Paralelepipedo Grey",
           "initialPosition" : {
             "tx": 0.0,
             "ty": 0.0,
@@ -291,8 +291,8 @@
         },
         {
           "alias": "paralelepipedo5",
-          "url": "modelos/puzzle3/paralelepipedo.txt",
-          "humanName": "Paralelepipedo5",
+          "url": "modelos/puzzle3/paralelepipedoYellow.txt",
+          "humanName": "Paralelepipedo Yellow",
           "initialPosition" : {
             "tx": 0.8,
             "ty": 0.4,
