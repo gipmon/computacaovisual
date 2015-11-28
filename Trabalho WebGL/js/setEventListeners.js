@@ -37,6 +37,49 @@ function setEventListeners(){
   	setEventListeners();
   });
 
+  (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id))
+          return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_EN/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  window.fbAsyncInit = function() {
+      FB.init({
+          appId: '1121300931213333',
+          status: true,
+          xfbml: true,
+          cookie: true
+      });
+  };
+
+  $('#aBtn').click(function() {
+      FB.ui({
+          method: 'feed',
+          name: 'I made '+$("#score").text()+' points in the Puzzle game!',
+          link: 'http://puzzle.rafaelferreira.pt/',
+          picture: 'http://puzzle-gustdev.rhcloud.com/img/logo.png',
+          description: 'The Puzzle is a game made by two students from the University of Aveiro for the course Visual Computation. Made by Rafael Ferreira and Rodrigo Cunha'
+      });
+  });
+
+  $('#endLevelsBtn').click(function() {
+      $("#endLevels").hide();
+  		$("#confetti").hide();
+  		confetti.stop();
+      
+      FB.ui({
+          method: 'feed',
+          name: 'I just finished all the puzzles of the Puzzle game!',
+          link: 'http://puzzle.rafaelferreira.pt/',
+          picture: 'http://puzzle-gustdev.rhcloud.com/img/logo.png',
+          description: 'The Puzzle is a game made by two students from the University of Aveiro for the course Visual Computation. Made by Rafael Ferreira and Rodrigo Cunha'
+      });
+  });
+
   $("#pausePosition").click(function(){
     clearInterval(timeoutGoAnimation);
     $(this).hide();
