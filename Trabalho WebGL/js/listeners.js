@@ -3,14 +3,38 @@ var deslocamento = 0.01;
 function setEventListeners(){
   var angle = 45;
 
-  var timeoutGo = null;
+  var timeoutGoAnimation = null;
 
   $("#correctPosition").click(function(){
-    timeoutGo = setTimeout(function () {
+    timeoutGoAnimation = setInterval(function () {
       if(webgl.models[selectedCube].tx.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tx){
+        webgl.models[selectedCube].tx -= deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].tx.round(2) < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tx) {
+        webgl.models[selectedCube].tx += deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if(webgl.models[selectedCube].ty.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.ty){
+        webgl.models[selectedCube].ty -= deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].ty.round(2) < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.ty) {
+        webgl.models[selectedCube].ty += deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if(webgl.models[selectedCube].tz.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tz){
+        webgl.models[selectedCube].tz -= deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].tz.round(2) < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tz) {
+        webgl.models[selectedCube].tz += deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else{
+        clearInterval(timeoutGoAnimation);
       }
-      console.log(webgl);
-    }, 10);
+    }, 100);
   });
 
   $("#xM45").click(function(){
