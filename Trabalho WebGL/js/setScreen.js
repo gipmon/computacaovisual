@@ -12,7 +12,6 @@ function setScreenPuzzle(puzzle){
   $("#btns").html("");
 
   for(var i=0; i<puzzle.pieces.length; i++){
-    console.log(1);
     $("#score").text(parseInt($("#score").text())+500);
     $("#btns").append('<button id="'+ puzzle.pieces[i].alias + 'Btn" class="btn btn-'+classes[classes_i]+' btn-sm btn3d">'+puzzle.pieces[i].humanName+'</button>');
 

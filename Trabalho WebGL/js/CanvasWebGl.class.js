@@ -92,6 +92,8 @@ CanvasWebGl.prototype.checkIsFinished = function(){
 		$("#aBtn").removeClass("orange-circle-button");
 		$("#spanBtn").addClass("succcess-circle-greater-than");
 		$("#spanBtn").removeClass("orange-circle-greater-than");
+		$("#confetti").show();
+		confetti.start();
 	}else{
 	  $("#informationNotice").show();
 	  $("#successNotice").hide();
@@ -99,6 +101,8 @@ CanvasWebGl.prototype.checkIsFinished = function(){
 		$("#aBtn").addClass("orange-circle-button");
 		$("#spanBtn").removeClass("succcess-circle-greater-than");
 		$("#spanBtn").addClass("orange-circle-greater-than");
+		$("#confetti").hide();
+		confetti.stop();
 	}
 };
 
