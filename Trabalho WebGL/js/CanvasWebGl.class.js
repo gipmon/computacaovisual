@@ -94,7 +94,11 @@ CanvasWebGl.prototype.checkIsFinished = function(){
 		$("#aBtn").removeClass("orange-circle-button");
 		$("#spanBtn").addClass("succcess-circle-greater-than");
 		$("#spanBtn").removeClass("orange-circle-greater-than");
-	  $("#nextLevel").show();
+		if(selectedPuzzle==(puzzles.length-1)){
+		  $("#endLevels").show();
+		}else{
+		  $("#nextLevel").show();
+		}
 		$("#confetti").show();
 		confetti.start();
 	}else{

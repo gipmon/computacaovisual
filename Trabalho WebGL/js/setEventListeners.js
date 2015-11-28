@@ -7,11 +7,34 @@ function setEventListeners(){
 
   var timeoutGoAnimation = null;
 
+  $("a[data-toggle='nextLevel']").click(function(){
+    var puzzleName = $(this).attr("href").replace("#", "");
+
+    for(var i=0; i<puzzles.length; i++){
+      if(puzzles[i].humanName==puzzleName){
+        break;
+      }
+    }
+
+    selectedPuzzle = i;
+
+    $("body").unbind();
+  	webgl = new CanvasWebGl(puzzles[selectedPuzzle]);
+   	setScreenPuzzle(puzzles[selectedPuzzle]);
+  	setEventListeners();
+  });
+
   $("#nextLevelBtn").click(function(){
     $("#nextLevel").hide();
 		$("#confetti").hide();
 		confetti.stop();
+
     // go to the next level
+    selectedPuzzle = ++i;
+    $("body").unbind();
+  	webgl = new CanvasWebGl(puzzles[selectedPuzzle]);
+   	setScreenPuzzle(puzzles[selectedPuzzle]);
+  	setEventListeners();
   });
 
   $("#pausePosition").click(function(){

@@ -6,10 +6,13 @@ function setScreenPuzzle(puzzle){
 
   $("#puzzleImg").attr("src", puzzle.image);
   $("#puzzleImgModal").attr("src", puzzle.image);
+  $("#puzzleHumanName").text(puzzle.humanName);
 
   selectedCube = puzzle.pieces[0].alias;
 
   $("#btns").html("");
+
+  $("#score").text('1');
 
   for(var i=0; i<puzzle.pieces.length; i++){
     $("#score").text(parseInt($("#score").text())+500);
