@@ -144,7 +144,10 @@ function setEventListeners(){
       for(var model in webgl.models){
         webgl.models[model].globalAngleXX += radians( 10 * deltaX);
         webgl.models[model].globalAngleYY += radians( 10 * deltaY);
+
       }
+      webgl.back.globalAngleXX += radians( 10 * deltaX);
+      webgl.back.globalAngleYY += radians( 10 * deltaY);
 
       webgl.drawScene();
 

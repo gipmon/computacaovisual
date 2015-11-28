@@ -1,3 +1,4 @@
+var texture;
 function Models(gl, initialPosition, vertices, colors, background){
   this.gl = gl;
   this.vertices = vertices;
@@ -21,11 +22,15 @@ function Models(gl, initialPosition, vertices, colors, background){
 	this.angleYY = initialPosition.angleYY;
 	this.angleZZ = initialPosition.angleZZ;
 
-	this.triangleVertexPositionBuffer = this.gl.createBuffer();
-	this.triangleVertexColorBuffer = this.gl.createBuffer();
+  if(!this.background){
+    this.triangleVertexPositionBuffer = this.gl.createBuffer();
+  	this.triangleVertexColorBuffer = this.gl.createBuffer();
+  }
 
   if(this.background){
+    console.log("entrei")
     this.cubeVertexTextureCoordBuffer = this.gl.createBuffer();
+    this.cubeVertexPositionBuffer = gl.createBuffer();
 
     this.textureCoords = [
                           0.0, 0.0,
@@ -34,30 +39,27 @@ function Models(gl, initialPosition, vertices, colors, background){
                           0.0, 1.0,
                           ];
 
-    var textureVertexIndices = [
+    this.textureVertexIndices = [
         0, 1, 2,      0, 2, 3,
     ];
 
     this.cubeVertexIndexBuffer = this.gl.createBuffer();
-    this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.cubeVertexIndexBuffer);
-    this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(textureVertexIndices),
-                       this.gl.STATIC_DRAW);
-    this.cubeVertexIndexBuffer.itemSize = 1;
-    this.cubeVertexIndexBuffer.numItems = 6;
+
 
     function handleTextureLoaded(texture) {
       gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
       gl.bindTexture(gl.TEXTURE_2D, null);
     }
 
-    this.texture = gl.createTexture();
-    this.texture.image = new Image();
-    this.texture.onload = function() { handleTextureLoaded(this.texture); }
-    this.texture.image.src = "img/background.jpg";
+    texture = gl.createTexture();
+    texture.image = new Image();
+    console.log(texture)
+    texture.image.onload = function() { handleTextureLoaded(texture); }
+    texture.image.src = "img/NeHe.gif";
   }else{
 
   }
@@ -65,35 +67,52 @@ function Models(gl, initialPosition, vertices, colors, background){
 
 // Handling the Vertex and the Color Buffers
 Models.prototype.initBuffers = function(){
-	// Coordinates
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
-	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
-	this.triangleVertexPositionBuffer.itemSize = 3;
-	this.triangleVertexPositionBuffer.numItems = this.vertices.length / 3;
+  if(!this.background){
+    // Coordinates
+  	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
+  	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+  	this.triangleVertexPositionBuffer.itemSize = 3;
+  	this.triangleVertexPositionBuffer.numItems = this.vertices.length / 3;
 
-	// Associating to the vertex shader
-	this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
-                        			this.triangleVertexPositionBuffer.itemSize,
-                        			this.gl.FLOAT, false, 0, 0);
+  	// Associating to the vertex shader
+  	this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
+                          			this.triangleVertexPositionBuffer.itemSize,
+                          			this.gl.FLOAT, false, 0, 0);
 
-	// Colors
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
-	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
-	this.triangleVertexColorBuffer.itemSize = 3;
-	this.triangleVertexColorBuffer.numItems = this.colors.length / 3;
+  	// Colors
+  	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
+  	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+  	this.triangleVertexColorBuffer.itemSize = 3;
+  	this.triangleVertexColorBuffer.numItems = this.colors.length / 3;
+
+  }
 
   if(this.background){
+  	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexPositionBuffer);
+  	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+  	this.cubeVertexPositionBuffer.itemSize = 3;
+  	this.cubeVertexPositionBuffer.numItems = this.vertices.length / 3;
+
     // Textures
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexTextureCoordBuffer);
     this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.textureCoords), this.gl.STATIC_DRAW);
     this.cubeVertexTextureCoordBuffer.itemSize = 2;
     this.cubeVertexTextureCoordBuffer.numItems = 4;
+
+    this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.cubeVertexIndexBuffer);
+    this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.textureVertexIndices),
+                       this.gl.STATIC_DRAW);
+    this.cubeVertexIndexBuffer.itemSize = 1;
+    this.cubeVertexIndexBuffer.numItems = 6;
   }
 
 	// Associating to the vertex shader
-	this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
-                        			this.triangleVertexColorBuffer.itemSize,
-                        			this.gl.FLOAT, false, 0, 0);
+  if(!this.background){
+    this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
+                          			this.triangleVertexColorBuffer.itemSize,
+                          			this.gl.FLOAT, false, 0, 0);
+  }
+
 
 	// enable depth test
 	this.gl.enable(this.gl.DEPTH_TEST);
@@ -114,18 +133,32 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 	var mvUniform = this.gl.getUniformLocation(this.shaderProgram, "uMVMatrix");
   this.gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
 
-	// Passing the Model View Matrix to apply the current transformation
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
-  this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
-                        			this.triangleVertexPositionBuffer.itemSize,
-                        			this.gl.FLOAT, false, 0, 0);
+  if(!this.background){
+    // Passing the Model View Matrix to apply the current transformation
+  	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
+    this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,
+                          			this.triangleVertexPositionBuffer.itemSize,
+                          			this.gl.FLOAT, false, 0, 0);
+
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
+
+    this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
+                                this.triangleVertexColorBuffer.itemSize,
+                                this.gl.FLOAT, false, 0, 0);
+   	this.gl.drawArrays(this.gl.TRIANGLES, 0, this.triangleVertexPositionBuffer.numItems);
+  }
+
 
   if(this.background){
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexPositionBuffer);
+
+    this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute, this.cubeVertexPositionBuffer.itemSize, this.gl.FLOAT, false, 0, 0);
+
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexTextureCoordBuffer);
     this.gl.vertexAttribPointer(this.shaderProgram.textureCoordAttribute, this.cubeVertexTextureCoordBuffer.itemSize, this.gl.FLOAT, false, 0, 0);
 
     this.gl.activeTexture(this.gl.TEXTURE0);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
+    this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
 
     this.gl.uniform1i(this.shaderProgram.samplerUniform, 0);
 
@@ -135,19 +168,13 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 
 	  this.gl.drawElements(this.gl.TRIANGLES, this.cubeVertexIndexBuffer.numItems, this.gl.UNSIGNED_SHORT, 0);
   }else{
-  	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
 
-    this.gl.vertexAttribPointer(this.shaderProgram.vertexColorAttribute,
-                                this.triangleVertexColorBuffer.itemSize,
-                                this.gl.FLOAT, false, 0, 0);
-   	this.gl.drawArrays(this.gl.TRIANGLES, 0, this.triangleVertexPositionBuffer.numItems);
   }
-
 
 };
 
 Models.prototype.drawScene = function(sx, sy, sz){
-  this.shaderProgram = initShaders(this.gl);
+  this.shaderProgram = initShaders(this.gl, this.background);
   this.initBuffers();
 	//  Drawing the 3D scene
 	var pMatrix;

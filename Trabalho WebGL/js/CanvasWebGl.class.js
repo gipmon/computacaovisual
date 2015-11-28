@@ -25,7 +25,7 @@ function CanvasWebGl(puzzle){
 		this.newModel(parseTXTfile(this.puzzle.pieces[i].url), this.puzzle.pieces[i]);
 	}
 
-	//this.initBackground();
+	this.initBackground();
 	this.drawScene();
 }
 
@@ -94,12 +94,13 @@ CanvasWebGl.prototype.drawScene = function(){
 		this.models[model].drawScene(this.sx, this.sy, this.sz);
 	}
 
-	//this.back.drawScene(this.sx, this.sy, this.sz);
+	this.back.drawScene(this.sx, this.sy, this.sz);
 };
 
 CanvasWebGl.prototype.initBackground = function(){
 	var result = parseTXTfile("modelos/back.txt");
-	this.back = new Models(this.gl, [0, 0, 0], result["vertices"].slice(), result["colors"].slice(), true);
+	console.log(result);
+	this.back = new Models(this.gl, new Position(0,0,0,0,0,0), result["vertices"].slice(), [], true);
 };
 
 CanvasWebGl.prototype.newModel =  function(result, piece){
