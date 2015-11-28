@@ -1,6 +1,8 @@
-var texture;
-function Models(gl, initialPosition, vertices, colors, background){
+function Models(gl, initialPosition, i, vertices, colors, background){
+
   this.gl = gl;
+  this.i = i;
+  
   this.vertices = vertices;
   this.colors = colors;
   this.globalAngleYY = 0.0;
@@ -11,6 +13,8 @@ function Models(gl, initialPosition, vertices, colors, background){
   }else{
     this.background = false;
   }
+
+  this.initialPosition = initialPosition;
 
 	// The translation vector
 	this.tx = initialPosition.tx;
@@ -64,6 +68,16 @@ function Models(gl, initialPosition, vertices, colors, background){
 
   }
 }
+
+Models.prototype.resetValues = function(){
+  this.tx = this.initialPosition.tx;
+  this.ty = this.initialPosition.ty;
+  this.tz = this.initialPosition.tz;
+
+  this.angleXX = this.initialPosition.angleXX;
+  this.angleYY = this.initialPosition.angleYY;
+  this.angleZZ = this.initialPosition.angleZZ;
+};
 
 // Handling the Vertex and the Color Buffers
 Models.prototype.initBuffers = function(){

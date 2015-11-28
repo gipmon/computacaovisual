@@ -19,4 +19,7 @@ $(document).ready(function () {
     	}
     	btn.closest('.number-spinner').find('input').val(newVal);
     });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
 });

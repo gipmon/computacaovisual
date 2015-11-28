@@ -1,13 +1,13 @@
 /* http://bootsnipp.com/snippets/featured/3d-buttons-effects-fix */
 .btn3d {
-    position:relative;
-    top: -6px;
-    border:0;
-     transition: all 40ms linear;
-     margin-top:10px;
-     margin-bottom:10px;
-     margin-left:2px;
-     margin-right:2px;
+  position:relative;
+  top: -6px;
+  border:0;
+  transition: all 40ms linear;
+  margin-top:10px;
+  margin-bottom:10px;
+  margin-left:2px;
+  margin-right:2px;
 }
 .btn3d:active:focus,
 .btn3d:focus:hover,
@@ -15,6 +15,12 @@
     -moz-outline-style:none;
          outline:medium none;
 }
+
+.btn3ddisabled{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
 .btn3d:active, .btn3d.active {
     top:2px;
 }

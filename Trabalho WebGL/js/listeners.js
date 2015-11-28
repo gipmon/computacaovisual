@@ -3,34 +3,86 @@ var deslocamento = 0.01;
 function setEventListeners(){
   var angle = 45;
 
+  var timeoutGoAnimation = null;
+
+  $("#correctPosition").click(function(){
+    timeoutGoAnimation = setInterval(function () {
+      if(webgl.models[selectedCube].tx.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tx){
+        webgl.models[selectedCube].tx -= deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].tx.round(2) < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tx) {
+        webgl.models[selectedCube].tx += deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if(webgl.models[selectedCube].ty.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.ty){
+        webgl.models[selectedCube].ty -= deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].ty.round(2) < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.ty) {
+        webgl.models[selectedCube].ty += deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if(webgl.models[selectedCube].tz.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tz){
+        webgl.models[selectedCube].tz -= deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].tz.round(2) < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tz) {
+        webgl.models[selectedCube].tz += deslocamento;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else{
+        clearInterval(timeoutGoAnimation);
+      }
+    }, 100);
+  });
+
   $("#xM45").click(function(){
-    webgl.models[selectedCube].angleXX += angle;
+    webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX + angle) % 360;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#xm45").click(function(){
-    webgl.models[selectedCube].angleXX -= angle;
+    webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX - angle) % 360;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#yM45").click(function(){
-    webgl.models[selectedCube].angleYY += angle;
+    webgl.models[selectedCube].angleYY = (webgl.models[selectedCube].angleYY + angle) % 360;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#ym45").click(function(){
-    webgl.models[selectedCube].angleYY -= angle;
+    webgl.models[selectedCube].angleYY  = (webgl.models[selectedCube].angleYY - angle) % 360;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#zM45").click(function(){
-    webgl.models[selectedCube].angleZZ += angle;
+    webgl.models[selectedCube].angleZZ = (webgl.models[selectedCube].angleZZ + angle) % 360;
     webgl.drawScene();
+    updateFigurePosition();
   });
 
   $("#zm45").click(function(){
-    webgl.models[selectedCube].angleZZ -= angle;
+    webgl.models[selectedCube].angleZZ  = (webgl.models[selectedCube].angleZZ - angle) % 360;
     webgl.drawScene();
+    updateFigurePosition();
+  });
+
+  $("#resetLevel").click(function(){
+    webgl.resetValues();
+    webgl.drawScene();
+    updateFigurePosition();
+  });
+
+  $("#resetValues").click(function(){
+    webgl.models[selectedCube].resetValues();
+    webgl.drawScene();
+    updateFigurePosition();
   });
 
   // keydown events
@@ -41,11 +93,6 @@ function setEventListeners(){
              40: false, // down key
              90: false, // z key
             };
-
-  // deslocamento
-  $(document).on('click', '.number-spinner button', function () {
-    deslocamento = 0.01 * $("#desc").val();
-  });
 
   $(document).keydown(function(e) {
     function testConditionScreen(coordinate, increment){
@@ -58,36 +105,42 @@ function setEventListeners(){
           if(testConditionScreen(webgl.models[selectedCube].tz, 1)){
             webgl.models[selectedCube].tz += deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[90] && map[40]) {
           if(testConditionScreen(webgl.models[selectedCube].tz, -1)){
             webgl.models[selectedCube].tz -= deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[37]){ // left
           if(testConditionScreen(webgl.models[selectedCube].tx, -1)){
             webgl.models[selectedCube].tx -= deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[38]) { // up
           if(testConditionScreen(webgl.models[selectedCube].ty, 1)){
             webgl.models[selectedCube].ty += deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[39]) { // right
           if(testConditionScreen(webgl.models[selectedCube].tx, 1)){
             webgl.models[selectedCube].tx += deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }else if (map[40]) { // down
           if(testConditionScreen(webgl.models[selectedCube].ty, -1)){
             webgl.models[selectedCube].ty -= deslocamento;
             webgl.drawScene();
+            updateFigurePosition();
           }
           return false;
         }
