@@ -38,7 +38,7 @@ for(var i=0; i<puzzles_json.puzzles.length; i++){
 }
 
 function runWebGL(){
-	webgl = new CanvasWebGl(puzzles[0]);
- 	setScreenPuzzle(puzzles[0]);
+	webgl = new CanvasWebGl(puzzles[2]);
+ 	setScreenPuzzle(puzzles[2]);
 	setEventListeners();
 }

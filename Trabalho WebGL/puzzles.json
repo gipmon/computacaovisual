@@ -47,6 +47,270 @@
           }
         }
       ]
+    },
+    {
+      "humanName": "Level 2",
+      "image" : "img/puzzles/puzzle1.png",
+      "pieces" : [
+        {
+          "alias": "triangulo1",
+          "url": "modelos/puzzle3/triangulo.txt",
+          "humanName": "Triângulo1",
+          "initialPosition" : {
+            "tx": 0.2,
+            "ty": 0.4,
+            "tz": 0.5,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0.05,
+            "ty": 0.22,
+            "tz": 0,
+            "angleXX": -90,
+            "angleYY": 0,
+            "angleZZ": 225
+          }
+        },
+        {
+          "alias": "triangulo2",
+          "url": "modelos/puzzle3/triangulo.txt",
+          "humanName": "Triângulo2",
+          "initialPosition" : {
+            "tx": 0.3,
+            "ty": -0.7,
+            "tz": 0.2,
+            "angleXX": 135,
+            "angleYY": 90,
+            "angleZZ": -45
+          },
+          "finalPosition" : {
+            "tx": -0.05,
+            "ty": 0.22,
+            "tz": 0,
+            "angleXX": -90,
+            "angleYY": 180,
+            "angleZZ": 135
+          }
+        },
+        {
+          "alias": "cubo1",
+          "url": "modelos/puzzle3/cubo_1.txt",
+          "humanName": "Cubo1",
+          "initialPosition" : {
+            "tx": -0.2,
+            "ty": 0,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": -0.12,
+            "ty": 0.15,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": -45
+          }
+        },
+        {
+          "alias": "cubo2",
+          "url": "modelos/puzzle3/cubo_1.txt",
+          "humanName": "Cubo2",
+          "initialPosition" : {
+            "tx": -0.4,
+            "ty": 0.6,
+            "tz": 0,
+            "angleXX": 45,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0.12,
+            "ty": 0.15,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 45
+          }
+        },
+        {
+          "alias": "piramideQuadrangular",
+          "url": "modelos/puzzle3/piramideQuadrangular.txt",
+          "humanName": "Piramide Quadrangular",
+          "initialPosition" : {
+            "tx": 0.0,
+            "ty": 0.0,
+            "tz": 0,
+            "angleXX": 45,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0,
+            "ty": 0.34,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          }
+        },
+        {
+          "alias": "paralelepipedo",
+          "url": "modelos/puzzle3/paralelepipedo.txt",
+          "humanName": "Paralelepipedo",
+          "initialPosition" : {
+            "tx": 0.8,
+            "ty": 0.4,
+            "tz": 0,
+            "angleXX": 45,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0,
+            "ty": 0.19,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          }
+        }
+      ]
+    },
+    {
+      "humanName": "Level 3",
+      "image" : "img/puzzles/puzzle1.png",
+      "pieces" : [
+        {
+          "alias": "paralelepipedo1",
+          "url": "modelos/puzzle3/paralelepipedo.txt",
+          "humanName": "Paralelepipedo1",
+          "initialPosition" : {
+            "tx": 0.2,
+            "ty": 0.4,
+            "tz": 0.5,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": -0.38,
+            "ty": 0.02,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          }
+        },
+        {
+          "alias": "paralelepipedo2",
+          "url": "modelos/puzzle3/paralelepipedo.txt",
+          "humanName": "Paralelepipedo2",
+          "initialPosition" : {
+            "tx": 0.3,
+            "ty": -0.7,
+            "tz": 0.2,
+            "angleXX": 135,
+            "angleYY": 90,
+            "angleZZ": -45
+          },
+          "finalPosition" : {
+            "tx": -0.33,
+            "ty": -0.13,
+            "tz": 0,
+            "angleXX": 135,
+            "angleYY": 90,
+            "angleZZ": 45
+          }
+        },
+        {
+          "alias": "cubo1",
+          "url": "modelos/puzzle3/cubo_1.txt",
+          "humanName": "Cubo1",
+          "initialPosition" : {
+            "tx": -0.2,
+            "ty": 0,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0.16,
+            "ty": -0.11,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 45
+          }
+        },
+        {
+          "alias": "paralelepipedo3",
+          "url": "modelos/puzzle3/paralelepipedo.txt",
+          "humanName": "Paralelepipedo3",
+          "initialPosition" : {
+            "tx": -0.4,
+            "ty": 0.6,
+            "tz": 0,
+            "angleXX": 45,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": -0.33,
+            "ty": 0.17,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": -90
+          }
+        },
+        {
+          "alias": "paralelepipedo4",
+          "url": "modelos/puzzle3/paralelepipedo.txt",
+          "humanName": "Paralelepipedo4",
+          "initialPosition" : {
+            "tx": 0.0,
+            "ty": 0.0,
+            "tz": 0,
+            "angleXX": 45,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0.06,
+            "ty": -0.01,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 45
+          }
+        },
+        {
+          "alias": "paralelepipedo5",
+          "url": "modelos/puzzle3/paralelepipedo.txt",
+          "humanName": "Paralelepipedo5",
+          "initialPosition" : {
+            "tx": 0.8,
+            "ty": 0.4,
+            "tz": 0,
+            "angleXX": 45,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0.26,
+            "ty": -0.01,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 135
+          }
+        }
+      ]
     }
   ]
 }
