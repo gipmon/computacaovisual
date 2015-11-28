@@ -1,5 +1,5 @@
 var texture, gl, tmp;
-function Models(gl, initialPosition, i, vertices, colors, background, sx, sy, sz){
+function Models(gl, initialPosition, i, vertices, colors, background, sx, sy, sz, globalTz){
 
   this.gl = gl;
   this.i = i;
@@ -7,6 +7,8 @@ function Models(gl, initialPosition, i, vertices, colors, background, sx, sy, sz
   this.sx = sx;
   this.sy = sy;
   this.sz = sz;
+
+  this.globalTz = globalTz;
 
   this.vertices = vertices;
   this.colors = colors;
@@ -176,7 +178,7 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 
 };
 
-Models.prototype.drawScene = function(sx, sy, sz){
+Models.prototype.drawScene = function(sx, sy, sz, globalTz){
   this.shaderProgram = initShaders(this.gl, this.background);
   this.initBuffers();
 	//  Drawing the 3D scene
@@ -187,9 +189,6 @@ Models.prototype.drawScene = function(sx, sy, sz){
 	// Viewer is at (0,0,0)
 	// Ensure that the model is "inside" the view volume
 	pMatrix = perspective(45, 1, 0.05, 15);
-
-	// Global transformation!
-	globalTz = -2.5;
 
 	// Passing the Projection Matrix to apply the current projection
 	var pUniform = this.gl.getUniformLocation(this.shaderProgram, "uPMatrix");
@@ -225,14 +224,15 @@ Models.prototype.initTexture = function(tmpArray){
   sx = this.sx;
   sy = this.sy;
   sz = this.sz;
+  globalTz = this.globalTz;
 
   texture = gl.createTexture();
   texture.image = new Image();
   texture.image.onload = function() {
     handleTextureLoaded(texture);
-    tmp.drawScene(sx,sy, sz);
+    tmp.drawScene(sx,sy, sz, globalTz);
     for(var model in tmpArray){
-      tmpArray[model].drawScene(sx, sy, sz);
+      tmpArray[model].drawScene(sx, sy, sz, globalTz);
     }
   }
   texture.image.src = "background.jpg";

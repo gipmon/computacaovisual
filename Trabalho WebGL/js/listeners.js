@@ -123,6 +123,16 @@ function setEventListeners(){
     updateFigurePosition();
   });
 
+  $("#zoomm").click(function(){
+    webgl.globalTz -= 0.1
+    webgl.drawScene();
+  });
+
+  $("#zoomM").click(function(){
+    webgl.globalTz += 0.1
+    webgl.drawScene();
+  });
+
   // keydown events
 
   var map = {37: false, // left key

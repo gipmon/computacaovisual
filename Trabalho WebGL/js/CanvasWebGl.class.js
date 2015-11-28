@@ -44,7 +44,7 @@ CanvasWebGl.prototype.resetValues = function(){
 CanvasWebGl.prototype.resetGlobalValues = function() {
 	// The GLOBAL transformation parameters
 	this.globalAngleYY = 0.0;
-	this.globalTz = 0.0;
+	this.globalTz = -2.5;
 
 	// The scaling factors
 	this.sx = 0.5;
@@ -114,21 +114,21 @@ CanvasWebGl.prototype.drawScene = function(){
 	// Clearing the frame-buffer and the depth-buffer
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 	for(var model in this.models){
-		this.models[model].drawScene(this.sx, this.sy, this.sz);
+		this.models[model].drawScene(this.sx, this.sy, this.sz, this.globalTz);
 
 	}
 
-	this.back.drawScene(this.sx, this.sy, this.sz);
+	this.back.drawScene(this.sx, this.sy, this.sz, this.globalTz);
 
 };
 
 CanvasWebGl.prototype.initBackground = function(){
 	var result = parseTXTfile("modelos/back.txt");
-	this.back = new Models(this.gl, new Position(0,0,0,0,0,0), 0, result["vertices"].slice(), [], true, this.sx, this.sy, this.sz);
+	this.back = new Models(this.gl, new Position(0,0,0,0,0,0), 0, result["vertices"].slice(), [], true, this.sx, this.sy, this.sz, this.globalTz);
 };
 
 CanvasWebGl.prototype.newModel =  function(result, piece, i){
-	this.models[piece.alias] = new Models(this.gl, piece.initialPosition, i, result["vertices"].slice(), result["colors"].slice(), false, this.sx, this.sy, this.sz);
+	this.models[piece.alias] = new Models(this.gl, piece.initialPosition, i, result["vertices"].slice(), result["colors"].slice(), false, this.sx, this.sy, this.sz, this.globalTz);
 };
 
 // WebGL Initialization
