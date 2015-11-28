@@ -1,11 +1,12 @@
 var deslocamento = 0.01;
+var angle = 45;
 
 function setEventListeners(){
-  var angle = 45;
-
   var timeoutGoAnimation = null;
 
   $("#correctPosition").click(function(){
+    var intervalTime = 100;
+
     timeoutGoAnimation = setInterval(function () {
       if(webgl.models[selectedCube].tx.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tx){
         webgl.models[selectedCube].tx -= deslocamento;
@@ -31,10 +32,34 @@ function setEventListeners(){
         webgl.models[selectedCube].tz += deslocamento;
         webgl.drawScene();
         updateFigurePosition();
+      }else if (webgl.models[selectedCube].angleXX < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.angleXX) {
+        webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX + angle) % 360;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].angleYY < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.angleYY) {
+        webgl.models[selectedCube].angleYY = (webgl.models[selectedCube].angleYY + angle) % 360;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].angleZZ < webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.angleZZ) {
+        webgl.models[selectedCube].angleZZ = (webgl.models[selectedCube].angleZZ + angle) % 360;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].angleXX > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.angleXX) {
+        webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX - angle) % 360;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].angleYY > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.angleYY) {
+        webgl.models[selectedCube].angleYY = (webgl.models[selectedCube].angleYY - angle) % 360;
+        webgl.drawScene();
+        updateFigurePosition();
+      }else if (webgl.models[selectedCube].angleZZ > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.angleZZ) {
+        webgl.models[selectedCube].angleZZ = (webgl.models[selectedCube].angleZZ - angle) % 360;
+        webgl.drawScene();
+        updateFigurePosition();
       }else{
         clearInterval(timeoutGoAnimation);
       }
-    }, 100);
+    }, intervalTime);
   });
 
   $("#xM45").click(function(){

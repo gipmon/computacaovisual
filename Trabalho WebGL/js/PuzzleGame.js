@@ -9,8 +9,8 @@ var puzzle1 = new Puzzle("img/puzzles/puzzle1.png");
 puzzle1.addPiece(new Piece("modelos/puzzle_triangulocubo/triangulo.txt",
 													 "triangulo",
 												 	 "Triângulo",
-												 	 new Position(0, 0, 0,
-													 							0, 0, 0),
+												 	 new Position(0.2, 0.4, 0.5,
+													 							225, 45, 45),
  												 	 new Position(0, 0, 0,
  													 							0, 0, 0)));
 
