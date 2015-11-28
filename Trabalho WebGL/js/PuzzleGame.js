@@ -14,7 +14,7 @@ $.ajax({
   }
 });
 
-var puzzles = {};
+var puzzles = [];
 
 for(var i=0; i<puzzles_json.puzzles.length; i++){
 	puzzles[i] = new Puzzle(puzzles_json.puzzles[i].image, puzzles_json.puzzles[i].humanName);
@@ -35,10 +35,14 @@ for(var i=0; i<puzzles_json.puzzles.length; i++){
 															 	  initP,
 			 												 	  finalP));
 	}
+
+	$("#menuLevels").append('<li><a href="#'+puzzles[i].humanName+'" data-toggle="nextLevel">'+puzzles[i].humanName+'</a></li>');
 }
 
+var selectedPuzzle = 0;
+
 function runWebGL(){
-	webgl = new CanvasWebGl(puzzles[0]);
- 	setScreenPuzzle(puzzles[0]);
+	webgl = new CanvasWebGl(puzzles[selectedPuzzle]);
+ 	setScreenPuzzle(puzzles[selectedPuzzle]);
 	setEventListeners();
 }
