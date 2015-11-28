@@ -4,6 +4,9 @@ function setScreenPuzzle(puzzle){
   var classes = ["info", "warning", "success", "default"];
   var classes_i = 0;
 
+  $("#puzzleImg").attr("src", puzzle.image);
+  $("#puzzleImgModal").attr("src", puzzle.image);
+  
   selectedCube = puzzle.pieces[0].alias;
 
   $("#btns").html("");

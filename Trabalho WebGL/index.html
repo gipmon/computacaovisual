@@ -63,21 +63,23 @@
 			<div class="row">
 				<div class="col-lg-4">
 			    <div class="well">
-						<h4>Puzzle:</h4>
-						<img id="puzzleImg" src="img/puzzles/puzzle1.png" />
-			      <h4>Select the figure:</h4>
+						<h4>Puzzle</h4>
+						<a href="#" data-toggle="modal" data-target="#imgModal">
+							<img id="puzzleImg" style="max-width: 170px; max-height: 75px" />
+						</a>
+			      <h4>Select the figure</h4>
 						<div id="btns">
 						</div>
-						<h4>Figure position:</4>
+						<h4>Figure position</4>
 						<div class="input-group number-spinner">
-							<input type="text" id="posX" style="width: 50px; font-size: 8px;" data-toggle="tooltip" data-placement="top" title="Translation x" class="form-control text-center input-danger" value="0.4" readonly="true">
-							<input type="text" id="posY" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Translation y" class="form-control text-center input-danger" value="0.4" readonly="true">
-							<input type="text" id="posZ" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Translation z" class="form-control text-center input-danger" value="0.4" readonly="true">
-							<input type="text" id="angleX" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Angle X" class="form-control text-center input-danger" value="0.4" readonly="true">
-							<input type="text" id="angleY" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Angle Y" class="form-control text-center input-danger" value="0.4" readonly="true">
-							<input type="text" id="angleZ" style="width: 50px; font-size: 8px" data-toggle="tooltip" data-placement="top" title="Angle Z" class="form-control text-center input-danger" value="0.4" readonly="true">
+							<input type="text" id="posX" data-toggle="tooltip" data-placement="top" title="Translation x" class="form-control text-center input-danger input-text-position" value="0.4" readonly="true">
+							<input type="text" id="posY" data-toggle="tooltip" data-placement="top" title="Translation y" class="form-control text-center input-danger input-text-position" value="0.4" readonly="true">
+							<input type="text" id="posZ" data-toggle="tooltip" data-placement="top" title="Translation z" class="form-control text-center input-danger input-text-position" value="0.4" readonly="true">
+							<input type="text" id="angleX" data-toggle="tooltip" data-placement="top" title="Angle X" class="form-control text-center input-danger input-text-position" value="0.4" readonly="true">
+							<input type="text" id="angleY" data-toggle="tooltip" data-placement="top" title="Angle Y" class="form-control text-center input-danger input-text-position" value="0.4" readonly="true">
+							<input type="text" id="angleZ" data-toggle="tooltip" data-placement="top" title="Angle Z" class="form-control text-center input-danger input-text-position" value="0.4" readonly="true">
 						</div>
-						<h4>Controls:</h4>
+						<h4>Controls</h4>
 						<table>
 							<tr>
 								<td>
@@ -96,10 +98,19 @@
 								</td>
 							</tr>
 						</table>
+						<h4>Game state</h4>
+						<div id="noticeMessage">
+							<div  id="informationNotice" class="notice notice-sm">
+					    	<strong>Unfinished!</strong> Please move the pieces for the correct place.
+					    </div>
+							<div id="successNotice" class="notice notice-success notice-sm" style="display: none">
+					        <strong>Finished!</strong> Good! Go to the next level!!
+					    </div>
+						</div>
+						<h4>Helpers<h4/>
 						<table>
 							<tr>
 								<td colspan="2">
-									<br/>
 									<button id="correctPosition"  data-toggle="tooltip" data-placement="top" title="The piece will go to the correct position" class="btn btn-success btn-sm btn3d"><i class="fa fa-fast-forward"></i> <strong>Go to the correct position</strong></button>
 									<button id="pausePosition" style="display: none"  data-toggle="tooltip" data-placement="top" title="This will pause the animation" class="btn btn-warning btn-sm btn3d"><i class="fa fa-pause"></i> <strong>Pause the animation</strong></button>
 								</td>
@@ -113,15 +124,6 @@
 								</td>
 							</tr>
 						</table>
-						<h4>Game state:</h4>
-						<div id="noticeMessage">
-							<div  id="informationNotice" class="notice notice-sm">
-					    	<strong>Unfinished!</strong> Please move the pieces for the correct place.
-					    </div>
-							<div id="successNotice" class="notice notice-success notice-sm" style="display: none">
-					        <strong>Finished!</strong> Good! Go to the next level!!
-					    </div>
-						</div>
 			    </div>
 				</div>
 				<div class="col-lg-8 text-center">
@@ -133,6 +135,24 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="modalLabel">Puzzle</h4>
+	      </div>
+	      <div class="modal-body text-center">
+					<img id="puzzleImgModal" />
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 	<script id="shader-vs" type="x-shader/x-vertex">

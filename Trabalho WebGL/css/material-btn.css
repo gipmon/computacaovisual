@@ -5,6 +5,11 @@
   background-color:#f2dede !important;
 }
 
+.input-text-position{
+  width: 50px !important;
+  font-size: 8px;
+}
+
 /* http://bootsnipp.com/snippets/featured/fancy-navbar-login-sign-in-form */
 
 #login-dp{
