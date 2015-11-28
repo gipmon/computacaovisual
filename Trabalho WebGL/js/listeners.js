@@ -4,8 +4,17 @@ var angle = 45;
 function setEventListeners(){
   var timeoutGoAnimation = null;
 
+  $("#pausePosition").click(function(){
+    clearInterval(timeoutGoAnimation);
+    $(this).hide();
+    $("#correctPosition").show();
+  });
+
   $("#correctPosition").click(function(){
     var intervalTime = 100;
+
+    $(this).hide();
+    $("#pausePosition").show();
 
     timeoutGoAnimation = setInterval(function () {
       if(webgl.models[selectedCube].tx.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tx){
@@ -58,6 +67,8 @@ function setEventListeners(){
         updateFigurePosition();
       }else{
         clearInterval(timeoutGoAnimation);
+        $("#pausePosition").hide();
+        $("#correctPosition").show();
       }
     }, intervalTime);
   });

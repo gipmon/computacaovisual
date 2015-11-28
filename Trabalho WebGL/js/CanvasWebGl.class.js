@@ -88,9 +88,17 @@ CanvasWebGl.prototype.checkIsFinished = function(){
 	if(win){
 	  $("#informationNotice").hide();
 	  $("#successNotice").show();
+		$("#aBtn").addClass("success-circle-button");
+		$("#aBtn").removeClass("orange-circle-button");
+		$("#spanBtn").addClass("succcess-circle-greater-than");
+		$("#spanBtn").removeClass("orange-circle-greater-than");
 	}else{
 	  $("#informationNotice").show();
 	  $("#successNotice").hide();
+		$("#aBtn").removeClass("success-circle-button");
+		$("#aBtn").addClass("orange-circle-button");
+		$("#spanBtn").removeClass("succcess-circle-greater-than");
+		$("#spanBtn").addClass("orange-circle-greater-than");
 	}
 };
 

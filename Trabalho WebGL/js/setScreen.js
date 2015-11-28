@@ -4,11 +4,16 @@ function setScreenPuzzle(puzzle){
   var classes = ["info", "warning", "success", "default"];
   var classes_i = 0;
 
+  $("#puzzleImg").attr("src", puzzle.image);
+  $("#puzzleImgModal").attr("src", puzzle.image);
+
   selectedCube = puzzle.pieces[0].alias;
 
   $("#btns").html("");
 
   for(var i=0; i<puzzle.pieces.length; i++){
+    console.log(1);
+    $("#score").text(parseInt($("#score").text())+500);
     $("#btns").append('<button id="'+ puzzle.pieces[i].alias + 'Btn" class="btn btn-'+classes[classes_i]+' btn-sm btn3d">'+puzzle.pieces[i].humanName+'</button>');
 
     classes_i = (classes_i + 1) % classes.length;
@@ -44,6 +49,8 @@ function updateFigurePosition(){
   $("#posX").attr("value", webgl.models[selectedCube].tx.round(2));
   $("#posY").attr("value", webgl.models[selectedCube].ty.round(2));
   $("#posZ").attr("value", webgl.models[selectedCube].tz.round(2));
+
+  $("#score").text($("#score").text()-1);
 
   // background
   if(webgl.models[selectedCube].angleXX == webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.angleXX){
