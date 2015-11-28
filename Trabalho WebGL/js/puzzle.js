@@ -17,7 +17,8 @@ function Position(tx, ty, tz, angleXX, angleYY, angleZZ){
 	this.angleZZ = angleZZ;
 }
 
-function Puzzle(image){
+function Puzzle(image, humanName){
+	this.humanName = humanName;
 	this.image = image;
 	this.pieces = [];
 }

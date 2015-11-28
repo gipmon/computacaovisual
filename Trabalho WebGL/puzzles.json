@@ -1,0 +1,60 @@
+{
+  "pieces" : [
+    {
+      "alias": "triangulo",
+      "humanName": "Triângulo",
+      "url": "modelos/puzzle_triangulocubo/triangulo.txt"
+    },
+    {
+      "alias": "cubo",
+      "humanName": "Cubo",
+      "url": "modelos/puzzle_triangulocubo/cubo_1.txt"
+    }
+  ],
+  "puzzles" : [
+    {
+      "humanName": "Level 1",
+      "image" : "img/puzzles/puzzle1.png",
+      "pieces" : [
+        {
+          "alias": "triangulo",
+          "initialPosition" : {
+            "tx": 0.2,
+            "ty": 0.4,
+            "tz": 0.5,
+            "angleXX": 225,
+            "angleYY": 45,
+            "angleZZ": 45
+          },
+          "finalPosition" : {
+            "tx": 0,
+            "ty": 0,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          }
+        },
+        {
+          "alias": "cubo",
+          "initialPosition" : {
+            "tx": -0.2,
+            "ty": 0,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": -0.1,
+            "ty": 0,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          }
+        }
+      ]
+    }
+  ]
+}
