@@ -24,8 +24,10 @@ function CanvasWebGl(puzzle){
 	for(var i=0; i<this.puzzle.pieces.length; i++){
 		this.newModel(parseTXTfile(this.puzzle.pieces[i].url), this.puzzle.pieces[i], i);
 	}
+	this.tmp = [];
 
 	this.initBackground();
+	this.back.initTexture(this.tmp);
 	this.drawScene();
 }
 
@@ -97,22 +99,22 @@ CanvasWebGl.prototype.drawScene = function(){
 
 	// Clearing the frame-buffer and the depth-buffer
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
 	for(var model in this.models){
 		this.models[model].drawScene(this.sx, this.sy, this.sz);
+		this.tmp.push(this.models[model]);
 	}
 
 	this.back.drawScene(this.sx, this.sy, this.sz);
+
 };
 
 CanvasWebGl.prototype.initBackground = function(){
 	var result = parseTXTfile("modelos/back.txt");
-	console.log(result);
-	this.back = new Models(this.gl, new Position(0,0,0,0,0,0), 0, result["vertices"].slice(), [], true);
+	this.back = new Models(this.gl, new Position(0,0,0,0,0,0), 0, result["vertices"].slice(), [], true, this.sx, this.sy, this.sz);
 };
 
 CanvasWebGl.prototype.newModel =  function(result, piece, i){
-	this.models[piece.alias] = new Models(this.gl, piece.initialPosition, i, result["vertices"].slice(), result["colors"].slice());
+	this.models[piece.alias] = new Models(this.gl, piece.initialPosition, i, result["vertices"].slice(), result["colors"].slice(), false, this.sx, this.sy, this.sz);
 };
 
 // WebGL Initialization

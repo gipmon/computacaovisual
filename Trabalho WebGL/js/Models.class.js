@@ -1,7 +1,12 @@
-function Models(gl, initialPosition, i, vertices, colors, background){
+var texture, gl, tmp;
+function Models(gl, initialPosition, i, vertices, colors, background, sx, sy, sz){
 
   this.gl = gl;
   this.i = i;
+
+  this.sx = sx;
+  this.sy = sy;
+  this.sz = sz;
 
   this.vertices = vertices;
   this.colors = colors;
@@ -29,10 +34,10 @@ function Models(gl, initialPosition, i, vertices, colors, background){
   if(!this.background){
     this.triangleVertexPositionBuffer = this.gl.createBuffer();
   	this.triangleVertexColorBuffer = this.gl.createBuffer();
+    this.drawScene(sx, sy, sz);
   }
 
   if(this.background){
-    console.log("entrei")
     this.cubeVertexTextureCoordBuffer = this.gl.createBuffer();
     this.cubeVertexPositionBuffer = gl.createBuffer();
 
@@ -49,23 +54,7 @@ function Models(gl, initialPosition, i, vertices, colors, background){
 
     this.cubeVertexIndexBuffer = this.gl.createBuffer();
 
-
-    function handleTextureLoaded(texture) {
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-      gl.bindTexture(gl.TEXTURE_2D, null);
-    }
-
-    texture = gl.createTexture();
-    texture.image = new Image();
-    console.log(texture)
-    texture.image.onload = function() { handleTextureLoaded(texture); }
-    texture.image.src = "img/NeHe.gif";
-  }else{
-
+    this.initTexture();
   }
 }
 
@@ -163,7 +152,7 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
   }
 
 
-  if(this.background){
+  else{
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexPositionBuffer);
 
     this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute, this.cubeVertexPositionBuffer.itemSize, this.gl.FLOAT, false, 0, 0);
@@ -181,9 +170,9 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.cubeVertexIndexBuffer);
 
 	  this.gl.drawElements(this.gl.TRIANGLES, this.cubeVertexIndexBuffer.numItems, this.gl.UNSIGNED_SHORT, 0);
-  }else{
-
   }
+
+
 
 };
 
@@ -220,4 +209,31 @@ Models.prototype.drawScene = function(sx, sy, sz){
 			           sx, sy, sz,
 			           this.tx, this.ty, this.tz,
 			           mvMatrix);
+};
+
+Models.prototype.initTexture = function(tmpArray){
+  function handleTextureLoaded(texture) {
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.bindTexture(gl.TEXTURE_2D, null);
+  }
+  gl = this.gl;
+  tmp = this;
+  sx = this.sx;
+  sy = this.sy;
+  sz = this.sz;
+
+  texture = gl.createTexture();
+  texture.image = new Image();
+  texture.image.onload = function() {
+    handleTextureLoaded(texture);
+    tmp.drawScene(sx,sy, sz);
+    for(var model in tmpArray){
+      tmpArray[model].drawScene(sx, sy, sz);
+    }
+  }
+  texture.image.src = "background.jpg";
 };
