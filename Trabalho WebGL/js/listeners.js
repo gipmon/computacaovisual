@@ -2,6 +2,8 @@ var deslocamento = 0.01;
 var angle = 45;
 
 function setEventListeners(){
+  $("#confetti").hide();
+
   var timeoutGoAnimation = null;
 
   $("#pausePosition").click(function(){
