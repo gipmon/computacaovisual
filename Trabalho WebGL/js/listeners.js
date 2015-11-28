@@ -7,12 +7,10 @@ function setEventListeners(){
 
   $("#correctPosition").click(function(){
     timeoutGo = setTimeout(function () {
-
+      if(webgl.models[selectedCube].tx.round(2) > webgl.puzzle.pieces[webgl.models[selectedCube].i].finalPosition.tx){
+      }
+      console.log(webgl);
     }, 10);
-
-    webgl.models[selectedCube].angleXX += angle;
-    webgl.drawScene();
-    updateFigurePosition();
   });
 
   $("#xM45").click(function(){
@@ -71,11 +69,6 @@ function setEventListeners(){
              40: false, // down key
              90: false, // z key
             };
-
-  // deslocamento
-  $(document).on('click', '.number-spinner button', function () {
-    deslocamento = 0.01 * $("#desc").val();
-  });
 
   $(document).keydown(function(e) {
     function testConditionScreen(coordinate, increment){
