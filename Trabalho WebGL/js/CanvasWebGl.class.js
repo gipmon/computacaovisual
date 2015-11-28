@@ -94,6 +94,7 @@ CanvasWebGl.prototype.checkIsFinished = function(){
 		$("#aBtn").removeClass("orange-circle-button");
 		$("#spanBtn").addClass("succcess-circle-greater-than");
 		$("#spanBtn").removeClass("orange-circle-greater-than");
+
 		if(selectedPuzzle==(puzzles.length-1)){
 		  $("#endLevels").show();
 		}else{
