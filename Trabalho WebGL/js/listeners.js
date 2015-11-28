@@ -3,8 +3,16 @@ var angle = 45;
 
 function setEventListeners(){
   $("#confetti").hide();
+  $("#nextLevel").hide();
 
   var timeoutGoAnimation = null;
+
+  $("#nextLevelBtn").click(function(){
+    $("#nextLevel").hide();
+		$("#confetti").hide();
+		confetti.stop();
+    // go to the next level
+  });
 
   $("#pausePosition").click(function(){
     clearInterval(timeoutGoAnimation);
