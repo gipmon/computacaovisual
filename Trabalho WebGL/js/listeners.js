@@ -4,6 +4,12 @@ var angle = 45;
 function setEventListeners(){
   var timeoutGoAnimation = null;
 
+  $("#pausePosition").click(function(){
+    clearInterval(timeoutGoAnimation);
+    $(this).hide();
+    $("#correctPosition").show();
+  });
+
   $("#correctPosition").click(function(){
     var intervalTime = 100;
 
@@ -61,6 +67,8 @@ function setEventListeners(){
         updateFigurePosition();
       }else{
         clearInterval(timeoutGoAnimation);
+        $("#pausePosition").hide();
+        $("#correctPosition").show();
       }
     }, intervalTime);
   });
