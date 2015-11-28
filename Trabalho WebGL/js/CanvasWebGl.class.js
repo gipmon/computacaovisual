@@ -27,8 +27,10 @@ function CanvasWebGl(puzzle){
 	this.tmp = [];
 
 	this.initBackground();
+	for(var model in this.models){
+		this.tmp.push(this.models[model]);
+	}
 	this.back.initTexture(this.tmp);
-	this.drawScene();
 }
 
 CanvasWebGl.prototype.resetValues = function(){
@@ -113,7 +115,7 @@ CanvasWebGl.prototype.drawScene = function(){
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 	for(var model in this.models){
 		this.models[model].drawScene(this.sx, this.sy, this.sz);
-		this.tmp.push(this.models[model]);
+
 	}
 
 	this.back.drawScene(this.sx, this.sy, this.sz);
