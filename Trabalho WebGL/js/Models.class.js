@@ -2,7 +2,7 @@ function Models(gl, initialPosition, i, vertices, colors, background){
 
   this.gl = gl;
   this.i = i;
-  
+
   this.vertices = vertices;
   this.colors = colors;
   this.globalAngleYY = 0.0;

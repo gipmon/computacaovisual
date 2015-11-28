@@ -108,7 +108,7 @@ CanvasWebGl.prototype.drawScene = function(){
 CanvasWebGl.prototype.initBackground = function(){
 	var result = parseTXTfile("modelos/back.txt");
 	console.log(result);
-	this.back = new Models(this.gl, new Position(0,0,0,0,0,0), result["vertices"].slice(), [], true);
+	this.back = new Models(this.gl, new Position(0,0,0,0,0,0), 0, result["vertices"].slice(), [], true);
 };
 
 CanvasWebGl.prototype.newModel =  function(result, piece, i){
