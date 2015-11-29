@@ -30,7 +30,7 @@ function setEventListeners(){
 		confetti.stop();
 
     // go to the next level
-    selectedPuzzle = ++i;
+    selectedPuzzle = ++selectedPuzzle;
     $("body").unbind();
   	webgl = new CanvasWebGl(puzzles[selectedPuzzle]);
    	setScreenPuzzle(puzzles[selectedPuzzle]);
@@ -70,7 +70,7 @@ function setEventListeners(){
       $("#endLevels").hide();
   		$("#confetti").hide();
   		confetti.stop();
-      
+
       FB.ui({
           method: 'feed',
           name: 'I just finished all the puzzles of the Puzzle game!',

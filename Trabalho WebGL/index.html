@@ -48,15 +48,16 @@
         </div>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i> Levels</a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i> Levels <span class="caret"></span></a>
 						<ul class="dropdown-menu" id="menuLevels">
 	          </ul>
 					</li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-users"></i> Authors</a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-users"></i> Authors <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 	            <li><a href="https://github.com/gipmon">Rafael Ferreira</a></li>
 	            <li><a href="https://github.com/rlopescunha">Rodrigo Cunha</a></li>
+							<li><a href="https://github.com/gipmon/computacaovisual">Project <i class="fa fa-github-alt"></i> repository</a></li>
 	          </ul>
 					</li>
 	        <li class="dropdown">
@@ -65,10 +66,20 @@
 							<li>
 								 <div class="row">
 										<div class="col-md-12">
-
+											<div class="text-center">
+												<i class="fa fa-arrow-circle-left"></i><i class="fa fa-arrow-circle-down"><i class="fa fa-arrow-circle-up"></i></i><i class="fa fa-arrow-circle-right"></i><br/>
+											</div>
+											Use the arrowkeys to move each piece to the correct position.
+											<br/>
+											<i class="fa fa-rotate-left"></i> Turn +45º
+											<br/>
+											<i class="fa fa-rotate-right"></i>  Turn -45º
+											<br/>
+											<strong>Piece position: </strong> when the position is red it means that is incorrect. If is green, the position is correct!
+											<strong>Win: </strong> Wins the player with higher score with the puzzle finished!
 										</div>
 										<div class="bottom text-center">
-											Suggestions? <a href="#"><b>Tell Us</b></a>
+											Suggestions? <a href="mailto:mail@rafaelferreira.pt"><b>Tell Us</b></a>
 										</div>
 								 </div>
 							</li>
@@ -129,8 +140,8 @@
 						</div>
 						<h4>Helpers<h4/>
 						<div class="pull-right">
-							<button id="zoomM" class="btn btn-default btn-sm btn3d"><i class="fa fa-search-plus"></i></button>
-							<button id="zoomm" class="btn btn-default btn-sm btn3d"><i class="fa fa-search-minus"></i></button>
+							<button id="zoomM" data-toggle="tooltip" data-placement="top" title="Zoom in" class="btn btn-default btn-sm btn3d"><i class="fa fa-search-plus"></i></button>
+							<button id="zoomm" data-toggle="tooltip" data-placement="top" title="Zoom out" class="btn btn-default btn-sm btn3d"><i class="fa fa-search-minus"></i></button>
 						</div>
 						<table>
 							<tr>
