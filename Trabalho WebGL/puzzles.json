@@ -50,7 +50,7 @@
     },
     {
       "humanName": "Level 2",
-      "image" : "img/puzzles/puzzle1.png",
+      "image" : "img/puzzles/puzzle2.png",
       "pieces" : [
         {
           "alias": "trianguloBlue",
@@ -182,7 +182,7 @@
     },
     {
       "humanName": "Level 3",
-      "image" : "img/puzzles/puzzle1.png",
+      "image" : "img/puzzles/puzzle3.png",
       "pieces" : [
         {
           "alias": "paralelepipedo1",
@@ -288,7 +288,7 @@
             "angleYY": 0,
             "angleZZ": 135
           }
-        }
+        },
         {
           "alias": "cubo1",
           "url": "modelos/cuboGreen.txt",
