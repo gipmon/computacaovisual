@@ -6,8 +6,8 @@
       "pieces" : [
         {
           "alias": "triangulo",
-          "url": "modelos/puzzle_triangulocubo/triangulo.txt",
-          "humanName": "Triângulo",
+          "url": "modelos/trianguloBlue.txt",
+          "humanName": "Triângulo Blue",
           "initialPosition" : {
             "tx": 0.2,
             "ty": 0.4,
@@ -27,8 +27,8 @@
         },
         {
           "alias": "cubo",
-          "url": "modelos/puzzle_triangulocubo/cubo_1.txt",
-          "humanName": "Cubo",
+          "url": "modelos/cuboRed.txt",
+          "humanName": "Cubo Red",
           "initialPosition" : {
             "tx": -0.2,
             "ty": 0,
@@ -53,9 +53,9 @@
       "image" : "img/puzzles/puzzle1.png",
       "pieces" : [
         {
-          "alias": "triangulo1",
-          "url": "modelos/puzzle3/triangulo.txt",
-          "humanName": "Triângulo1",
+          "alias": "trianguloBlue",
+          "url": "modelos/trianguloBlue.txt",
+          "humanName": "Triângulo Blue",
           "initialPosition" : {
             "tx": 0.2,
             "ty": 0.4,
@@ -74,9 +74,9 @@
           }
         },
         {
-          "alias": "triangulo2",
-          "url": "modelos/puzzle3/triangulo.txt",
-          "humanName": "Triângulo2",
+          "alias": "trianguloGrey",
+          "url": "modelos/trianguloGrey.txt",
+          "humanName": "Triângulo Grey",
           "initialPosition" : {
             "tx": 0.3,
             "ty": -0.7,
@@ -95,9 +95,9 @@
           }
         },
         {
-          "alias": "cubo1",
-          "url": "modelos/puzzle3/cubo_1.txt",
-          "humanName": "Cubo1",
+          "alias": "cuboGreen",
+          "url": "modelos/cuboGreen.txt",
+          "humanName": "Cubo Green",
           "initialPosition" : {
             "tx": -0.2,
             "ty": 0,
@@ -116,9 +116,9 @@
           }
         },
         {
-          "alias": "cubo2",
-          "url": "modelos/puzzle3/cubo_1.txt",
-          "humanName": "Cubo2",
+          "alias": "cuboRed",
+          "url": "modelos/cuboRed.txt",
+          "humanName": "Cubo Red",
           "initialPosition" : {
             "tx": -0.4,
             "ty": 0.6,
@@ -137,9 +137,9 @@
           }
         },
         {
-          "alias": "piramideQuadrangular",
-          "url": "modelos/puzzle3/piramideQuadrangular.txt",
-          "humanName": "Piramide Quadrangular",
+          "alias": "piramideQuadrangularBlue",
+          "url": "modelos/piramideQuadrangularBlue.txt",
+          "humanName": "Piramide Quadrangular Blue",
           "initialPosition" : {
             "tx": 0.0,
             "ty": 0.0,
@@ -158,9 +158,9 @@
           }
         },
         {
-          "alias": "paralelepipedo",
-          "url": "modelos/puzzle3/paralelepipedoGreen.txt",
-          "humanName": "Paralelepipedo",
+          "alias": "paralelepipedoYellow",
+          "url": "modelos/paralelepipedoYellow.txt",
+          "humanName": "Paralelepipedo Yellow",
           "initialPosition" : {
             "tx": 0.8,
             "ty": 0.4,
@@ -186,7 +186,7 @@
       "pieces" : [
         {
           "alias": "paralelepipedo1",
-          "url": "modelos/puzzle3/paralelepipedoGreen.txt",
+          "url": "modelos/paralelepipedoGreen.txt",
           "humanName": "Paralelepipedo Green",
           "initialPosition" : {
             "tx": 0.2,
@@ -207,7 +207,7 @@
         },
         {
           "alias": "paralelepipedo2",
-          "url": "modelos/puzzle3/paralelepipedoBlue.txt",
+          "url": "modelos/paralelepipedoBlue.txt",
           "humanName": "Paralelepipedo Blue",
           "initialPosition" : {
             "tx": 0.3,
@@ -227,29 +227,8 @@
           }
         },
         {
-          "alias": "cubo1",
-          "url": "modelos/puzzle3/cubo_1.txt",
-          "humanName": "Cubo1",
-          "initialPosition" : {
-            "tx": -0.2,
-            "ty": 0,
-            "tz": 0,
-            "angleXX": 0,
-            "angleYY": 0,
-            "angleZZ": 0
-          },
-          "finalPosition" : {
-            "tx": 0.16,
-            "ty": -0.11,
-            "tz": 0,
-            "angleXX": 0,
-            "angleYY": 0,
-            "angleZZ": 45
-          }
-        },
-        {
           "alias": "paralelepipedo3",
-          "url": "modelos/puzzle3/paralelepipedoRed.txt",
+          "url": "modelos/paralelepipedoRed.txt",
           "humanName": "Paralelepipedo Red",
           "initialPosition" : {
             "tx": -0.4,
@@ -270,7 +249,7 @@
         },
         {
           "alias": "paralelepipedo4",
-          "url": "modelos/puzzle3/paralelepipedoGrey.txt",
+          "url": "modelos/paralelepipedoGrey.txt",
           "humanName": "Paralelepipedo Grey",
           "initialPosition" : {
             "tx": 0.0,
@@ -291,7 +270,7 @@
         },
         {
           "alias": "paralelepipedo5",
-          "url": "modelos/puzzle3/paralelepipedoYellow.txt",
+          "url": "modelos/paralelepipedoYellow.txt",
           "humanName": "Paralelepipedo Yellow",
           "initialPosition" : {
             "tx": 0.8,
@@ -308,6 +287,27 @@
             "angleXX": 0,
             "angleYY": 0,
             "angleZZ": 135
+          }
+        }
+        {
+          "alias": "cubo1",
+          "url": "modelos/cuboGreen.txt",
+          "humanName": "Cubo Green",
+          "initialPosition" : {
+            "tx": -0.2,
+            "ty": 0,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 0
+          },
+          "finalPosition" : {
+            "tx": 0.16,
+            "ty": -0.11,
+            "tz": 0,
+            "angleXX": 0,
+            "angleYY": 0,
+            "angleZZ": 45
           }
         }
       ]
