@@ -71,3 +71,9 @@
 1412148816 /usr/local/include/opencv2/imgproc/types_c.h
 	"opencv2/core/core_c.h"
 
+1355340790 source:/vagrant/AulasPraticas/Rafael/OpenCV/OpenCV_Guiao_03/OpenCV_ex_13.cpp
+	<iostream>
+	"opencv2/core/core.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	"opencv2/highgui/highgui.hpp"
+
