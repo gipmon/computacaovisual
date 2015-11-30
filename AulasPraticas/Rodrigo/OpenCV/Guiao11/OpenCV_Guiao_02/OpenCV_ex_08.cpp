@@ -206,6 +206,12 @@ int main( int argc, char** argv )
 
     namedWindow("EH", CV_WINDOW_AUTOSIZE);
     imshow("EH", imagemEH);
+
+    Mat imagemTTrunc;
+
+    threshold(imagem, imagemTTrunc, 127, 127, THRESH_TRUNC);
+    namedWindow("THRESH_TRUNC", CV_WINDOW_AUTOSIZE);
+    imshow("THRESH_TRUNC", imagemTTrunc);
     // Esperar
 
     waitKey( 0 );
