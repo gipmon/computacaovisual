@@ -18,6 +18,11 @@ function setEventListeners(){
 
     selectedPuzzle = i;
 
+    $("#aBtn").removeClass("success-circle-button");
+    $("#aBtn").addClass("orange-circle-button");
+    $("#spanBtn").removeClass("succcess-circle-greater-than");
+    $("#spanBtn").addClass("orange-circle-greater-than");
+
     $("body").unbind();
   	webgl = new CanvasWebGl(puzzles[selectedPuzzle]);
    	setScreenPuzzle(puzzles[selectedPuzzle]);
@@ -28,6 +33,11 @@ function setEventListeners(){
     $("#nextLevel").hide();
 		$("#confetti").hide();
 		confetti.stop();
+
+    $("#aBtn").removeClass("success-circle-button");
+    $("#aBtn").addClass("orange-circle-button");
+    $("#spanBtn").removeClass("succcess-circle-greater-than");
+    $("#spanBtn").addClass("orange-circle-greater-than");
 
     // go to the next level
     selectedPuzzle = ++selectedPuzzle;

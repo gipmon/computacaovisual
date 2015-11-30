@@ -200,6 +200,11 @@ int main( int argc, char** argv )
 
     namedWindow( "CS", CV_WINDOW_AUTOSIZE );
 
+    // THRESH_TRUNC
+    Mat imagemTTrunc;
+
+    threshold(imagem, imagemTTrunc,)
+
     imshow( "CS", imagemCS );
     // Esperar
 
