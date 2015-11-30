@@ -4,6 +4,12 @@ function setScreenPuzzle(puzzle){
   var classes = ["info", "warning", "success", "default"];
   var classes_i = 0;
 
+  var puzzleImg_old = $("#puzzleImg").attr("src");
+
+  if (typeof puzzleImg_old != 'undefined'){
+    $(".magnify-large").css("background", $(".magnify-large").css("background").replace(puzzleImg_old, puzzle.image));
+  }
+
   $("#puzzleImg").attr("src", puzzle.image);
   $("#puzzleImgModal").attr("src", puzzle.image);
   $("#puzzleHumanName").text(puzzle.humanName);
