@@ -26,7 +26,7 @@ function setEventListeners(){
     $("body").unbind();
   	webgl = new CanvasWebGl(puzzles[selectedPuzzle]);
    	setScreenPuzzle(puzzles[selectedPuzzle]);
-  	setEventListeners();
+  	//setEventListeners();
   });
 
   $("#nextLevelBtn").click(function(){
@@ -44,7 +44,7 @@ function setEventListeners(){
     $("body").unbind();
   	webgl = new CanvasWebGl(puzzles[selectedPuzzle]);
    	setScreenPuzzle(puzzles[selectedPuzzle]);
-  	setEventListeners();
+  	//setEventListeners();
   });
 
   (function(d, s, id) {
@@ -160,42 +160,36 @@ function setEventListeners(){
   });
 
   $("#xM45").click(function(){
-    console.log((webgl.models[selectedCube].angleXX + angle) % 360);
     webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX + angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#xm45").click(function(){
-    console.log((webgl.models[selectedCube].angleXX - angle) % 360);
     webgl.models[selectedCube].angleXX = (webgl.models[selectedCube].angleXX - angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#yM45").click(function(){
-    console.log((webgl.models[selectedCube].angleYY + angle) % 360);
     webgl.models[selectedCube].angleYY = (webgl.models[selectedCube].angleYY + angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#ym45").click(function(){
-    console.log((webgl.models[selectedCube].angleYY - angle) % 360);
     webgl.models[selectedCube].angleYY  = (webgl.models[selectedCube].angleYY - angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#zM45").click(function(){
-    console.log((webgl.models[selectedCube].angleZZ + angle) % 360);
     webgl.models[selectedCube].angleZZ = (webgl.models[selectedCube].angleZZ + angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
   });
 
   $("#zm45").click(function(){
-    console.log((webgl.models[selectedCube].angleZZ - angle) % 360);
     webgl.models[selectedCube].angleZZ  = (webgl.models[selectedCube].angleZZ - angle) % 360;
     webgl.drawScene();
     updateFigurePosition();
