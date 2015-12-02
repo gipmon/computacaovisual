@@ -1,6 +1,5 @@
 var texture, gl, tmp;
 function Models(gl, initialPosition, i, vertices, colors, background, sx, sy, sz, globalTz){
-
   this.gl = gl;
   this.i = i;
 
@@ -118,7 +117,6 @@ Models.prototype.initBuffers = function(){
                           			this.gl.FLOAT, false, 0, 0);
   }
 
-
 	// enable depth test
 	this.gl.enable(this.gl.DEPTH_TEST);
 };
@@ -151,10 +149,7 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
                                 this.triangleVertexColorBuffer.itemSize,
                                 this.gl.FLOAT, false, 0, 0);
    	this.gl.drawArrays(this.gl.TRIANGLES, 0, this.triangleVertexPositionBuffer.numItems);
-  }
-
-
-  else{
+  }else{
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cubeVertexPositionBuffer);
 
     this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute, this.cubeVertexPositionBuffer.itemSize, this.gl.FLOAT, false, 0, 0);
@@ -173,8 +168,6 @@ Models.prototype.drawModel = function(angleXX, angleYY, angleZZ,
 
 	  this.gl.drawElements(this.gl.TRIANGLES, this.cubeVertexIndexBuffer.numItems, this.gl.UNSIGNED_SHORT, 0);
   }
-
-
 
 };
 
@@ -228,6 +221,7 @@ Models.prototype.initTexture = function(tmpArray){
 
   texture = gl.createTexture();
   texture.image = new Image();
+  
   texture.image.onload = function() {
     handleTextureLoaded(texture);
     tmp.drawScene(sx,sy, sz, globalTz);
@@ -235,5 +229,6 @@ Models.prototype.initTexture = function(tmpArray){
       tmpArray[model].drawScene(sx, sy, sz, globalTz);
     }
   }
+
   texture.image.src = "background.jpg";
 };
