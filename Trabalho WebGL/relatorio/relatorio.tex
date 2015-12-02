@@ -186,9 +186,69 @@ Para uma melhor definição de todos os puzzles usados no jogo foi criado um fic
 }
 \end{lstlisting}
 
+\newpage
+
 \section{Interface do utilizador}
 
+\subsection{Controlos do utilizador}
 
+\begin{figure}[!htb]
+\center
+ \includegraphics[width=70mm,scale=1]{webuserinterface.pdf}
+ \caption{Web interface}
+ \label{fig:web_interface}
+\end{figure}
 
+A interface de utilizador dispõe de comandos que permite ao utilizador, controlar a rotação e translação em X, Y e Z de cada peça do puzzle. O "piece position" é a posição da peça no puzzle, quando está vermelho é porque a posição está errada, quando fica a verde a posição fica correta. O "puzzle state" dá um feedback sobre o estado do estado do puzzle, se está concluído ou não, também tem um "Helper" que permite ao utilizador ir para a posição correta no puzzle. Para fazer translação em Z é necessário percecionar a tecla "Z" e depois usar as arrow keys para controlar a translação.
+
+Também tem controlos para fazer zoom in, zoom out e reset do nível e da posição da figura.
+
+A pontuação é disponibilizada ao utilizador no círculo, que fica verde quando o utilizador termina. Ao clicar nessa bola também é aberta uma janela de facebook para o utilizador conseguir fazer a partilha da sua pontuação. Também quando termina todos os níveis, ao fechar a animação de conclusão é aberto uma janela de facebook para partilhar no seu facebook.
+
+Como referido anteriormente, o utilizador quando termina um nível é mostrada uma animação com confettis e uma janela de conclusão do nível.
+
+\subsection{Movimento do rato}
+
+\begin{figure}[!htb]
+\center
+ \includegraphics[width=70mm,scale=1]{3d.pdf}
+ \caption{3D movimento do rato}
+ \label{fig:3d_animation}
+\end{figure}
+
+Foi implementado uma translação global em Y e X controlada pelo evento do movimento do rato quando clica no canvas.
+
+\subsection{Mesa de jogo}
+
+Como mostrado na figura anterior, foi implementado um modelo especial para dar o efeito de uma mesa de jogo, usando uma textura. Não é permitido ao utilizador fazer translação em Z para detrás da mesa, nem translações das peças para fora do puzzle.
+
+\newpage
+
+\subsection{Help}
+
+\begin{figure}[!htb]
+\center
+ \includegraphics[width=70mm,scale=1]{help.pdf}
+ \caption{Help}
+ \label{fig:help}
+\end{figure}
+
+Fizemos também um menu superior onde é dado ao utilizador todo o apoio para usar o puzzle, assim como é dada a ligação para os autores e para outros níveis.
+
+\section{Instalação}
+
+Para a instalação para o site funcionar foi usado um Simple HTTP Server que é disponibilizado pelo Python. O utilizador apenas precisa de ter \href{https://www.python.org/downloads/}{Python} instalado no seu computador.
+
+Para correr:
+
+\shellcmd{python manage.py restriction add restrict{\_}book book{\_}identifier \linebreak restriction{\_}name}
+
+./run.sh
+
+ou
+
+python -m SimpleHTTPServer 8000
+
+e aceder a http://localhost:8000
 
 \end{document}
