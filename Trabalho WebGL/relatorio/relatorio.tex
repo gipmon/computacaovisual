@@ -117,6 +117,37 @@ Para alimentar a class \textit{CanvasWebGl}, foi criada uma class \textit{Puzzle
 
 A peça, terá o URL sendo este onde será obtido a lista de vértices e de cores para a peça. O alias é o usado para identificar a peça, tem de ser único para todas as peças existentes no Puzzle, o \textit{initialPosition} que identifica a posição inicial da peça e o \textit{finalPosition} que identifica a posição final da figura.
 
+\section{Organização da implementação}
+
+\subsection{Modelos}
+
+Foram criados vários modelos para cada puzzle, estes depois são usados para peças e estão localizados na pasta "modelos". Ests são ficheiros .txt como usados nas aulas onde armazenam a lista de vértices e de cores. 
+
+\subsection{Javascript}
+
+Os ficheiros javascript onde está a maior parte da implementação, desde "listeners" a código de WebGl está guardado na pasta "js".
+
+\begin{itemize}  
+        \item \textit{bootstrap.js} contem os scripts do bootstrap que são responsáveis por exemplo pelas modalbox, tooltips entre outros.
+        \item \textit{CanvasWebGl.class.js} como já foi explicado, contem a automatização necessária para instanciar um puzzle em WebGl.
+        \item \textit{confetti.js} contem o script necessário para a animação de confettis quando um utilizador termina o puzzle.
+        \item \textit{bootstrap.js} contem os scripts do bootstrap que são responsáveis por exemplo pelas modalbox, tooltips entre outros.
+        \item \textit{document.jquery.js} contem os scripts jquery necessários para a lupa quando o utilizador passa o rato por cima da pré-visualização do puzzle quando é terminado e a animação necessária para a pontuação do utilizador.
+        \item \textit{initShaders.js} contem os scripts necessários para inicializar cada shader program e para inicializar o shader. Este foi um aspeto importante no nosso desenvolvimento porque a percepção do que estes elementos faziam, além de outras coisas, permitiu-nos instanciar os modelos de forma independente.
+        \item \textit{jquery.js} é uma framework javascript que simplifica a vida ao programador, permite criar listeners de forma mais fácil e dinâmica com seletores, modificar atributos de objetos do documento HTML, fazer animações com esses objetos entre outras coisas.
+        \item \textit{maths.js} contem os scripts auxiliares usados nas aulas.
+        \item \textit{microscope.js} contem o script para instanciar a lupa na imagem.
+        \item \textit{Models.class.js} tal como descrito em cima, contem toda a informação necessária para instanciar uma peça de um puzzle e fazer as translações, rotações entre outras coisas do puzzle.
+        \item \textit{models.js} não necessitámos de olhar para este ficheiro, mas, contem as funções necessárias para processar as "triangle mesh models".
+        \item \textit{parseFiles.js} adaptando o código fornecido nas aulas práticas para fazer o processamento de ficheiros txt e obj, contudo a adaptação prendeu-se em fazer download via ajax de forma assíncrona dos ficheiros.
+        \item \textit{puzzle.js} contem as classes que permitem fazer programação ao estilo orientada aos objetos para definir o puzzle, as peças e as posições iniciais e finais.
+        \item \textit{PuzzleGame.js} é responsável por carregar o ficheiro puzzles.json que tem a definição dos puzzles em JSON e disponibiliza o runWebGL que irá instanciar o CanvasWebGl e irá chamar o setScreenPuzzle e o setEventListeners.
+	\item \textit{setEventListeners.js} contem os event listeners necessários para os controlos do puzzle e da página.
+	\item \textit{setScreenPuzzle.js} contem os scripts necessários para popular a página que é apresentada ao utilizador com toda a informação necessária.
+	\item \textit{webgl-utils.js} Copyright 2010, Google Inc, All rights reserved.
+	                    
+\end{itemize}
+
 \subsection{JSON}
 
 Para uma melhor definição de todos os puzzles usados no jogo foi criado um ficheiro JSON onde é possível criar todas as peças de cada puzzle e definir todos os atributos anteriormente detalhados. Este ficheiro é carregado inicialmente sempre que o jogo é iniciado, apresentando assim ao utilizador a lista de puzzles e inicializando o jogo com o puzzle inicial.
@@ -155,7 +186,9 @@ Para uma melhor definição de todos os puzzles usados no jogo foi criado um fic
 }
 \end{lstlisting}
 
-\subsection{JSON}
+\section{Interface do utilizador}
+
+
 
 
 \end{document}
