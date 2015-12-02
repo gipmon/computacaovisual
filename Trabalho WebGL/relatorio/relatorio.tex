@@ -109,11 +109,11 @@ O relatório reflete todos os passos e decisões tomadas na criação do sistema
  \label{fig:decifra_livro}
 \end{figure}
 
-Na implementação desenvolvida procurou-se uma solução que permitisse reutilizar o código e instanciar quantas peças e puzzles fosse preciso. Para isso criou-se uma class Models, que tem como atributos os que estão descritos em cima, que instância um modelo, independente dos outros que irá fazer uso das translações, rotações e outros métodos usados durante as aulas práticas. Para isso, esta class irá, no seu construtor instanciar uma única vez dois buffers, um chamado \textit{triangleVertexPositionBuffer} e outro  \textit{triangleVertexColorBuffer}, de resto, o initBuffers é sempre chamado sempre que for feito um drawScene para os arrays de buffers serem atualizados.
+Na implementação desenvolvida procurou-se uma solução que permitisse reutilizar o código e instanciar quantas peças e puzzles fosse preciso. Para isso criou-se uma class Models, que tem como atributos os que estão descritos em cima, que instância um modelo, independente dos outros que irá fazer uso das translações, rotações e outros métodos usados durante as aulas práticas. Para isso, esta class irá, no seu construtor instanciar uma única vez dois buffers, um chamado \textit{triangleVertexPositionBuffer} e outro  \textit{triangleVertexColorBuffer}, de resto, o \textit{initBuffers} é sempre chamado sempre que for feito um \textit{drawScene} para os arrays de buffers serem atualizados.
 
-Já na class CanvasWebGl, é onde o puzzle instância todos os modelos (peças), aplica as translações globais e independentes, é desenhada a cena, inicializado o modelo de fundo e inicializado o WebGl. 
+Já na class \textit{CanvasWebGl}, é onde o puzzle instância todos os modelos (peças), aplica as translações globais e independentes, é desenhada a cena, inicializado o modelo de fundo e inicializado o WebGl. 
 
-Para alimentar a class CanvasWebGl, foi criada uma class Puzzle que tem todos os atributos necessários para instanciar um puzzle. O puzzle irá ter o seu \textit{humanName} que será apresentado ao utilizador, a \textit{image} que é a imagem final da solução do puzzle, e as \textit{pieces} que são as várias peças do puzzle.
+Para alimentar a class \textit{CanvasWebGl}, foi criada uma class \textit{Puzzle} que tem todos os atributos necessários para instanciar um puzzle. O puzzle irá ter o seu \textit{humanName} que será apresentado ao utilizador, a \textit{image} que é a imagem final da solução do puzzle, e as \textit{pieces} que são as várias peças do puzzle.
 
 A peça, terá o URL sendo este onde será obtido a lista de vértices e de cores para a peça. O alias é o usado para identificar a peça, tem de ser único para todas as peças existentes no Puzzle, o \textit{initialPosition} que identifica a posição inicial da peça e o \textit{finalPosition} que identifica a posição final da figura.
 
@@ -154,6 +154,8 @@ Para uma melhor definição de todos os puzzles usados no jogo foi criado um fic
   ]
 }
 \end{lstlisting}
+
+\subsection{JSON}
 
 
 \end{document}
