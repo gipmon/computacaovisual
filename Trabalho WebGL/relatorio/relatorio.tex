@@ -57,7 +57,7 @@
 }
 
 %Highlight
-\newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\# #1}\\}
+\newcommand{\shellcmd}[1]{\indent\indent\texttt{\footnotesize\# #1}\\}
 
 \pagestyle{fancy}
 \renewcommand*\thesection{\thechapter\arabic{section}}
@@ -241,14 +241,12 @@ Para a instalação para o site funcionar foi usado um Simple HTTP Server que é
 
 Para correr:
 
-\shellcmd{python manage.py restriction add restrict{\_}book book{\_}identifier \linebreak restriction{\_}name}
-
-./run.sh
+\shellcmd{./run.sh}
 
 ou
 
-python -m SimpleHTTPServer 8000
+\shellcmd{python -m SimpleHTTPServer 8000}
 
-e aceder a http://localhost:8000
+e aceder a \url{http://localhost:8000}
 
 \end{document}
