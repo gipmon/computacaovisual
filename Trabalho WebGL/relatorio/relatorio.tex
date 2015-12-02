@@ -90,13 +90,27 @@
 
 \section{Introdução}
 % o que, porquê e o objetivo
-O trabalho proposto para o projeto da unidade curricular de Segurança é um IEDCS: Identity Enabled Distribution Control System. Para o  efeito foi necessário implementar uma Ebook Webstore, um WebService e um Player de reprodução dos Ebooks em formato de texto.
+O trabalho proposto para o projeto da unidade curricular de Computação Visual é um Puzzle desenvolvido em WebGl. Para o efeito foi necessário implementar um site com Bootstrap, Jquery, Json e WebGl.
 
-O objetivo deste sistema é garantir a máxima e possível segurança do serviço, utilizando os conhecimentos adquiridos na unidade curricular de Segurança. Para isso são necessários vários processos como por exemplo, a utilização de certificados HTTPS, a cifragem de todo o material existente, derivação de chaves e registo de utilizadores.	
+Foi pensada uma implementação baseada na experiência do utilizador ao utilizar o nosso jogo, para isso desenvolveu-se uma interface atraente e com bastantes funcionalidades, tanto a nível de opções como da implementação usando WebGl. Neste relatório procurou-se focar na explicação da arquitectura desenvolvida que permite uma melhor reutilização de modelos, código e independência entre modelos desenvolvidos.
 
-O relatório reflete todos os passos e decisões tomadas na criação do sistema, assim como uma análise ao que foi mostrado na primeira apresentação e decisões que se tomaram depois desta, tecnologias utilizadas, descrição dos vários processos existentes e conclusão.
+O relatório reflete todos os passos e decisões tomadas na criação da implementação, assim como uma explicação do que foi usado e da interface do utilizador.
 
 \clearpage
+
+\section{Instalação}
+
+Para a instalar o que é necessário para o puzzle funcionar sem problemas foi usado um Simple HTTP Server que é disponibilizado pelo Python. Apenas é preciso ter o \href{https://www.python.org/downloads/}{Python} instalado no seu computador.
+
+Para iniciar o servidor:
+
+\shellcmd{./run.sh}
+
+ou
+
+\shellcmd{python -m SimpleHTTPServer 8000}
+
+e depois aceder a: \url{http://localhost:8000}
 
 \section{JavaScript e WebGL}
 
@@ -235,18 +249,22 @@ Como mostrado na figura anterior, foi implementado um modelo especial para dar o
 
 Fizemos também um menu superior onde é dado ao utilizador todo o apoio para usar o puzzle, assim como é dada a ligação para os autores e para outros níveis.
 
-\section{Instalação}
 
-Para a instalação para o site funcionar foi usado um Simple HTTP Server que é disponibilizado pelo Python. O utilizador apenas precisa de ter \href{https://www.python.org/downloads/}{Python} instalado no seu computador.
+\section{Conclusão}
 
-Para correr:
+O principal objetivo foi conseguido, inicialmente esteve-se um pouco com receio sobre o que iria ser possível ser feito e quanto tempo iria demorar a implementação do projeto. Optou-se por usar o código disponibilizado pelo professor nas aulas práticas e fazer uma reformulação tendo como objetivo instanciar objetos independentes, com atributos diferentes, translações e rotações. Assim seria possível desenvolver um puzzle com as peças que quiséssemos e de forma simples. Esse objetivo foi conseguido, acabou-se por fazer duas class bastante gerais que poderão ser usadas para qualquer tipo de aplicação que pretenda usar WebGl e que apenas necessite de translações, rotações e outro tipo de funcionalidades.
 
-\shellcmd{./run.sh}
+Os principais problemas prendeu-se em desenvolver esta aproximação de modelos independentes e na criação de um modelo com textura, que serviu para fundo, contudo, o projeto acabou por exceder as nossas expetativas e foi divertido e interessante de ser realizado.
 
-ou
+\renewcommand{\bibname}{Referências}
 
-\shellcmd{python -m SimpleHTTPServer 8000}
-
-e aceder a \url{http://localhost:8000}
+\begin{thebibliography}{} 
+	\bibitem{stack} \url{http://stackoverflow.com/}
+	\bibitem{madeira}\url{http://sweet.ua.pt/jmadeira/CV/index.html}
+	\bibitem{classes} \url{http://book.mixu.net/node/ch6.html}
+	\bibitem{shaders} \url{http://chimera.labs.oreilly.com/books/1234000000802/ch02.html#the_shader}
+	\bibitem{bootsnipp} \url{http://bootsnipp.com/}
+	\bibitem{bootstrap} \url{http://getbootstrap.com/getting-started/}
+\end{thebibliography}
 
 \end{document}
