@@ -197,6 +197,15 @@ function setEventListeners(){
 
   $("#resetLevel").click(function(){
     webgl.resetValues();
+    for(var model in webgl.models){
+      webgl.models[model].globalAngleXX = 0.0;
+      webgl.models[model].globalAngleYY = 0.0;
+
+    }
+    webgl.back.globalAngleXX = 0.0;
+    webgl.back.globalAngleYY = 0.0;
+    setScreenPuzzle(puzzles[selectedPuzzle]);
+    $("#score").text(parseInt($("#score").text())+1);
     webgl.drawScene();
     updateFigurePosition();
   });
