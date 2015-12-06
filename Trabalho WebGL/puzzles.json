@@ -7,7 +7,7 @@
         {
           "alias": "triangulo",
           "url": "modelos/trianguloBlue.txt",
-          "humanName": "Triângulo Blue",
+          "humanName": "Prisma Triangular Blue",
           "initialPosition" : {
             "tx": 0.2,
             "ty": 0.4,
@@ -55,7 +55,7 @@
         {
           "alias": "trianguloBlue",
           "url": "modelos/trianguloBlue.txt",
-          "humanName": "Triângulo Blue",
+          "humanName": "Prisma Triangular Blue",
           "initialPosition" : {
             "tx": 0.2,
             "ty": 0.4,
@@ -76,7 +76,7 @@
         {
           "alias": "trianguloGrey",
           "url": "modelos/trianguloGrey.txt",
-          "humanName": "Triângulo Grey",
+          "humanName": "Prisma Triangular Grey",
           "initialPosition" : {
             "tx": 0.3,
             "ty": -0.7,
