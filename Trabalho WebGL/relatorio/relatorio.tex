@@ -70,7 +70,7 @@
 %Cabeçalhos de rodapé
 \fancyhead{}
 \fancyfoot{}
-\lhead{Puzzle}
+\lhead{Puzzle - WebGL}
 \rhead{CV - 2015/2016}
 \lfoot{Rafael Ferreira nmec: 67405 \\ Rodrigo Cunha nmec: 67800}
 \rfoot{\thepage}
@@ -90,9 +90,9 @@
 
 \section{Introdução}
 % o que, porquê e o objetivo
-O trabalho proposto para o projeto da unidade curricular de Computação Visual é um Puzzle desenvolvido em WebGl. Para o efeito foi necessário implementar um site com Bootstrap, Jquery, Json e WebGl.
+O trabalho proposto para o projeto da unidade curricular de Computação Visual é um Puzzle desenvolvido em WebGl. Para o efeito foi necessário implementar um site com Bootstrap, Jquery, JSON e WebGl.
 
-Foi pensada uma implementação baseada na experiência do utilizador ao utilizar o nosso jogo, para isso desenvolveu-se uma interface atraente e com bastantes funcionalidades, tanto a nível de opções como da implementação usando WebGl. Neste relatório procurou-se focar na explicação da arquitectura desenvolvida que permite uma melhor reutilização de modelos, código e independência entre modelos desenvolvidos.
+Foi pensada uma implementação baseada na experiência do utilizador ao utilizar o jogo, para isso desenvolveu-se uma interface atraente e com bastantes funcionalidades, tanto a nível de opções como da implementação usando WebGl. Neste relatório procurou-se focar a explicação da arquitectura desenvolvida que permite uma melhor reutilização de modelos, código e independência entre modelos desenvolvidos.
 
 O relatório reflete todos os passos e decisões tomadas na criação da implementação, assim como uma explicação do que foi usado e da interface do utilizador.
 
@@ -100,7 +100,7 @@ O relatório reflete todos os passos e decisões tomadas na criação da impleme
 
 \section{Instalação}
 
-Para a instalar o que é necessário para o puzzle funcionar sem problemas foi usado um Simple HTTP Server que é disponibilizado pelo Python. Apenas é preciso ter o \href{https://www.python.org/downloads/}{Python} instalado no seu computador.
+Para a instalar o que é necessário para o puzzle funcionar sem problemas foi usado um Simple HTTP Server que é disponibilizado pelo Python. Apenas é preciso ter o \href{https://www.python.org/downloads/}{Python} instalado no computador.
 
 Para iniciar o servidor:
 
@@ -114,7 +114,7 @@ e depois aceder a: \url{http://localhost:8000}
 
 \section{JavaScript e WebGL}
 
-\subsection{Arquitectura da implementação}
+\subsection{Arquitetura da implementação}
 
 \begin{figure}[!htb]
 \center
@@ -123,11 +123,11 @@ e depois aceder a: \url{http://localhost:8000}
  \label{fig:decifra_livro}
 \end{figure}
 
-Na implementação desenvolvida procurou-se uma solução que permitisse reutilizar o código e instanciar quantas peças e puzzles fosse preciso. Para isso criou-se uma class Models, que tem como atributos os que estão descritos em cima, que instância um modelo, independente dos outros que irá fazer uso das translações, rotações e outros métodos usados durante as aulas práticas. Para isso, esta class irá, no seu construtor instanciar uma única vez dois buffers, um chamado \textit{triangleVertexPositionBuffer} e outro  \textit{triangleVertexColorBuffer}, de resto, o \textit{initBuffers} é sempre chamado sempre que for feito um \textit{drawScene} para os arrays de buffers serem atualizados.
+Na implementação desenvolvida procurou-se uma solução que permitisse reutilizar o código e instanciar quantas peças e puzzles fosse preciso. Para isso criou-se uma class Models, que tem como atributos os que estão descritos em cima, que instancia um modelo, independente dos outros que irá fazer uso das translações, rotações e outros métodos usados durante as aulas práticas. Para isso, esta class irá, no construtor instanciar uma única vez dois buffers, um chamado \textit{triangleVertexPositionBuffer} e outro  \textit{triangleVertexColorBuffer}, de resto, o \textit{initBuffers} é chamado sempre que for feito um \textit{drawScene} para os arrays de buffers serem atualizados.
 
-Já na class \textit{CanvasWebGl}, é onde o puzzle instância todos os modelos (peças), aplica as translações globais e independentes, é desenhada a cena, inicializado o modelo de fundo e inicializado o WebGl. 
+Já na class \textit{CanvasWebGl}, é onde o puzzle instancia todos os modelos (peças), aplica as translações globais e independentes, é desenhada a cena, inicializado o modelo de fundo e inicializado o WebGl. 
 
-Para alimentar a class \textit{CanvasWebGl}, foi criada uma class \textit{Puzzle} que tem todos os atributos necessários para instanciar um puzzle. O puzzle irá ter o seu \textit{humanName} que será apresentado ao utilizador, a \textit{image} que é a imagem final da solução do puzzle, e as \textit{pieces} que são as várias peças do puzzle.
+Para alimentar a class \textit{CanvasWebGl}, foi criada uma class \textit{Puzzle} que tem todos os atributos necessários para instanciar um puzzle. O puzzle irá ter o \textit{humanName} que será apresentado ao utilizador, a \textit{image} que é a imagem final da solução do puzzle, e as \textit{pieces} que são as várias peças do puzzle.
 
 A peça, terá o URL sendo este onde será obtido a lista de vértices e de cores para a peça. O alias é o usado para identificar a peça, tem de ser único para todas as peças existentes no Puzzle, o \textit{initialPosition} que identifica a posição inicial da peça e o \textit{finalPosition} que identifica a posição final da figura.
 
@@ -146,12 +146,12 @@ Os ficheiros javascript onde está a maior parte da implementação, desde "list
         \item \textit{CanvasWebGl.class.js} como já foi explicado, contem a automatização necessária para instanciar um puzzle em WebGl.
         \item \textit{confetti.js} contem o script necessário para a animação de confettis quando um utilizador termina o puzzle.
         \item \textit{document.jquery.js} contem os scripts jquery necessários para a lupa quando o utilizador passa o rato por cima da pré-visualização do puzzle quando é terminado e a animação necessária para a pontuação do utilizador.
-        \item \textit{initShaders.js} contem os scripts necessários para inicializar cada shader program e para inicializar o shader. Este foi um aspeto importante no nosso desenvolvimento porque a percepção do que estes elementos faziam, além de outras coisas, permitiu-nos instanciar os modelos de forma independente.
+        \item \textit{initShaders.js} contem os scripts necessários para inicializar cada shader program e para inicializar o shader. Este foi um aspeto importante o desenvolvimento porque a percepção do que estes elementos faziam, além de outras coisas, permitiu instanciar os modelos de forma independente.
         \item \textit{jquery.js} é uma framework javascript que simplifica a vida ao programador, permite criar listeners de forma mais fácil e dinâmica com seletores, modificar atributos de objetos do documento HTML, fazer animações com esses objetos entre outras coisas.
         \item \textit{maths.js} contem os scripts auxiliares usados nas aulas.
         \item \textit{microscope.js} contem o script para instanciar a lupa na imagem.
         \item \textit{Models.class.js} tal como descrito em cima, contem toda a informação necessária para instanciar uma peça de um puzzle e fazer as translações, rotações entre outras coisas do puzzle.
-        \item \textit{models.js} não necessitámos de olhar para este ficheiro, mas, contem as funções necessárias para processar as "triangle mesh models".
+        \item \textit{models.js} não foi necessário de olhar para este ficheiro, mas, contem as funções necessárias para processar as "triangle mesh models".
         \item \textit{parseFiles.js} adaptando o código fornecido nas aulas práticas para fazer o processamento de ficheiros txt e obj, contudo a adaptação prendeu-se em fazer download via ajax de forma assíncrona dos ficheiros.
         \item \textit{puzzle.js} contem as classes que permitem fazer programação ao estilo orientada aos objetos para definir o puzzle, as peças e as posições iniciais e finais.
         \item \textit{PuzzleGame.js} é responsável por carregar o ficheiro puzzles.json que tem a definição dos puzzles em JSON e disponibiliza o runWebGL que irá instanciar o CanvasWebGl e irá chamar o setScreenPuzzle e o setEventListeners.
@@ -216,7 +216,7 @@ A interface de utilizador dispõe de comandos que permite ao utilizador, control
 
 Também tem controlos para fazer zoom in, zoom out e reset do nível e da posição da figura.
 
-A pontuação é disponibilizada ao utilizador no círculo, que fica verde quando o utilizador termina. Ao clicar nessa bola também é aberta uma janela de facebook para o utilizador conseguir fazer a partilha da sua pontuação. Também quando termina todos os níveis, ao fechar a animação de conclusão é aberto uma janela de facebook para partilhar no seu facebook.
+A pontuação é disponibilizada ao utilizador no círculo, que fica verde quando o utilizador termina. Ao clicar nessa bola também é aberta uma janela de facebook para o utilizador conseguir fazer a partilha da sua pontuação. Também quando termina todos os níveis, ao fechar a animação de conclusão é aberto uma janela de facebook para partilhar no facebook.
 
 Como referido anteriormente, o utilizador quando termina um nível é mostrada uma animação com confettis e uma janela de conclusão do nível.
 
@@ -246,14 +246,14 @@ Como mostrado na figura anterior, foi implementado um modelo especial para dar o
  \label{fig:help}
 \end{figure}
 
-Fizemos também um menu superior onde é dado ao utilizador todo o apoio para usar o puzzle, assim como é dada a ligação para os autores e para outros níveis.
+Fez-se também um menu superior onde é dado ao utilizador todo o apoio para usar o puzzle, assim como é dada a ligação para os autores e para outros níveis.
 
 
 \section{Conclusão}
 
-O principal objetivo foi conseguido, inicialmente esteve-se um pouco com receio sobre o que iria ser possível ser feito e quanto tempo iria demorar a implementação do projeto. Optou-se por usar o código disponibilizado pelo professor nas aulas práticas e fazer uma reformulação tendo como objetivo instanciar objetos independentes, com atributos diferentes, translações e rotações. Assim seria possível desenvolver um puzzle com as peças que quiséssemos e de forma simples. Esse objetivo foi conseguido, acabou-se por fazer duas class bastante gerais que poderão ser usadas para qualquer tipo de aplicação que pretenda usar WebGl e que apenas necessite de translações, rotações e outro tipo de funcionalidades.
+O principal objetivo foi conseguido, inicialmente teve-se um pouco com receio sobre o que iria ser possível ser feito e quanto tempo iria demorar a implementação do projeto. Optou-se por usar o código disponibilizado pelo professor nas aulas práticas e fazer uma reformulação tendo como objetivo instanciar objetos independentes, com atributos diferentes, translações e rotações. Assim seria possível desenvolver um puzzle com as peças que fossem necessárias e de forma simples. Esse objetivo foi conseguido, acabou-se por fazer duas class bastante gerais que poderão ser usadas para qualquer tipo de aplicação que pretenda usar WebGl e que apenas necessite de translações, rotações e outro tipo de funcionalidades.
 
-Os principais problemas prendeu-se em desenvolver esta aproximação de modelos independentes e na criação de um modelo com textura, que serviu para fundo, contudo, o projeto acabou por exceder as nossas expetativas e foi divertido e interessante de ser realizado.
+Os principais problemas prenderam-se em desenvolver esta aproximação de modelos independentes e na criação de um modelo com textura, que serviu para fundo, contudo, o projeto acabou por exceder as expetativas e foi divertido e interessante de ser realizado.
 
 \renewcommand{\bibname}{Referências}
 
