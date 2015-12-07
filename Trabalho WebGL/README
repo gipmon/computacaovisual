@@ -1,0 +1,10 @@
+Para a instalar o que é necessário para o puzzle funcionar sem problemas foi
+usado um Simple HTTP Server que é disponibilizado pelo Python.
+Apenas é preciso ter o Python instalado no computador.
+
+Para iniciar o servidor:
+# ./run.sh
+ou
+# python -m SimpleHTTPServer 8000
+
+e depois aceder a: http://localhost:8000
