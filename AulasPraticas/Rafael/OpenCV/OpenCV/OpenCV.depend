@@ -77,3 +77,21 @@
 	"opencv2/imgproc/imgproc.hpp"
 	"opencv2/highgui/highgui.hpp"
 
+1449500540 source:/vagrant/AulasPraticas/Rafael/OpenCV/OpenCV_Guiao_04/OpenCV_ex_2.cpp
+	<iostream>
+	"opencv2/core/core.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	"opencv2/highgui/highgui.hpp"
+
+1449502058 source:/vagrant/AulasPraticas/Rafael/OpenCV/OpenCV_Guiao_04/OpenCV_ex_5.cpp
+	<iostream>
+	"opencv2/core/core.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	"opencv2/highgui/highgui.hpp"
+
+1449503206 source:/vagrant/AulasPraticas/Rafael/OpenCV/OpenCV_Guiao_04/OpenCV_ex_7.cpp
+	<iostream>
+	"opencv2/core/core.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	"opencv2/highgui/highgui.hpp"
+
