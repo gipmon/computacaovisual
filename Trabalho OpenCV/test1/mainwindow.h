@@ -32,6 +32,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
     cv::Mat photo;
+    cv::Mat histogram_r;
+    cv::Mat histogram_g;
+    cv::Mat histogram_b;
     cv::Mat histogram;
     void setHistogram();
 };
