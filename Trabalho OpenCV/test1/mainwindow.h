@@ -37,6 +37,16 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void on_red_hist_clicked();
+
+    void on_green_hist_clicked();
+
+    void on_blue_hist_clicked();
+
+    void on_pushButton_6_clicked();
+
+    void on_pushButton_9_clicked();
+
 private:
     Ui::MainWindow *ui;
     cv::Mat photo;

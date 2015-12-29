@@ -67,15 +67,21 @@ void MainWindow::setHistogram(){
     /// Draw for each channel
     for( int i = 1; i < histSize; i++ )
     {
-      cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(histogram_b.at<float>(i-1)) ) ,
-                       cv::Point( bin_w*(i), hist_h - cvRound(histogram_b.at<float>(i)) ),
-                       cv::Scalar( 255, 0, 0), 2, 8, 0  );
-      cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(histogram_g.at<float>(i-1)) ) ,
-                       cv::Point( bin_w*(i), hist_h - cvRound(histogram_g.at<float>(i)) ),
-                       cv::Scalar( 0, 255, 0), 2, 8, 0  );
-      cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(histogram_r.at<float>(i-1)) ) ,
-                       cv::Point( bin_w*(i), hist_h - cvRound(histogram_r.at<float>(i)) ),
-                       cv::Scalar( 0, 0, 255), 2, 8, 0  );
+      if(ui->red_hist->isChecked()){
+          cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(histogram_r.at<float>(i-1)) ) ,
+                           cv::Point( bin_w*(i), hist_h - cvRound(histogram_r.at<float>(i)) ),
+                           cv::Scalar( 0, 0, 255), 2, 8, 0  );
+      }
+      if(ui->blue_hist->isChecked()){
+          cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(histogram_b.at<float>(i-1)) ) ,
+                           cv::Point( bin_w*(i), hist_h - cvRound(histogram_b.at<float>(i)) ),
+                           cv::Scalar( 255, 0, 0), 2, 8, 0  );
+      }
+      if(ui->green_hist->isChecked()){
+          cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(histogram_g.at<float>(i-1)) ) ,
+                           cv::Point( bin_w*(i), hist_h - cvRound(histogram_g.at<float>(i)) ),
+                           cv::Scalar( 0, 255, 0), 2, 8, 0  );
+      }
     }
 
     QImage imgHist= ASM::cvMatToQImage(histogram);
@@ -220,4 +226,47 @@ void MainWindow::on_pushButton_5_clicked()
     ui->horizontalSlider->setValue(0);
     ui->horizontalSlider_2->setValue(0);
     ui->horizontalSlider_3->setValue(0);
+}
+
+void MainWindow::on_red_hist_clicked()
+{
+    if(ui->red_hist->isChecked()){
+        ui->horizontalSlider_3->setValue(0);
+    }else{
+        ui->horizontalSlider_3->setValue(-255);
+    }
+    reloadImageAndHistogram();
+}
+
+void MainWindow::on_green_hist_clicked()
+{
+    if(ui->green_hist->isChecked()){
+        ui->horizontalSlider->setValue(0);
+    }else{
+        ui->horizontalSlider->setValue(-255);
+    }
+    reloadImageAndHistogram();
+}
+
+void MainWindow::on_blue_hist_clicked()
+{
+    if(ui->blue_hist->isChecked()){
+        ui->horizontalSlider_2->setValue(0);
+    }else{
+        ui->horizontalSlider_2->setValue(-255);
+    }
+    reloadImageAndHistogram();
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    // http://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_equalization/histogram_equalization.html
+    // http://stackoverflow.com/questions/14708572/opencv-applying-operations-on-rgb-images-splitmerge
+
+}
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    // brightness histogram
+
 }
