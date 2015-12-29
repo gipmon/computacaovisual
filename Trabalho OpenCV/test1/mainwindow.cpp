@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     photo = cv::imread("Fruits-RGB.tif");
+    photo_original = cv::imread("Fruits-RGB.tif");
+
     if(!photo.data){
         QMessageBox msg;
         msg.setText("Could not load image");
@@ -84,8 +86,13 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_3_clicked()
 {
     // Save Image
-    QImage imgIn = ASM::cvMatToQImage(photo);
-    imgIn.save("output.jpg");
+    try{
+        QString fileName = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Image Files (*.png *.jpg *.bmp *.tif)"));
+        QImage imgIn = ASM::cvMatToQImage(photo);
+        imgIn.save(fileName);
+    }catch(cv::Exception e){
+
+    }
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -107,48 +114,48 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    // Save Histogram
-    cv::FileStorage fs("histogram.yml", cv::FileStorage::WRITE);
-    if (!fs.isOpened()) {
-        QMessageBox msg;
-        msg.setText("Could not open file storage");
-        msg.exec();
-    }
+    try{
+        // Save Histogram
+        QString fileName = QFileDialog::getSaveFileName(this,tr("Save Histogram"), "", tr("Histogram Files (*.yml)"));
+        cv::FileStorage fs(fileName.toStdString(), cv::FileStorage::WRITE);
+        if (!fs.isOpened()) {
+            QMessageBox msg;
+            msg.setText("Could not open file storage");
+            msg.exec();
+        }
 
-    fs << "histogram_r" << histogram_r;
-    fs << "histogram_g" << histogram_g;
-    fs << "histogram_b" << histogram_b;
-    fs << "histogram" << histogram;
-    fs << "size_rows" << photo.rows;
-    fs << "size_cols" << photo.cols;
-    fs.release();
+        fs << "histogram" << histogram;
+        fs.release();
+    }catch(cv::Exception e){
+
+    }
 }
 
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    // Load Histogram and Image
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Histogram"), "", tr("Image Files (*.yml)"));
-    cv::FileStorage fs(fileName.toStdString(), cv::FileStorage::READ);
+    try{
+        // Load Histogram and Image
+        QString fileName = QFileDialog::getOpenFileName(this,tr("Open Histogram"), "", tr("Image Files (*.yml)"));
+        cv::FileStorage fs(fileName.toStdString(), cv::FileStorage::READ);
 
-    if (!fs.isOpened()) {
-        QMessageBox msg;
-        msg.setText("Could not load histogram");
-        msg.exec();
+        if (!fs.isOpened()) {
+            QMessageBox msg;
+            msg.setText("Could not load histogram");
+            msg.exec();
+        }
+
+        fs["histogram"] >> histogram;
+        fs.release();
+
+        QImage imgHist= ASM::cvMatToQImage(histogram);
+        ui->label_2->setPixmap(QPixmap::fromImage(imgHist));
+    }catch(cv::Exception e){
+
     }
+}
 
-    fs["histogram"] >> histogram;
-    int rows, cols;
-    fs["size_rows"] >> rows;
-    fs["size_cols"] >> cols;
+void MainWindow::on_horizontalSlider_3_valueChanged(int value)
+{
 
-    cv::Mat hist_r, hist_b, hist_g;
-    fs["histogram_r"] >> hist_r;
-    fs["histogram_g"] >> hist_g;
-    fs["histogram_b"] >> hist_b;
-
-    fs.release();
-
-    QImage imgHist= ASM::cvMatToQImage(histogram);
-    ui->label_2->setPixmap(QPixmap::fromImage(imgHist));
 }
