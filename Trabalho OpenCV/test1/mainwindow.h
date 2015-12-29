@@ -31,6 +31,12 @@ private slots:
 
     void on_horizontalSlider_3_valueChanged(int value);
 
+    void on_horizontalSlider_valueChanged(int value);
+
+    void on_horizontalSlider_2_valueChanged(int value);
+
+    void on_pushButton_5_clicked();
+
 private:
     Ui::MainWindow *ui;
     cv::Mat photo;
@@ -40,6 +46,8 @@ private:
     cv::Mat histogram_b;
     cv::Mat histogram;
     void setHistogram();
+    void reloadImageAndHistogram();
+    void RGB_slider();
 };
 
 #endif // MAINWINDOW_H

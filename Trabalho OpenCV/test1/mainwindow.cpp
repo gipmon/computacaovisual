@@ -23,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent) :
         msg.exec();
     }
 
+    reloadImageAndHistogram();
+}
+
+void MainWindow::reloadImageAndHistogram(){
     QImage imgIn= ASM::cvMatToQImage(photo);
     ui->label->setPixmap(QPixmap::fromImage(imgIn));
     setHistogram();
@@ -157,5 +161,63 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_horizontalSlider_3_valueChanged(int value)
 {
+    RGB_slider();
+}
 
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    RGB_slider();
+}
+
+void MainWindow::on_horizontalSlider_2_valueChanged(int value)
+{
+    RGB_slider();
+}
+
+void MainWindow::RGB_slider(){
+    photo = photo_original.clone();
+
+    for(int i=0; i<photo.rows; i++){
+        for(int j=0; j<photo.cols; j++){
+            // BLUE
+            int value_b = (int) photo.at<cv::Vec3b>(i, j)[0] + ui->horizontalSlider_2->value();
+            if(value_b<0){
+                value_b = 0;
+            }else if(value_b>255){
+                value_b = 255;
+            }
+            photo.at<cv::Vec3b>(i, j)[0] = value_b;
+
+            // change GREEN
+            int value_g = (int) photo.at<cv::Vec3b>(i, j)[1] + ui->horizontalSlider->value();
+            if(value_g<0){
+                value_g = 0;
+            }else if(value_g>255){
+                value_g = 255;
+            }
+            photo.at<cv::Vec3b>(i, j)[1] = value_g;
+
+            // change RED
+            int value_r = (int) photo.at<cv::Vec3b>(i, j)[2] + ui->horizontalSlider_3->value();
+            if(value_r<0){
+                value_r = 0;
+            }else if(value_r>255){
+                value_r = 255;
+            }
+            photo.at<cv::Vec3b>(i, j)[2] = value_r;
+        }
+    }
+
+    reloadImageAndHistogram();
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    // reset rgb
+    photo = photo_original.clone();
+    reloadImageAndHistogram();
+    ui->horizontalSlider->setValue(0);
+    ui->horizontalSlider_2->setValue(0);
+    ui->horizontalSlider_3->setValue(0);
 }
