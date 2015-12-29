@@ -20,20 +20,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_horizontalSlider_valueChanged(int value);
 
-    void on_comboBox_currentIndexChanged(int index);
+    void on_pushButton_3_clicked();
 
-    void on_comboBox_2_currentIndexChanged(int index);
-
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
+    void on_pushButton_4_clicked();
 
 private:
     Ui::MainWindow *ui;
-    cv::Mat original;
-    cv::Mat modified;
+    cv::Mat photo;
+    cv::Mat histogram;
+    void setHistogram();
 };
 
 #endif // MAINWINDOW_H

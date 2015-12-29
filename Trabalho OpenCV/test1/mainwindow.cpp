@@ -6,6 +6,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <asmopencv.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,17 +14,68 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    original = cv::imread("lena.jpg");
-    if(!original.data){
+    photo = cv::imread("Fruits-RGB.tif");
+    if(!photo.data){
         QMessageBox msg;
         msg.setText("Could not load image");
         msg.exec();
     }
-    QImage imgIn= QImage((uchar*) original.data, original.cols, original.rows, original.step, QImage::Format_RGB888);
 
+    QImage imgIn= ASM::cvMatToQImage(photo);
     ui->label->setPixmap(QPixmap::fromImage(imgIn));
-    ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
+    setHistogram();
+}
 
+void MainWindow::setHistogram(){
+    // make histogram
+
+    /// Separate the image in 3 places ( B, G and R )
+    cv::vector<cv::Mat> bgr_planes;
+    cv::split( photo, bgr_planes );
+
+    // Establish the number of bins
+    int histSize = 256;
+
+    // Set the ranges ( for B,G,R) )
+    float range[] = { 0, 256 } ;
+    const float* histRange = { range };
+
+    bool uniform = true;
+    bool accumulate = false;
+
+    cv::Mat b_hist, g_hist, r_hist;
+
+    cv::calcHist( &bgr_planes[0], 1, 0, cv::Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
+    cv::calcHist( &bgr_planes[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate );
+    cv::calcHist( &bgr_planes[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate );
+
+    // Draw the histograms for B, G and R
+    int hist_w = 512; int hist_h = 400;
+    int bin_w = cvRound( (double) hist_w/histSize );
+
+    cv::Mat histImage( hist_h, hist_w, CV_8UC3, cv::Scalar( 0,0,0) );
+
+    // Normalize the result to [ 0, histImage.rows ]
+    cv::normalize(b_hist, b_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat() );
+    cv::normalize(g_hist, g_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat() );
+    cv::normalize(r_hist, r_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat() );
+
+    /// Draw for each channel
+    for( int i = 1; i < histSize; i++ )
+    {
+      cv::line( histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1)) ) ,
+                       cv::Point( bin_w*(i), hist_h - cvRound(b_hist.at<float>(i)) ),
+                       cv::Scalar( 255, 0, 0), 2, 8, 0  );
+      cv::line( histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(g_hist.at<float>(i-1)) ) ,
+                       cv::Point( bin_w*(i), hist_h - cvRound(g_hist.at<float>(i)) ),
+                       cv::Scalar( 0, 255, 0), 2, 8, 0  );
+      cv::line( histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(r_hist.at<float>(i-1)) ) ,
+                       cv::Point( bin_w*(i), hist_h - cvRound(r_hist.at<float>(i)) ),
+                       cv::Scalar( 0, 0, 255), 2, 8, 0  );
+    }
+
+    QImage imgHist= ASM::cvMatToQImage(histImage);
+    ui->label_2->setPixmap(QPixmap::fromImage(imgHist));
 }
 
 MainWindow::~MainWindow()
@@ -31,98 +83,34 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_horizontalSlider_valueChanged(int value)
+void MainWindow::on_pushButton_3_clicked()
 {
-    int operation = ui->comboBox_2->currentIndex();
-    int option = ui->comboBox->currentIndex();
-    double factor = (double)value/2;
-
-    cv::Mat element = cv::getStructuringElement( operation,
-                                       cv::Size( 2*factor + 1, 2*factor+1 ),
-                                       cv::Point( factor, factor ) );
-
-
-    switch (option) {
-        case 0:
-            /// Apply the erosion operation
-            cv::erode( original, modified, element );
-            break;
-        case 1:
-            /// Apply the dilation operation
-            cv::dilate( original, modified, element );
-            break;
-        case 2:
-            /// Apply the opening operation
-            cv::morphologyEx( original, modified, option, element );
-            break;
-        case 3:
-            /// Apply the closing operation
-            cv::morphologyEx( original, modified, option, element );
-            break;
-        case 4:
-            /// Apply the gradient operation
-            cv::morphologyEx( original, modified, option, element );
-            break;
-        case 5:
-            /// Apply the top hat operation
-            cv::morphologyEx( original, modified, option, element );
-            break;
-        case 6:
-            /// Apply the black hat operation
-            cv::morphologyEx( original, modified, option, element );
-            break;
-        default:
-            break;
-        }
-
-
-
-    QImage imgIn= QImage((uchar*) modified.data, modified.cols, modified.rows, modified.step, QImage::Format_RGB888);
-    ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
-
-}
-
-void MainWindow::on_comboBox_currentIndexChanged(int index)
-{
-    //original = modified;
-    ui->horizontalSlider->setSliderPosition(0);
-    QImage imgIn= QImage((uchar*) original.data, original.cols, original.rows, original.step, QImage::Format_RGB888);
-
-    ui->label->setPixmap(QPixmap::fromImage(imgIn));
-    ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
-
-}
-
-void MainWindow::on_comboBox_2_currentIndexChanged(int index)
-{
-    //original = modified;
-    ui->horizontalSlider->setSliderPosition(0);
-    QImage imgIn= QImage((uchar*) original.data, original.cols, original.rows, original.step, QImage::Format_RGB888);
-
-    ui->label->setPixmap(QPixmap::fromImage(imgIn));
-    ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
-
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    QImage imgIn= QImage((uchar*) modified.data, modified.cols, modified.rows, modified.step, QImage::Format_RGB888);
+    // Save Image
+    QImage imgIn = ASM::cvMatToQImage(photo);
     imgIn.save("output.jpg");
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_pushButton_4_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+    // Load Image
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp *.tif)"));
 
-    original = cv::imread(fileName.toStdString());
-    if(!original.data){
+    photo = cv::imread(fileName.toStdString());
+    if(!photo.data){
         QMessageBox msg;
         msg.setText("Could not load image");
         msg.exec();
     }
-    QImage imgIn= QImage((uchar*) original.data, original.cols, original.rows, original.step, QImage::Format_RGB888);
 
+    QImage imgIn= ASM::cvMatToQImage(photo);
     ui->label->setPixmap(QPixmap::fromImage(imgIn));
-    ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
+    setHistogram();
+}
+
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    // Save Histogram
+
 }

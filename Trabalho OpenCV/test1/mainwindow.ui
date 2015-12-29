@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>RGB Histograms</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="label">
@@ -46,100 +46,11 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>480</y>
-      <width>641</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="maximum">
-     <number>40</number>
-    </property>
-    <property name="singleStep">
-     <number>1</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>440</y>
-      <width>121</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Erosion</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Dilation</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Opening</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Closing</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Gradient</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Top Hat</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Black Hat</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QComboBox" name="comboBox_2">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>440</y>
-      <width>85</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Rect</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Cross</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Ellipse</string>
-     </property>
-    </item>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>440</y>
+      <x>580</x>
+      <y>390</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -149,10 +60,42 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>440</y>
+      <x>700</x>
+      <y>390</y>
+      <width>99</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>390</y>
+      <width>99</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>390</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -171,14 +114,6 @@
      <height>25</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
