@@ -53,28 +53,28 @@ void MainWindow::setHistogram(){
     int hist_w = 512; int hist_h = 400;
     int bin_w = cvRound( (double) hist_w/histSize );
 
-    cv::Mat histImage( hist_h, hist_w, CV_8UC3, cv::Scalar( 0,0,0) );
+    histogram = cv::Mat( hist_h, hist_w, CV_8UC3, cv::Scalar( 0,0,0) );
 
-    // Normalize the result to [ 0, histImage.rows ]
-    cv::normalize(b_hist, b_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat() );
-    cv::normalize(g_hist, g_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat() );
-    cv::normalize(r_hist, r_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat() );
+    // Normalize the result to [ 0, histogram.rows ]
+    cv::normalize(b_hist, b_hist, 0, histogram.rows, cv::NORM_MINMAX, -1, cv::Mat() );
+    cv::normalize(g_hist, g_hist, 0, histogram.rows, cv::NORM_MINMAX, -1, cv::Mat() );
+    cv::normalize(r_hist, r_hist, 0, histogram.rows, cv::NORM_MINMAX, -1, cv::Mat() );
 
     /// Draw for each channel
     for( int i = 1; i < histSize; i++ )
     {
-      cv::line( histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1)) ) ,
+      cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1)) ) ,
                        cv::Point( bin_w*(i), hist_h - cvRound(b_hist.at<float>(i)) ),
                        cv::Scalar( 255, 0, 0), 2, 8, 0  );
-      cv::line( histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(g_hist.at<float>(i-1)) ) ,
+      cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(g_hist.at<float>(i-1)) ) ,
                        cv::Point( bin_w*(i), hist_h - cvRound(g_hist.at<float>(i)) ),
                        cv::Scalar( 0, 255, 0), 2, 8, 0  );
-      cv::line( histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(r_hist.at<float>(i-1)) ) ,
+      cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(r_hist.at<float>(i-1)) ) ,
                        cv::Point( bin_w*(i), hist_h - cvRound(r_hist.at<float>(i)) ),
                        cv::Scalar( 0, 0, 255), 2, 8, 0  );
     }
 
-    QImage imgHist= ASM::cvMatToQImage(histImage);
+    QImage imgHist= ASM::cvMatToQImage(histogram);
     ui->label_2->setPixmap(QPixmap::fromImage(imgHist));
 }
 
@@ -107,10 +107,36 @@ void MainWindow::on_pushButton_4_clicked()
     setHistogram();
 }
 
-
-
 void MainWindow::on_pushButton_clicked()
 {
     // Save Histogram
+    cv::FileStorage fs("histogram.yml", cv::FileStorage::WRITE);
+    if (!fs.isOpened()) {
+        QMessageBox msg;
+        msg.setText("Could not open file storage");
+        msg.exec();
+    }
 
+    fs << "histogram" << histogram;
+    fs.release();
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    // Load Histogram and Image
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Histogram"), "", tr("Image Files (*.yml)"));
+    cv::FileStorage fs(fileName.toStdString(), cv::FileStorage::READ);
+
+    if (!fs.isOpened()) {
+        QMessageBox msg;
+        msg.setText("Could not load histogram");
+        msg.exec();
+    }
+
+    fs["histogram"] >> histogram;
+    fs.release();
+
+    QImage imgHist= ASM::cvMatToQImage(histogram);
+    ui->label_2->setPixmap(QPixmap::fromImage(imgHist));
 }
