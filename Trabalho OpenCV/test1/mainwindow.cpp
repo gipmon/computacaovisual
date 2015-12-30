@@ -347,10 +347,33 @@ void MainWindow::on_pushButton_7_clicked()
     dst.copyTo(lab_planes[0]);
     cv::merge(lab_planes, lab_image);
 
-   // convert back to RGB
-   cv::Mat image_clahe;
-   cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
+    // convert back to RGB
+    cv::Mat image_clahe;
+    cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
 
-   photo = image_clahe;
-   reloadImageAndHistogram();
+    photo = image_clahe;
+    reloadImageAndHistogram();
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    // Histogram Equalization
+    cv::Mat lab_image;
+    cv::cvtColor(photo_original.clone(), lab_image, CV_BGR2Lab);
+
+    // Extract the L channel
+    std::vector<cv::Mat> lab_planes(3);
+    cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
+
+
+    // Merge the the color planes back into an Lab image
+    dst.copyTo(lab_planes[0]);
+    cv::merge(lab_planes, lab_image);
+
+    // convert back to RGB
+    cv::Mat image;
+    cv::cvtColor(lab_image, image, CV_Lab2BGR);
+
+    photo = image;
+    reloadImageAndHistogram();
 }
