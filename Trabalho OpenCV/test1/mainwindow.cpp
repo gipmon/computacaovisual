@@ -54,7 +54,7 @@ void MainWindow::setHistogram(){
     cv::calcHist( &bgr_planes[2], 1, 0, cv::Mat(), histogram_r, 1, &histSize, &histRange, uniform, accumulate );
 
     // Draw the histograms for B, G and R
-    int hist_w = 350; int hist_h = 350;
+    int hist_w = 256; int hist_h = 500;
     int bin_w = cvRound( (double) hist_w/histSize );
 
     histogram = cv::Mat( hist_h, hist_w, CV_8UC3, cv::Scalar( 0,0,0) );
@@ -82,6 +82,45 @@ void MainWindow::setHistogram(){
                            cv::Point( bin_w*(i), hist_h - cvRound(histogram_g.at<float>(i)) ),
                            cv::Scalar( 0, 255, 0), 2, 8, 0  );
       }
+    }
+
+    // allcoate memory for no of pixels for each intensity value
+    int histogram_intensity[256];
+
+    // initialize all intensity values to 0
+    for(int i = 0; i < 255; i++)
+    {
+        histogram_intensity[i] = 0;
+    }
+
+    // calculate the no of pixels for each intensity values
+    for(int y = 0; y < photo.rows; y++)
+        for(int x = 0; x < photo.cols; x++)
+            histogram_intensity[(int)photo.at<uchar>(y,x)]++;
+
+    // find the maximum intensity element from histogram
+    int max = histogram_intensity[0];
+    for(int i = 1; i < 256; i++){
+        if(max < histogram_intensity[i]){
+            max = histogram_intensity[i];
+        }
+    }
+
+    // normalize the histogram between 0 and histogram.rows
+
+    for(int i = 0; i < 255; i++){
+        histogram_intensity[i] = ((double)histogram_intensity[i]/max)*histogram.rows;
+    }
+
+
+    // draw the intensity line for histogram
+    for(int i = 0; i < 255; i++)
+    {
+        if(ui->y_hist->isChecked()){
+            cv::line( histogram, cv::Point( bin_w*(i-1), hist_h - cvRound(histogram_intensity[i-1]) ) ,
+                             cv::Point( bin_w*(i), hist_h - cvRound(histogram_intensity[i]) ),
+                             cv::Scalar( 224, 224,224), 2, 8, 0  );
+        }
     }
 
     QImage imgHist= ASM::cvMatToQImage(histogram);
@@ -215,6 +254,21 @@ void MainWindow::RGB_slider(){
         }
     }
 
+    cv::Mat new_image = cv::Mat::zeros( photo.size(), photo.type() );
+
+    int alpha = (3 * ui->brightness->value()) / 100;
+    int beta = ui->contrast->value();
+
+    /// Do the operation new_image(i,j) = alpha*image(i,j) + beta
+    for( int y = 0; y < photo.rows; y++ ){
+         for( int x = 0; x < photo.cols; x++ ){
+             for( int c = 0; c < 3; c++ ){
+                new_image.at<cv::Vec3b>(y,x)[c] = cv::saturate_cast<uchar>( alpha * ( photo.at<cv::Vec3b>(y,x)[c] ) + beta );
+             }
+         }
+    }
+
+    photo = new_image;
     reloadImageAndHistogram();
 }
 
@@ -258,15 +312,45 @@ void MainWindow::on_blue_hist_clicked()
     reloadImageAndHistogram();
 }
 
-void MainWindow::on_pushButton_6_clicked()
+void MainWindow::on_y_hist_clicked()
 {
-    // http://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_equalization/histogram_equalization.html
-    // http://stackoverflow.com/questions/14708572/opencv-applying-operations-on-rgb-images-splitmerge
-
+    reloadImageAndHistogram();
 }
 
-void MainWindow::on_pushButton_9_clicked()
+void MainWindow::on_contrast_valueChanged(int value)
 {
-    // brightness histogram
+    RGB_slider();
+}
 
+void MainWindow::on_brightness_valueChanged(int value)
+{
+    RGB_slider();
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{
+    // CLAHE (Contrast Limited Adaptive Histogram Equalization)
+    cv::Mat lab_image;
+    cv::cvtColor(photo_original.clone(), lab_image, CV_BGR2Lab);
+
+    // Extract the L channel
+    std::vector<cv::Mat> lab_planes(3);
+    cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
+
+    // apply the CLAHE algorithm to the L channel
+    cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+    clahe->setClipLimit(4);
+    cv::Mat dst;
+    clahe->apply(lab_planes[0], dst);
+
+    // Merge the the color planes back into an Lab image
+    dst.copyTo(lab_planes[0]);
+    cv::merge(lab_planes, lab_image);
+
+   // convert back to RGB
+   cv::Mat image_clahe;
+   cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
+
+   photo = image_clahe;
+   reloadImageAndHistogram();
 }

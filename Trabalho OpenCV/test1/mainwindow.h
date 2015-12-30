@@ -43,9 +43,13 @@ private slots:
 
     void on_blue_hist_clicked();
 
-    void on_pushButton_6_clicked();
+    void on_y_hist_clicked();
 
-    void on_pushButton_9_clicked();
+    void on_contrast_valueChanged(int value);
+
+    void on_brightness_valueChanged(int value);
+
+    void on_pushButton_7_clicked();
 
 private:
     Ui::MainWindow *ui;
