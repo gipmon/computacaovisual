@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0, std::string img_url="Fruits-RGB.tif");
     ~MainWindow();
 
 private slots:
@@ -51,6 +51,8 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+    void on_pushButton_6_clicked();
+
 private:
     Ui::MainWindow *ui;
     cv::Mat photo;
@@ -62,6 +64,8 @@ private:
     void setHistogram();
     void reloadImageAndHistogram();
     void RGB_slider();
+    bool contrast_changed;
+    bool bright_changed;
 };
 
 #endif // MAINWINDOW_H

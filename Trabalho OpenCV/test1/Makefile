@@ -49,10 +49,14 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		mainwindow.cpp moc_mainwindow.cpp
+		mainwindow.cpp \
+		histogramwindow.cpp moc_mainwindow.cpp \
+		moc_histogramwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		histogramwindow.o \
+		moc_mainwindow.o \
+		moc_histogramwindow.o
 DIST          = /home/bernardo/Qt/5.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/bernardo/Qt/5.4/gcc_64/mkspecs/common/shell-unix.conf \
 		/home/bernardo/Qt/5.4/gcc_64/mkspecs/common/unix.conf \
@@ -174,8 +178,10 @@ DIST          = /home/bernardo/Qt/5.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/bernardo/Qt/5.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/bernardo/Qt/5.4/gcc_64/mkspecs/features/lex.prf \
 		test1.pro mainwindow.h \
-		asmopencv.h main.cpp \
-		mainwindow.cpp
+		asmopencv.h \
+		histogramwindow.h main.cpp \
+		mainwindow.cpp \
+		histogramwindow.cpp
 QMAKE_TARGET  = test1
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = test1
@@ -203,7 +209,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_histogramwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: test1.pro /home/bernardo/Qt/5.4/gcc_64/mkspecs/linux-g++/qmake.conf /home/bernardo/Qt/5.4/gcc_64/mkspecs/features/spec_pre.prf \
@@ -469,9 +475,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h asmopencv.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h asmopencv.h histogramwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp histogramwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.ui histogramwindow.ui $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -494,9 +500,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_histogramwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_histogramwindow.cpp
 moc_mainwindow.cpp: /home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QMainWindow \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qwidget.h \
@@ -618,13 +624,122 @@ moc_mainwindow.cpp: /home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QMainWindow \
 		mainwindow.h
 	/home/bernardo/Qt/5.4/gcc_64/bin/moc $(DEFINES) -I/home/bernardo/Qt/5.4/gcc_64/mkspecs/linux-g++ -I'/media/psf/Trabalho OpenCV/test1' -I/usr/local/include -I/home/bernardo/Qt/5.4/gcc_64/include -I/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets -I/home/bernardo/Qt/5.4/gcc_64/include/QtGui -I/home/bernardo/Qt/5.4/gcc_64/include/QtCore mainwindow.h -o moc_mainwindow.cpp
 
+moc_histogramwindow.cpp: /home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QDialog \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qdialog.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qwidget.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qglobal.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qconfig.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfeatures.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qtypetraits.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qlogging.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qflags.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmutex.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobject.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstring.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qchar.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qlist.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qiterator.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmargins.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qrect.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsize.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qpoint.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpalette.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qcolor.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qrgb.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qpair.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qregexp.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qbrush.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qvector.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qmatrix.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qregion.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qline.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qtransform.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpainterpath.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qimage.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpixmap.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qhash.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qfont.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qfontinfo.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qcursor.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qkeysequence.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qevent.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qvariant.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmap.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qdebug.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qlocale.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qset.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qurl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qurlquery.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfile.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfiledevice.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qvector2d.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qtouchdevice.h \
+		histogramwindow.h
+	/home/bernardo/Qt/5.4/gcc_64/bin/moc $(DEFINES) -I/home/bernardo/Qt/5.4/gcc_64/mkspecs/linux-g++ -I'/media/psf/Trabalho OpenCV/test1' -I/usr/local/include -I/home/bernardo/Qt/5.4/gcc_64/include -I/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets -I/home/bernardo/Qt/5.4/gcc_64/include/QtGui -I/home/bernardo/Qt/5.4/gcc_64/include/QtCore histogramwindow.h -o moc_histogramwindow.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_histogramwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_histogramwindow.h
 ui_mainwindow.h: mainwindow.ui
 	/home/bernardo/Qt/5.4/gcc_64/bin/uic mainwindow.ui -o ui_mainwindow.h
+
+ui_histogramwindow.h: histogramwindow.ui
+	/home/bernardo/Qt/5.4/gcc_64/bin/uic histogramwindow.ui -o ui_histogramwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -897,8 +1012,12 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qinputmethod.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QButtonGroup \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qbuttongroup.h \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QComboBox \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qcombobox.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QHeaderView \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qitemselectionmodel.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qstyleoption.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qabstractspinbox.h \
@@ -909,12 +1028,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qstyle.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qtabbar.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qrubberband.h \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qabstractitemmodel.h \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QHeaderView \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qheaderview.h \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qitemselectionmodel.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QMenuBar \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qmenubar.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qmenu.h \
@@ -922,8 +1035,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qpushbutton.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QSlider \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QStatusBar \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qstatusbar.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QWidget \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QMessageBox \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qmessagebox.h \
@@ -931,11 +1042,124 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QFileDialog \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qdir.h \
-		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfileinfo.h
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfileinfo.h \
+		asmopencv.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/QImage \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/QPixmap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+
+histogramwindow.o: histogramwindow.cpp histogramwindow.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/QDialog \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qdialog.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qwidget.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qglobal.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qconfig.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfeatures.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qtypetraits.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qlogging.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qflags.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmutex.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobject.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstring.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qchar.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qlist.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qiterator.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmargins.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qrect.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsize.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qpoint.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpalette.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qcolor.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qrgb.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qpair.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qregexp.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qbrush.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qvector.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qmatrix.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qregion.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qline.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qtransform.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpainterpath.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qimage.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qpixmap.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qhash.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qfont.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qfontinfo.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qcursor.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qkeysequence.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qevent.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qvariant.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qmap.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qdebug.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qlocale.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qset.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qurl.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qurlquery.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfile.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtCore/qfiledevice.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qvector2d.h \
+		/home/bernardo/Qt/5.4/gcc_64/include/QtGui/qtouchdevice.h \
+		ui_histogramwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o histogramwindow.o histogramwindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_histogramwindow.o: moc_histogramwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_histogramwindow.o moc_histogramwindow.cpp
 
 ####### Install
 

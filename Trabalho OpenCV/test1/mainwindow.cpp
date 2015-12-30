@@ -7,15 +7,19 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <asmopencv.h>
+#include <histogramwindow.h>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent, std::string img_url) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    bool contrast_changed = false;
+    bool bright_changed = false;
+
     ui->setupUi(this);
 
-    photo = cv::imread("Fruits-RGB.tif");
-    photo_original = cv::imread("Fruits-RGB.tif");
+    photo = cv::imread(img_url);
+    photo_original = cv::imread(img_url);
 
     if(!photo.data){
         QMessageBox msg;
@@ -149,16 +153,8 @@ void MainWindow::on_pushButton_4_clicked()
     // Load Image
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp *.tif)"));
 
-    photo = cv::imread(fileName.toStdString());
-    if(!photo.data){
-        QMessageBox msg;
-        msg.setText("Could not load image");
-        msg.exec();
-    }
-
-    QImage imgIn= ASM::cvMatToQImage(photo);
-    ui->label->setPixmap(QPixmap::fromImage(imgIn));
-    setHistogram();
+    MainWindow *window = new MainWindow(0, fileName.toStdString());
+    window->show();
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -186,19 +182,8 @@ void MainWindow::on_pushButton_2_clicked()
     try{
         // Load Histogram and Image
         QString fileName = QFileDialog::getOpenFileName(this,tr("Open Histogram"), "", tr("Image Files (*.yml)"));
-        cv::FileStorage fs(fileName.toStdString(), cv::FileStorage::READ);
-
-        if (!fs.isOpened()) {
-            QMessageBox msg;
-            msg.setText("Could not load histogram");
-            msg.exec();
-        }
-
-        fs["histogram"] >> histogram;
-        fs.release();
-
-        QImage imgHist= ASM::cvMatToQImage(histogram);
-        ui->label_2->setPixmap(QPixmap::fromImage(imgHist));
+        HistogramWindow *hist = new HistogramWindow(0, fileName.toStdString());
+        hist->show();
     }catch(cv::Exception e){
 
     }
@@ -254,32 +239,38 @@ void MainWindow::RGB_slider(){
         }
     }
 
-    cv::Mat new_image = cv::Mat::zeros( photo.size(), photo.type() );
+    if(contrast_changed || bright_changed){
+        cv::Mat new_image = cv::Mat::zeros( photo.size(), photo.type() );
 
-    int alpha = (3 * ui->brightness->value()) / 100;
-    int beta = ui->contrast->value();
+        int alpha = (3 * ui->brightness->value()) / 100;
+        int beta = ui->contrast->value();
 
-    /// Do the operation new_image(i,j) = alpha*image(i,j) + beta
-    for( int y = 0; y < photo.rows; y++ ){
-         for( int x = 0; x < photo.cols; x++ ){
-             for( int c = 0; c < 3; c++ ){
-                new_image.at<cv::Vec3b>(y,x)[c] = cv::saturate_cast<uchar>( alpha * ( photo.at<cv::Vec3b>(y,x)[c] ) + beta );
+        /// Do the operation new_image(i,j) = alpha*image(i,j) + beta
+        for( int y = 0; y < photo.rows; y++ ){
+             for( int x = 0; x < photo.cols; x++ ){
+                 for( int c = 0; c < 3; c++ ){
+                    new_image.at<cv::Vec3b>(y,x)[c] = cv::saturate_cast<uchar>( alpha * ( photo.at<cv::Vec3b>(y,x)[c] ) + beta );
+                 }
              }
-         }
-    }
+        }
 
-    photo = new_image;
+        photo = new_image;
+    }
     reloadImageAndHistogram();
 }
 
 void MainWindow::on_pushButton_5_clicked()
 {
     // reset rgb
-    photo = photo_original.clone();
-    reloadImageAndHistogram();
     ui->horizontalSlider->setValue(0);
     ui->horizontalSlider_2->setValue(0);
     ui->horizontalSlider_3->setValue(0);
+    ui->brightness->setValue(50);
+    ui->contrast->setValue(50);
+    bright_changed = false;
+    contrast_changed = false;
+    photo = photo_original.clone();
+    reloadImageAndHistogram();
 }
 
 void MainWindow::on_red_hist_clicked()
@@ -319,11 +310,13 @@ void MainWindow::on_y_hist_clicked()
 
 void MainWindow::on_contrast_valueChanged(int value)
 {
+    contrast_changed = true;
     RGB_slider();
 }
 
 void MainWindow::on_brightness_valueChanged(int value)
 {
+    bright_changed = true;
     RGB_slider();
 }
 
@@ -357,23 +350,16 @@ void MainWindow::on_pushButton_7_clicked()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    // Histogram Equalization
-    cv::Mat lab_image;
-    cv::cvtColor(photo_original.clone(), lab_image, CV_BGR2Lab);
+    cv::Mat ycrcb;
+    cv::cvtColor(photo_original.clone(),ycrcb,CV_BGR2YCrCb);
 
-    // Extract the L channel
-    std::vector<cv::Mat> lab_planes(3);
-    cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
+    cv::vector<cv::Mat> channels;
+    cv::split(ycrcb,channels);
 
+    cv::equalizeHist(channels[0], channels[0]);
 
-    // Merge the the color planes back into an Lab image
-    dst.copyTo(lab_planes[0]);
-    cv::merge(lab_planes, lab_image);
+    cv::merge(channels,ycrcb);
+    cv::cvtColor(ycrcb,photo,CV_YCrCb2BGR);
 
-    // convert back to RGB
-    cv::Mat image;
-    cv::cvtColor(lab_image, image, CV_Lab2BGR);
-
-    photo = image;
     reloadImageAndHistogram();
 }

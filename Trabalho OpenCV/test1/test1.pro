@@ -13,12 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    histogramwindow.cpp
 
 HEADERS  += mainwindow.h \
-    asmopencv.h
+    asmopencv.h \
+    histogramwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    histogramwindow.ui
 
 INCLUDEPATH += "/usr/local/include/"
 
